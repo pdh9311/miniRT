@@ -3,16 +3,13 @@ CFLAGS		:= -g -Werror -Wextra -Wall
 CHECK		:=	-fsanitize=address
 
 OS 			:= $(shell uname)
-USERS 		:= $(shell Users)
+#USERS 		:= $(shell Users)
 ifeq ($(OS), Linux)
-#MLX_DIR		:= ./minilibx-linux/
-#MLX			:= $(MATH_LIB) -lXext -lX11
-else ifeq ($(USERS), joonpark)
-MLX_DIR		:= ./minilibx/
-MLX			:= -lm -framework OpenGL -framework AppKit
-else ifeq ($(USERS), donpark)
-MLX_DIR		:=
-MLX			:=
+	MLX_DIR		:= ./minilibx-linux/
+	MLX			:= -lm -lXext -lX11
+else
+	MLX_DIR		:= ./minilibx/
+	MLX			:= -lm -framework OpenGL -framework AppKit
 endif
 
 MLX_LIB = $(MLX_DIR)libmlx.a
@@ -34,7 +31,7 @@ OBJS_DIR	:=	./object/
 OBJECTS		:=	$(SOURCES:.c=.o)
 OBJS		:=	$(addprefix $(OBJS_DIR), $(OBJECTS))
 
-LIBRARY		:= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx
+LIBRARY		:= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx $(MLX)
 HEADERS		:= -I$(INC_DIR) -I$(LIBFT_INC) -I$(MLX_INC)
 
 NAME		:= miniRT
@@ -65,7 +62,7 @@ $(OBJS_DIR) :
 	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@$(CC) -c $< -o $@ $(CFLAGS) $(HEADERS)
+	@$(CC) -c $? -o $@ $(CFLAGS) $(HEADERS)
 	@echo "$(GREEN).$(RESET)\c"
 
 $(LIBFT_LIB) :
