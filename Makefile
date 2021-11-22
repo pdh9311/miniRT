@@ -5,11 +5,11 @@ CHECK		:=	-fsanitize=address
 OS 			:= $(shell uname)
 USERS 		:= $(shell Users)
 ifeq ($(OS), Linux)
-MLX_DIR		:= ./minilibx-linux/
-MLX			:= $(MATH_LIB) -lXext -lX11
+#MLX_DIR		:= ./minilibx-linux/
+#MLX			:= $(MATH_LIB) -lXext -lX11
 else ifeq ($(USERS), joonpark)
-MLX_DIR		:=
-MLX			:=
+MLX_DIR		:= ./minilibx/
+MLX			:= -lm -framework OpenGL -framework AppKit
 else ifeq ($(USERS), donpark)
 MLX_DIR		:=
 MLX			:=
@@ -55,10 +55,14 @@ RESET		:=	\033[0m
 
 .PHONY		: all clean fclean re bonus $(NAME)
 
-$(NAME) : $(LIBFT_LIB) $(OBJS_DIR) $(OBJS)
+$(NAME) : $(LIBFT_LIB) $(MLX_LIB) $(OBJS_DIR) $(OBJS)
 	@$(CC) -o $@ $(OBJS) $(CFLAGS) $(LIBRARY) $(HEADERS)
 	@echo "\n$(GREEN)object files were created$(RESET)"
 	@echo "$(RED)miniRT created.$(RESET)"
+
+$(OBJS_DIR) :
+	@mkdir -p $(OBJS_DIR)
+	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@$(CC) -c $< -o $@ $(CFLAGS) $(HEADERS)
@@ -69,10 +73,15 @@ $(LIBFT_LIB) :
 	@$(MAKE) clean -sC $(LIBFT_DIR)
 	@echo "$(YELLOW)[ Created libft.a ... ]$(RESET)"
 
+$(MLX_LIB) :
+	@$(MAKE) -sC $(MLX_DIR)
+	@echo "$(YELLOW)[ Created libmlx.a ... ]$(NC)"
+
 all : $(NAME)
 
 clean :
 	@$(MAKE) clean -sC $(LIBFT_DIR)
+	@$(MAKE) clean -sC $(MLX_DIR)
 	@rm -rf $(OBJS_DIR)
 	@echo "$(MENT)[Removing object files]"
 	@echo "$(MAGENTA)$(OBJS)$(RESET)"
