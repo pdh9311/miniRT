@@ -6,7 +6,7 @@
 /*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 04:45:31 by donpark           #+#    #+#             */
-/*   Updated: 2021/11/22 15:26:55 by joonpark         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:55:35 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 size_t		ft_wordcnt(char const *s, char c);
 char		**ft_split(char const *s, char c);
+int			is_in_str(char const *s, char c);
+size_t		ft_multi_wordcnt(char const *s, char *delimeter);
+char		**ft_multi_split(char const *s, char *delimeter);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_putchar_fd(char c, int fd);
