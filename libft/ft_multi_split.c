@@ -6,13 +6,13 @@
 /*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 04:31:31 by donpark           #+#    #+#             */
-/*   Updated: 2021/11/22 16:03:04 by joonpark         ###   ########.fr       */
+/*   Updated: 2021/11/22 17:14:41 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_worddup(char const *s, char *delimeter)
+static char	*ft_worddup(const char *s, char *delimeter)
 {
 	char	*word;
 	size_t	w_len;
@@ -41,7 +41,7 @@ static char	**ft_freeall(char **dptr)
 	return (0);
 }
 
-static int	ft_input_word(char const *s, char *delimeter, \
+static int	ft_input_word(const char *s, char *delimeter, \
 	char **words, size_t w_cnt)
 {
 	size_t	i;
@@ -68,7 +68,7 @@ static int	ft_input_word(char const *s, char *delimeter, \
 	return (i);
 }
 
-char	**ft_multi_split(char const *s, char *delimeter)
+char	**ft_multi_split(const char *s, char *delimeter)
 {
 	char	**words;
 	size_t	w_cnt;

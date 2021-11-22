@@ -20,11 +20,22 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= miniRT.h
+INCLUDES	:= miniRT.h element.h 
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
-SOURCES		:=	main.c
+SOURCES		:=	main.c \
+				readfile.c \
+				types/type_a.c \
+				types/type_c.c \
+				types/type_l.c \
+				types/type_pl.c \
+				types/type_sp.c \
+				types/type_cy.c \
+				types/utils.c \
+				utils/free.c \
+				test.c
+
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/
@@ -59,6 +70,8 @@ $(NAME) : $(LIBFT_LIB) $(MLX_LIB) $(OBJS_DIR) $(OBJS)
 
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/types
+	@mkdir -p $(OBJS_DIR)/utils
 	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c

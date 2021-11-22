@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donpark <donpark@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 01:39:33 by donpark           #+#    #+#             */
-/*   Updated: 2021/07/07 16:46:56 by donpark          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:14:41 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
 	char			*newstr;
 	unsigned int	i;
