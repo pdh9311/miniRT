@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 04:31:31 by donpark           #+#    #+#             */
-/*   Updated: 2021/07/29 20:59:58 by donpark          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:14:41 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_worddup(char const *s, char c)
+static char	*ft_worddup(const char *s, char c)
 {
 	char	*word;
 	size_t	w_len;
@@ -41,7 +41,7 @@ static char	**ft_freeall(char **dptr)
 	return (0);
 }
 
-static int	ft_input_word(char const *s, char c, char **words, size_t w_cnt)
+static int	ft_input_word(const char *s, char c, char **words, size_t w_cnt)
 {
 	size_t	i;
 	size_t	j;
@@ -67,7 +67,7 @@ static int	ft_input_word(char const *s, char c, char **words, size_t w_cnt)
 	return (i);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(const char *s, char c)
 {
 	char	**words;
 	size_t	w_cnt;
