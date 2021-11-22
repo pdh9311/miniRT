@@ -6,7 +6,7 @@
 /*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:09:07 by joonpark          #+#    #+#             */
-/*   Updated: 2021/11/22 17:53:15 by joonpark         ###   ########.fr       */
+/*   Updated: 2021/11/22 20:27:52 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static double	ft_pow(int i)
 	return (ret);
 }
 
+#include <stdio.h>
 double	ft_atof(const char *str)
 {	
 	double	ret;
@@ -39,7 +40,7 @@ double	ft_atof(const char *str)
 	while (*str && (*str >= '0' && *str <= '9'))
 		ret = (ret * 10.) + (*(str++) - '0');
 	if (*(str++) != '.')
-		return (ret);
+		return (ret * minus);
 	idx = 0;
 	while (*str && (*str >= '0' && *str <= '9'))
 	{

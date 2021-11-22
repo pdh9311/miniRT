@@ -39,4 +39,16 @@ typedef struct  s_element
     int			type;
 }				t_element;
 
+int			readfile(char *file);
+
+int			input_type_a(char **split);
+int			input_type_c(char **split);
+int			input_type_l(char **split);
+int			input_type_pl(char **split);
+int			input_type_sp(char **split);
+int			input_type_cy(char **split);
+t_color		set_color(char *rgb);
+t_coord		set_coord(char *data);
+
+int	free_dptr(char **dptr, int ret);
 #endif
