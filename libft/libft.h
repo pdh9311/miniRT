@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joonpark <joonpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 04:45:31 by donpark           #+#    #+#             */
-/*   Updated: 2021/11/13 15:40:52 by joonpark         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:55:35 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int			ft_isdigit(int c);
 int			ft_isalnum(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
+int			ft_isspace(char c);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
 void		*ft_calloc(size_t count, size_t size);
@@ -74,6 +75,9 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 size_t		ft_wordcnt(char const *s, char c);
 char		**ft_split(char const *s, char c);
+int			is_in_str(char const *s, char c);
+size_t		ft_multi_wordcnt(char const *s, char *delimeter);
+char		**ft_multi_split(char const *s, char *delimeter);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_putchar_fd(char c, int fd);
