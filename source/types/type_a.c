@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdio.h>	//
 
-int	input_type_a(char **split)
+int	input_type_a(char **split, t_lst **lst)
 {
 	t_element	*elem;
 
@@ -11,8 +11,10 @@ int	input_type_a(char **split)
 		return (EXIT_FAILURE);
 	ft_memset(elem, 0, sizeof(t_element));
 	elem->brightness = ft_atof(split[1]);
-	elem->rgb = set_color(split[2]);
+	elem->rgb = get_color(split[2]);
+	elem->type = A;
 	// lst에 추가
-	printf("%lf | %d %d %d\n", elem->brightness, elem->rgb.r, elem->rgb.g, elem->rgb.b);
+	pp_lstadd_back(lst, pp_lstnew(elem));
+	// printf("%lf | %d %d %d\n", elem->brightness, elem->rgb.r, elem->rgb.g, elem->rgb.b);
 	return (EXIT_SUCCESS);	
 }

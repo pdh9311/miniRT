@@ -1,6 +1,18 @@
 #ifndef ELEMENT_H
 # define ELEMENT_H
 
+# include "list.h"
+
+enum e_type
+{
+	A = 0,
+	C,
+	L,
+	PL,
+	SP,
+	CY
+};
+
 typedef struct	s_coord
 {
 	double		x;
@@ -39,16 +51,15 @@ typedef struct  s_element
     int			type;
 }				t_element;
 
-int			readfile(char *file);
+int			readfile(char *file, t_lst **lst);
 
-int			input_type_a(char **split);
-int			input_type_c(char **split);
-int			input_type_l(char **split);
-int			input_type_pl(char **split);
-int			input_type_sp(char **split);
-int			input_type_cy(char **split);
-t_color		set_color(char *rgb);
-t_coord		set_coord(char *data);
+int			input_type_a(char **split, t_lst **lst);
+int			input_type_c(char **split, t_lst **lst);
+int			input_type_l(char **split, t_lst **lst);
+int			input_type_pl(char **split, t_lst **lst);
+int			input_type_sp(char **split, t_lst **lst);
+int			input_type_cy(char **split, t_lst **lst);
+t_color		get_color(char *rgb);
+t_coord		get_coord(char *data);
 
-int	free_dptr(char **dptr, int ret);
 #endif

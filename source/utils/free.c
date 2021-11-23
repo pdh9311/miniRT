@@ -1,5 +1,15 @@
 #include <stdlib.h>
 
+int	free_ptr(char *ptr, int ret)
+{
+	if (ptr != NULL)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+	return (ret);
+}
+
 int	free_dptr(char **dptr, int ret)
 {
 	int	i;

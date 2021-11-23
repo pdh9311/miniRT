@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdio.h>	//
 
-int	input_type_c(char **split)
+int	input_type_c(char **split, t_lst **lst)
 {
 	t_element	*elem;
 
@@ -10,11 +10,13 @@ int	input_type_c(char **split)
 	if (elem == NULL)
 		return (EXIT_FAILURE);
 	ft_memset(elem, 0, sizeof(t_element));
-	elem->coord = set_coord(split[1]);
-	elem->vector = set_coord(split[2]);
+	elem->coord = get_coord(split[1]);
+	elem->vector = get_coord(split[2]);
 	elem->fov = ft_atof(split[3]);
+	elem->type = C;
 	// lst에 추가
-	printf("%lf,%lf,%lf | %lf,%lf,%lf, | %lf\n", elem->coord.x, elem->coord.y, elem->coord.z,\
-		elem->vector.x, elem->vector.y, elem->vector.z, elem->fov);
+	pp_lstadd_back(lst, pp_lstnew(elem));
+	// printf("%lf,%lf,%lf | %lf,%lf,%lf, | %lf\n", elem->coord.x, elem->coord.y, elem->coord.z,\
+		// elem->vector.x, elem->vector.y, elem->vector.z, elem->fov);
 	return (EXIT_SUCCESS);	
 }	
