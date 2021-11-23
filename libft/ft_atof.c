@@ -6,7 +6,7 @@
 /*   By: joonpark <joonpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:09:07 by joonpark          #+#    #+#             */
-/*   Updated: 2021/11/22 20:27:52 by joonpark         ###   ########.fr       */
+/*   Updated: 2021/11/23 19:38:29 by joonpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static double	ft_pow(int i)
 	return (ret);
 }
 
-#include <stdio.h>
 double	ft_atof(const char *str)
 {	
 	double	ret;

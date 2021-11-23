@@ -1,14 +1,14 @@
-#include "element.h"
 #include "libft.h"
 #include "utils.h"
+#include "element.h"
 
-int	check_type(char **split, char *type)
+int	check_type(char **split, char *type, t_lst **lst)
 {
 	static const int	total = 6;
 	static const char	*type_str[] = {
 		"A", "C", "L", "pl", "sp", "cy", NULL
 	};
-	static		int		(*type_func[])(char **) = {
+	static		int		(*type_func[])(char **, t_lst **) = {
 		&input_type_a, &input_type_c,
 		&input_type_l, &input_type_pl,
 		&input_type_sp, &input_type_cy
@@ -23,7 +23,7 @@ int	check_type(char **split, char *type)
 	}
 	if (idx <= total)
 	{
-		if (idx < total && type_func[idx](split) == EXIT_FAILURE)
+		if (idx < total && type_func[idx](split, lst) == EXIT_FAILURE)
 			return (free_dptr(split, EXIT_FAILURE));
 		else
 			return (EXIT_SUCCESS);
@@ -43,7 +43,7 @@ static int	read_line(int fd, char **line, int *flag)
 	return (EXIT_SUCCESS);
 }
 
-static int	line_split(char *line)
+static int	line_split(char *line, t_lst **lst)
 {
 	char	**split;
 
@@ -53,7 +53,7 @@ static int	line_split(char *line)
 		free_ptr(line, 0);
 		return (EXIT_FAILURE);
 	}
-	if (check_type(split, split[0]) == EXIT_FAILURE)
+	if (check_type(split, split[0], lst) == EXIT_FAILURE)
 	{
 		free_ptr(line, 0);
 		return (free_dptr(split, EXIT_FAILURE));
@@ -61,7 +61,7 @@ static int	line_split(char *line)
 	return (free_dptr(split, EXIT_SUCCESS));
 }
 
-int	readfile(char *file)
+int	readfile(char *file, t_lst **lst)
 {
 	int		fd;
 	char	*line;
@@ -75,7 +75,7 @@ int	readfile(char *file)
 	{
 		if (read_line(fd, &line, &flag))
 			break ;
-		if (line_split(line))
+		if (line_split(line, lst))
 			break ;
 		// print_str_arr(split);
 		free_ptr(line, 0);
