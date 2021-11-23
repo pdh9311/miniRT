@@ -50,5 +50,4 @@ int			input_type_cy(char **split);
 t_color		get_color(char *rgb);
 t_coord		get_coord(char *data);
 
-int	free_dptr(char **dptr, int ret);
 #endif

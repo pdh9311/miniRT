@@ -1,6 +1,8 @@
 #include "element.h"
 #include "libft.h"
+#include "utils.h"
 #include <stdio.h> //
+
 t_color	get_color(char *rgb)
 {
 	t_color	color;

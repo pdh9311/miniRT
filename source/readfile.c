@@ -1,64 +1,84 @@
 #include "element.h"
 #include "libft.h"
+#include "utils.h"
 
 int	check_type(char **split, char *type)
 {
-	if (ft_strcmp(type, "A") == 0)
-	{
-		if (input_type_a(split))
-			return (free_dptr(split, EXIT_FAILURE));
-	}
-	else if (ft_strcmp(type, "C") == 0)
-	{
-		if (input_type_c(split))
-			return (free_dptr(split, EXIT_FAILURE));
-	}
-	else if (ft_strcmp(type, "L") == 0)
-	{
-		if (input_type_l(split))
-			return (free_dptr(split, EXIT_FAILURE));
-		
-	}
-	else if (ft_strcmp(type, "pl") == 0)
-	{
-		if (input_type_pl(split))
-			return (free_dptr(split, EXIT_FAILURE));
+	static const int	total = 6;
+	static const char	*type_str[] = {
+		"A", "C", "L", "pl", "sp", "cy", NULL
+	};
+	static		int		(*type_func[])(char **) = {
+		&input_type_a, &input_type_c,
+		&input_type_l, &input_type_pl,
+		&input_type_sp, &input_type_cy
+	};
+	int					idx;
 
-	}
-	else if (ft_strcmp(type, "sp") == 0)
+	idx = -1;
+	while (++idx <= total)
 	{
-		if (input_type_sp(split))
-			return (free_dptr(split, EXIT_FAILURE));
-
+		if (ft_strcmp(type_str[idx], type) == 0)
+			break ;
 	}
-	else if (ft_strcmp(type, "cy") == 0)
+	if (idx <= total)
 	{
-		if (input_type_cy(split))
+		if (idx < total && type_func[idx](split) == EXIT_FAILURE)
 			return (free_dptr(split, EXIT_FAILURE));
-
+		else
+			return (EXIT_SUCCESS);
 	}
+	return (EXIT_FAILURE);
+}
+
+static int	read_line(int fd, char **line, int *flag)
+{
+	int	gnl_ret;
+
+	gnl_ret = get_next_line(fd, line);
+	if (gnl_ret < 0)
+		return (EXIT_FAILURE);
+	if (gnl_ret == 0)
+		*flag = 0;
 	return (EXIT_SUCCESS);
+}
+
+static int	line_split(char *line)
+{
+	char	**split;
+
+	split = ft_multi_split(line, " \r\t\v\f\n");
+	if (split == NULL)
+	{
+		free_ptr(line, 0);
+		return (EXIT_FAILURE);
+	}
+	if (check_type(split, split[0]) == EXIT_FAILURE)
+	{
+		free_ptr(line, 0);
+		return (free_dptr(split, EXIT_FAILURE));
+	}
+	return (free_dptr(split, EXIT_SUCCESS));
 }
 
 int	readfile(char *file)
 {
 	int		fd;
 	char	*line;
-	char	**split;
-	int		gnl_ret;
+	int		flag;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (EXIT_FAILURE);
-	while (1)
+	flag = 1;
+	while (flag)
 	{
-		gnl_ret = get_next_line(fd, &line);
-		split = ft_multi_split(line, " \r\t\v\f\n");
-		check_type(split, split[0]);
-		// print_str_arr(split);
-		free(line);
-		if (gnl_ret <= 0)
+		if (read_line(fd, &line, &flag))
 			break ;
+		if (line_split(line))
+			break ;
+		// print_str_arr(split);
+		free_ptr(line, 0);
 	}
 	close(fd);
 	return (EXIT_SUCCESS);
