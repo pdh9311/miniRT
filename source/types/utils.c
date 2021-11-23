@@ -1,7 +1,7 @@
 #include "element.h"
 #include "libft.h"
 #include <stdio.h> //
-t_color	set_color(char *rgb)
+t_color	get_color(char *rgb)
 {
 	t_color	color;
 	char	**rgb_split;
@@ -14,7 +14,7 @@ t_color	set_color(char *rgb)
 	return (color);
 }
 
-t_coord	set_coord(char *data)
+t_coord	get_coord(char *data)
 {
 	t_coord	coord;
 	char	**data_split;
