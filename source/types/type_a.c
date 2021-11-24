@@ -2,6 +2,10 @@
 #include "libft.h"
 #include <stdio.h>	//
 
+/** A(주변광)
+ * 밝기 [0.0, 1.0] 사이 값
+ * RGB 값[0, 255] ex)13, 254, 213
+ */
 int	input_type_a(char **split, t_lst **lst)
 {
 	t_element	*elem;
@@ -16,5 +20,5 @@ int	input_type_a(char **split, t_lst **lst)
 	// lst에 추가
 	pp_lstadd_back(lst, pp_lstnew(elem));
 	// printf("%lf | %d %d %d\n", elem->brightness, elem->rgb.r, elem->rgb.g, elem->rgb.b);
-	return (EXIT_SUCCESS);	
+	return (EXIT_SUCCESS);
 }

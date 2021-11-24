@@ -1,7 +1,12 @@
 #include "element.h"
 #include "libft.h"
-#include <stdio.h>
+#include <stdio.h>	//
 
+/** pl(평면)
+ * x, y, z 좌표
+ * 3d vector 값[-1, 1]
+ * RGB 값[0, 255]
+ */
 int	input_type_pl(char **split, t_lst **lst)
 {
 	t_element	*elem;

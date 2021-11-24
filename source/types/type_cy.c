@@ -1,7 +1,14 @@
 #include "element.h"
 #include "libft.h"
-#include <stdio.h>
+#include <stdio.h>	//
 
+/** cy(원통)
+ *  x, y, z 좌표
+ * 3d vector 값[-1, 1]
+ * 지름
+ * 높이
+ * RGB 값[0, 255]
+ */
 int	input_type_cy(char **split, t_lst **lst)
 {
 	t_element	*elem;

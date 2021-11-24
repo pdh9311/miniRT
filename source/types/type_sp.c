@@ -1,7 +1,12 @@
 #include "element.h"
 #include "libft.h"
-#include <stdio.h>
+#include <stdio.h>	//
 
+/** sp(구)
+ *  구 중심 좌표(x, y, z)
+ * 지름
+ * RGB 값[0, 255]
+ */
 int	input_type_sp(char **split, t_lst **lst)
 {
 	t_element	*elem;

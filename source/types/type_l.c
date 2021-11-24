@@ -1,7 +1,12 @@
 #include "element.h"
 #include "libft.h"
-#include <stdio.h>
+#include <stdio.h>	//
 
+/** L(빛)
+ * x, y, z 좌표
+ * 밝기[0, 1]
+ * RGB 값[0, 255]
+ */
 int	input_type_l(char **split, t_lst **lst)
 {
 	t_element	*elem;

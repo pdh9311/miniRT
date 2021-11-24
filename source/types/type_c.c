@@ -2,6 +2,11 @@
 #include "libft.h"
 #include <stdio.h>	//
 
+/** C(카메라)
+ * x, y, z 좌표
+ * 3d vector 값[-1, 1] x, y, z 좌표 당 하나 씩 총 3개
+ * 화각[0, 180]
+ */
 int	input_type_c(char **split, t_lst **lst)
 {
 	t_element	*elem;
@@ -18,5 +23,5 @@ int	input_type_c(char **split, t_lst **lst)
 	pp_lstadd_back(lst, pp_lstnew(elem));
 	// printf("%lf,%lf,%lf | %lf,%lf,%lf, | %lf\n", elem->coord.x, elem->coord.y, elem->coord.z,\
 		// elem->vector.x, elem->vector.y, elem->vector.z, elem->fov);
-	return (EXIT_SUCCESS);	
-}	
+	return (EXIT_SUCCESS);
+}
