@@ -20,7 +20,7 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= miniRT.h element.h utils.h list.h test.h 
+INCLUDES	:= miniRT.h element.h utils.h list.h test.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
@@ -122,3 +122,7 @@ norm :
 	@find ./source -name "*.c" -exec norminette {} \;
 	@find ./include -name "*.h" -exec norminette {} \;
 	@echo "$(RESET)"
+
+test :
+	@echo "$(CYAN)./miniRT test_files/element.rt$(RESET)"
+	@./miniRT test_files/element.rt
