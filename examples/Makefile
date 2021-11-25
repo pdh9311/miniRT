@@ -52,4 +52,5 @@ clean :
 	discontinuous_keyhook continuous_keyhook \
 	discontinuous_mousehook_1 discontinuous_mousehook_2 \
 	closehook \
-	bresenham
+	bresenham \
+	a.out

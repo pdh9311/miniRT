@@ -4,10 +4,10 @@
 
 void plotLine(int x0, int y0, int x1, int y1)
 {
-	int dx =  abs(x1-x0);
+	int dx =  abs(x1 - x0);
 	int sx = x0 < x1 ? 1 : -1;
 
-	int dy = -abs(y1-y0);
+	int dy = -abs(y1 - y0);
 	int sy = y0 < y1 ? 1 : -1;
 
 	printf("dx: %d, dy: %d\n", dx, dy);
@@ -41,9 +41,14 @@ void plotLine(int x0, int y0, int x1, int y1)
 
 int	main(void)
 {
+	printf("------------------------\n");
 	plotLine(0, 0, 4, -5);
-	// plotLine(1, 1, 6, 5);
-	// plotLine(-1, -1, 5, -6);
-	// plotLine(1, 1, -6, -15);
+	printf("------------------------\n");
+	plotLine(1, 1, 6, 5);
+	printf("------------------------\n");
+	plotLine(-1, -1, 5, -6);
+	printf("------------------------\n");
+	plotLine(1, 1, -6, -15);
+	printf("------------------------\n");
 	return (0);
 }
