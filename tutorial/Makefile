@@ -1,4 +1,4 @@
-C			:= gcc
+CC			:= gcc
 CFLAGS		:= -g -Werror -Wextra -Wall
 CHECK		:=	-fsanitize=address
 
@@ -14,7 +14,7 @@ endif
 MLX_LIB = $(MLX_DIR)libmlx.a
 MLX_INC = $(MLX_DIR)
 
-LIBFT_DIR	:= ../libft/
+LIBFT_DIR	:= ./libft/
 LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
@@ -84,3 +84,10 @@ re : fclean all
 test :
 	@./miniRT
 
+t1 : $(MLX_LIB)
+	@rm -rf image_render
+	@$(CC) image_render.c -o image_render -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+t2 : $(MLX_LIB)
+	@rm -rf image_render
+	@$(CC) vec_image_render.c -o vec_image_render -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
