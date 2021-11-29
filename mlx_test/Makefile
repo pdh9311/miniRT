@@ -1,0 +1,32 @@
+TARGET		:= mlx_test
+
+CC			:= gcc
+CFLAGS		:= -g -Wall -Werror -Wextra
+MLX_FLAG	:= -lm -lmlx -framework OpenGL -framework AppKit
+
+MLX_DIR		:= ../minilibx
+MLX			:= $(MLX_DIR)/libmlx.a
+
+SRC_DIR		:= ./
+SRC_FILE	:= main.c
+SRCS		:= $(addprefix $(SRC_DIR), $(SRC_FILE))
+
+OBJ_DIR		:= ./
+OBJ_FILE	:= $(SRC_FILE:.c=.o)
+OBJS		:= $(addprefix $(OBJ_DIR), $(OBJ_FILE))
+
+.PHONY		: all clean fclean re
+
+all : $(TARGET)
+
+$(TARGET) : $(OBJS) 
+	$(CC) $(OBJS) -L$(MLX_DIR) -o $@ $(MLX_FLAG)
+
+$(OBJS) : $(SRCS)
+	$(CC) $(CFLAGS) -c $< -o $@ -I../minilibx
+
+clean :
+	rm -f $(OBJS)
+
+fclean : clean
+	rm -f $(TARGET)
