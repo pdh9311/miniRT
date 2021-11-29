@@ -27,8 +27,20 @@ void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
+int	hit_sphere(const point3 center, double radius, const ray r)
+{
+	vec3	oc = subtract(r.origin, center);
+	double	a = dot(r.direction, r.direction);
+	double	b = 2.0 * dot(oc, r.direction);
+	double	c = dot(oc, oc) - (radius * radius);
+	double	discriminant = (b * b) - (4 * a * c);
+	return (discriminant > 0);
+}
+
 color	ray_color(const ray* r)
 {
+	if (hit_sphere((point3){0, 0, -1}, 0.5, *r))
+		return ((color){1, 0, 0});
 	vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
 	double	t = 0.5 * (unit_direction.y + 1.0);
@@ -50,7 +62,7 @@ int	main()
 	double			viewport_width = aspect_ratio * viewport_height;
 	double			focal_length = 1.0;
 
-	point3			origin = {5, 5, 5};
+	point3			origin = {0, 0, 0};
 	vec3			horizontal = {viewport_width, 0, 0};
 	vec3			vertical = {0, viewport_height, 0};
 	vec3			tmp = {0, 0, focal_length};
