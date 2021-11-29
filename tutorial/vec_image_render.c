@@ -1,6 +1,11 @@
 #include "mlx.h"
-#include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
+
+#define KEY_PRESS 2
+#define KEY_RELEASE 3
+#define ESC 53
 
 typedef struct s_vec
 {
@@ -24,16 +29,19 @@ typedef struct	s_data
 	int		endian;
 
 	t_vec	color;
-	int		int_color;
+	int		trgb;
 }	t_data;
 
-t_vec	vec(double e1, double e2, double e3)
+typedef t_vec color;
+typedef t_vec point3;
+
+t_vec	vec(double x, double y, double z)
 {
 	t_vec	v;
 
-	v.x = e1;
-	v.y = e2;
-	v.z = e3;
+	v.x = x;
+	v.y = y;
+	v.z = z;
 	return (v);
 }
 
@@ -101,7 +109,7 @@ void	white_color(t_data *data, t_vec c)
 	data->color.x = ir << 16;
 	data->color.y = ig << 8;
 	data->color.z = ib;
-	data->int_color = data->color.x + data->color.y + data->color.z;
+	data->trgb = data->color.x + data->color.y + data->color.z;
 }
 
 double	length_squared(t_vec e)
@@ -129,12 +137,36 @@ t_vec	ray_color(t_vec orig, t_vec dir)
 	return (vec_add(vec_mul_n(a, 1.0 - t), vec_mul_n(b, t)));
 }
 
+void close(int keycode, t_data *data)	// 이벤트 발생시 call될 함수
+{
+	mlx_destroy_window(data->mlx, data->win);	// 창을 닫는다.
+	/** [ ADD in Linux or Ubuntu ]
+	 * mlx_destroy_image(data->mlx, data->img);
+	 * mlx_destroy_display(data->mlx);
+	 * free(data->mlx);
+	 */
+	system("leaks image_render");	// memory leaks check
+	exit(EXIT_SUCCESS);
+}
+
+int	key_hook(int keycode, t_data *data)
+{
+	if (keycode == ESC)
+		close(keycode, data);
+	return (0);
+}
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*((unsigned int *)dst) = color;
+}
+
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
 int	main(void)
@@ -148,6 +180,8 @@ int	main(void)
 	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial 1");
 	data.img = mlx_new_image(data.mlx,  data.width, data.height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
+	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);
+	mlx_hook(data.win, KEY_RELEASE, 1L<<1, key_hook, &data);
 	//////////////////////////////////////////////////////////////////
 
 	// Camera
@@ -178,7 +212,7 @@ int	main(void)
 					);
 			t_vec pixel_color = ray_color(a, b);
 			white_color(&data, pixel_color);
-			my_mlx_pixel_put(&data, i, j, data.int_color);
+			my_mlx_pixel_put(&data, i, j, data.trgb);
 		}
 	}
 	////////////////////////////////////////////////////////////////

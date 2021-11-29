@@ -91,3 +91,11 @@ t1 : $(MLX_LIB)
 t2 : $(MLX_LIB)
 	@rm -rf image_render
 	@$(CC) vec_image_render.c -o vec_image_render -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+t2-2 : $(MLX_LIB)
+	@rm -rf image_render2
+	@$(CC) vec_image_render2.c -o vec_image_render2 -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+t3 : $(MLX_LIB)
+	@rm -rf sphere
+	@$(CC) sphere.c -o sphere -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
