@@ -31,18 +31,28 @@ $(OBJS) : $(SRCS)
 2 :
 	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
 
-sphere :
+normal : fclean
 	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
 
-ray :
+sphere : fclean
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+
+sphere_move : fclean
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+
+ray : fclean
 	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)	
 
 clean :
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
+	@echo "Removed OBJS"
 
 fclean : clean
-	rm -f $(TARGET)
-	rm -f ray
-	rm -f sphere
-	rm -f 1
-	rm -f 2
+	@rm -f $(TARGET)
+	@rm -f ray
+	@rm -f sphere
+	@rm -f sphere_move
+	@rm -f normal
+	@rm -f 1
+	@rm -f 2
+	@echo "fclean Done!!"

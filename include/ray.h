@@ -20,7 +20,7 @@ ray ray_(point3 origin, vec3 direction, double time)
 	return (r);
 }
 
-point3 at(ray *r, double t)
+point3 at(const ray *r, double t)
 {
 	return (add(r->origin, multiply(r->direction, t)));
 }
