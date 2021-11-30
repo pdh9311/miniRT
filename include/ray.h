@@ -6,11 +6,11 @@
 typedef struct	ray
 {
 	point3 origin;
-	vec3 direction;
+	t_vec3 direction;
 	double time;
 }				ray;
 
-ray ray_(point3 origin, vec3 direction, double time)
+ray ray_(point3 origin, t_vec3 direction, double time)
 {
 	ray r;
 
