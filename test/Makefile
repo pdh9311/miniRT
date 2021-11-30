@@ -1,7 +1,7 @@
 TARGET		:= test
 
 CC			:= gcc
-CFLAGS		:= -g -Wall -Werror -Wextra
+CFLAGS		:= -Wall -Werror -Wextra
 MLX_FLAG	:= -lm -lmlx -framework OpenGL -framework AppKit
 
 MLX_DIR		:= ../minilibx
