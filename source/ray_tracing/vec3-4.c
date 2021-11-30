@@ -1,30 +1,30 @@
 #include "rtweekend.h"
 
-void subtract_(t_vec3 *u, t_vec3 v)
+void	subtract_(t_vec3 *u, t_vec3 v)
 {
 	update(u, u->x - v.x, u->y - v.y, u->z - v.z);
 }
 
-t_vec3 subtract(t_vec3 u, t_vec3 v)
+t_vec3	subtract(t_vec3 u, t_vec3 v)
 {
 	return (vec3_(u.x - v.x, u.y - v.y, u.z - v.z));
 }
 
-double dot(t_vec3 u, t_vec3 v)
+double	dot(t_vec3 u, t_vec3 v)
 {
 	return (u.x * v.x
-			+u.y * v.y
-			+u.z * v.z);
+		+ u.y * v.y
+		+ u.z * v.z);
 }
 
-t_vec3 cross(t_vec3 u, t_vec3 v)
+t_vec3	cross(t_vec3 u, t_vec3 v)
 {
 	return (vec3_(u.y * v.z - u.z * v.y,
-				u.z * v.x - u.x * v.z,
-				u.x * v.y - u.y * v.x));
+			u.z * v.x - u.x * v.z,
+			u.x * v.y - u.y * v.x));
 }
 
-t_vec3 unit_vector(t_vec3 v)
+t_vec3	unit_vector(t_vec3 v)
 {
 	return (divide(v, length(v)));
 }

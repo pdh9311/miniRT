@@ -2,7 +2,8 @@
 
 t_material	material_(t_surface s, t_color c, double f, double ir)
 {
-	t_material m;
+	t_material	m;
+
 	m.surface = s;
 	m.albedo = c;
 	m.fuzz = f;
@@ -12,7 +13,9 @@ t_material	material_(t_surface s, t_color c, double f, double ir)
 
 static double reflectance(double cosine, double ref_idx)
 {
-	double r0 = (1-ref_idx) / (1+ref_idx);
+	double r0;
+
+	r0 = (1-ref_idx) / (1+ref_idx);
 	r0 = r0*r0;
 	return (r0 + (1-r0)*pow((1-cosine), 5));
 }
@@ -55,3 +58,28 @@ int scatter(t_ray *r_in, t_hit_record *rec, t_color *attenuation, t_ray *scatter
 
 	return (rec->material.surface != metal || dot(scattered->direction, rec->normal) > 0);
 }
+
+/*
+int scatter(t_ray *r_in, t_hit_record *rec, t_color *attenuation, t_ray *scattered)
+{
+	t_vec3 direction;
+	t_vec3 unit_direction;
+	double refraction_ratio;
+	double cos_theta; 
+	double sin_theta; 
+
+	if (rec->material.surface == lambertian)
+		// do lambertian
+		;
+	else if (rec->material.surface == dielectric)
+		// do dielectric
+		;
+	else if (rec->material.surface == metal)
+		// do metal
+		;
+	*scattered = ray_(rec->p, direction, r_in->time);
+	*attenuation = rec->material.albedo;
+
+	return (rec->material.surface != metal || dot(scattered->direction, rec->normal) > 0);
+}
+*/
