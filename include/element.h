@@ -13,14 +13,14 @@ enum e_type
 	CY
 };
 
-typedef struct	s_coord
+typedef struct s_coord
 {
 	double		x;
 	double		y;
 	double		z;
 }				t_coord;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	int			r;
 	int			g;
@@ -38,7 +38,7 @@ typedef struct s_check
 	int			fov;
 }				t_check;
 
-typedef struct  s_element
+typedef struct s_element
 {
 	t_check		check;
 	t_coord		coord;
@@ -48,7 +48,7 @@ typedef struct  s_element
 	double		diameter;
 	double		height;
 	double		fov;
-    int			type;
+	int			type;
 }				t_element;
 
 int			readfile(char *file, t_lst **lst);

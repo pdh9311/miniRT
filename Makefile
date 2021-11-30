@@ -40,6 +40,15 @@ SOURCES		:=	main.c \
 				list/pp_lstsize.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
+				ray_tracing/rtweekend.c \
+				ray_tracing/ray.c \
+				ray_tracing/material.c \
+				ray_tracing/vec3-1.c \
+				ray_tracing/vec3-2.c \
+				ray_tracing/vec3-3.c \
+				ray_tracing/vec3-4.c \
+				ray_tracing/vec3-5.c \
+				ray_tracing/vec3-6.c \
 				test.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
@@ -78,6 +87,7 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)/types
 	@mkdir -p $(OBJS_DIR)/utils
 	@mkdir -p $(OBJS_DIR)/list
+	@mkdir -p $(OBJS_DIR)/ray_tracing
 	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c

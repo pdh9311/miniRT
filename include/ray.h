@@ -3,26 +3,14 @@
 
 # include "vec3.h"
 
-typedef struct	ray
+typedef struct s_ray
 {
-	point3 origin;
-	t_vec3 direction;
-	double time;
-}				ray;
+	t_point3	origin;
+	t_vec3		direction;
+	double		time;
+}				t_ray;
 
-ray ray_(point3 origin, t_vec3 direction, double time)
-{
-	ray r;
-
-	r.origin = origin;
-	r.direction = direction;
-	r.time = time;
-	return (r);
-}
-
-point3 at(const ray *r, double t)
-{
-	return (add(r->origin, multiply(r->direction, t)));
-}
+t_ray		ray_(t_point3 origin, t_vec3 direction, double time);
+t_point3	at(const t_ray *r, double t);
 
 #endif
