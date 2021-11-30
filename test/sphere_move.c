@@ -32,7 +32,7 @@ void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
 
 int	hit_sphere(const point3 center, double radius, const ray r)
 {
-	vec3	oc = subtract(r.origin, center);
+	t_vec3	oc = subtract(r.origin, center);
 	double	a = dot(r.direction, r.direction);
 	double	b = 2.0 * dot(oc, r.direction);
 	double	c = dot(oc, oc) - (radius * radius);
@@ -44,7 +44,7 @@ color	ray_color(const ray* r)
 {
 	if (hit_sphere((point3){0, 0, -1}, 0.5, *r))
 		return ((color){1, 0, 0});
-	vec3	unit_direction = unit_vector(r->direction);
+	t_vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
 	double	t = 0.5 * (unit_direction.y + 1.0);
 	color	tmp1 = {1.0, 1.0, 1.0};
@@ -62,10 +62,10 @@ typedef struct s_data
 	double		focal_length;
 
 	point3		origin;
-	vec3		horizontal;
-	vec3		vertical;
-	vec3		tmp;
-	vec3		lower_left_corner;
+	t_vec3		horizontal;
+	t_vec3		vertical;
+	t_vec3		tmp;
+	t_vec3		lower_left_corner;
 }				t_data;
 
 int	draw(void *param)
@@ -134,9 +134,9 @@ int	main()
 	data.focal_length = 1.0;
 
 	data.origin = (point3){0, 0, 0};
-	data.horizontal = (vec3){data.viewport_width, 0, 0};
-	data.vertical = (vec3){0, data.viewport_height, 0};
-	data.tmp = (vec3){0, 0, data.focal_length};
+	data.horizontal = (t_vec3){data.viewport_width, 0, 0};
+	data.vertical = (t_vec3){0, data.viewport_height, 0};
+	data.tmp = (t_vec3){0, 0, data.focal_length};
 	data.lower_left_corner = subtract(subtract(subtract(data.origin, divide(data.horizontal, 2)), \
 												divide(data.vertical, 2)), data.tmp);
 /*
@@ -150,10 +150,10 @@ int	main()
 	double			focal_length = 1.0;
 
 	point3			origin = {0, 0, 0};
-	vec3			horizontal = {viewport_width, 0, 0};
-	vec3			vertical = {0, viewport_height, 0};
-	vec3			tmp = {0, 0, focal_length};
-	vec3			lower_left_corner = subtract(subtract(subtract(origin, divide(horizontal, 2)), \
+	t_vec3			horizontal = {viewport_width, 0, 0};
+	t_vec3			vertical = {0, viewport_height, 0};
+	t_vec3			tmp = {0, 0, focal_length};
+	t_vec3			lower_left_corner = subtract(subtract(subtract(origin, divide(horizontal, 2)), \
 												divide(vertical, 2)), tmp);
 												*/
 

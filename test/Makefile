@@ -26,22 +26,22 @@ $(OBJS) : $(SRCS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I../minilibx -I../include
 
 1 :
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)
 
 2 :
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)
 
 normal : fclean
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)
 
 sphere : fclean
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)
 
 sphere_move : fclean
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)
 
 ray : fclean
-	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)	
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -I$(MLX_DIR) -L$(MLX_DIR) $(MLX_FLAG)	
 
 clean :
 	@rm -f $(OBJS)
