@@ -209,7 +209,7 @@ int	main(int ac, char **av)
 	double	viewport_width = data.aspect_ratio * viewport_height;	// ray 방향에 있는 viewport의 너비
 	double	focal_length = 1.0;										// 초점 거리
 
-	t_vec	origin = vec(5, 5, 5);
+	t_vec	origin = vec(0, 0, 0);
 	t_vec	horizontal = vec(viewport_width, 0, 0);
 	t_vec	vertical = vec(0, viewport_height, 0);
 	t_vec	focal = vec(0, 0, focal_length);

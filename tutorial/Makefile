@@ -99,3 +99,7 @@ t2-2 : $(MLX_LIB)
 t3 : $(MLX_LIB)
 	@rm -rf sphere
 	@$(CC) sphere.c -o sphere -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+t4 : $(MLX_LIB)
+	@rm -rf sphere2
+	@$(CC) sphere2.c -o sphere2 -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
