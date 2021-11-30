@@ -53,5 +53,5 @@ int	main()
 		j++;
 	}
 	mlx_put_image_to_window ( mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0 );
-	//mlx_loop(mlx.mlx_ptr);
+	mlx_loop(mlx.mlx_ptr);
 }

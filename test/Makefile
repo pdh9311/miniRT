@@ -25,8 +25,24 @@ $(TARGET) : $(OBJS)
 $(OBJS) : $(SRCS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I../minilibx -I../include
 
+1 :
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+
+2 :
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+
+sphere :
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)
+
+ray :
+	$(CC) $(CFLAGS) $@.c -o $@ -I../include -L$(MLX_DIR) $(MLX_FLAG)	
+
 clean :
 	rm -f $(OBJS)
 
 fclean : clean
 	rm -f $(TARGET)
+	rm -f ray
+	rm -f sphere
+	rm -f 1
+	rm -f 2
