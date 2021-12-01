@@ -20,7 +20,8 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= 	color.h \
+INCLUDES	:= 	camera.h \
+				color.h \
 				element.h \
 				hittable_list.h \
 				hittable.h \
@@ -54,6 +55,7 @@ SOURCES		:=	main.c \
 				list/pp_lstsize.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
+				ray_tracing/camera.c \
 				ray_tracing/color.c \
 				ray_tracing/hittable_list_1.c \
 				ray_tracing/hittable_list_2.c \

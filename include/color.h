@@ -5,6 +5,6 @@
 # include "rtweekend.h"
 # include "miniRT.h"
 
-void	write_color(t_mlx *mlx, t_color pixel_color, int idx);
+void	write_color(t_mlx *mlx, t_color pixel_color, int idx, int samples_per_pexel);
 
 #endif

@@ -2,7 +2,6 @@
 #include "color.h"
 #include "hittable_list.h"
 #include "sphere.h"
-#include "camera.h"
 #include "miniRT.h"
 
 t_color	ray_color(t_ray* r, t_hlist *world)
@@ -28,13 +27,7 @@ int	main()
 	const double	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 1600;
 	const int		image_height = (int)(image_width / aspect_ratio);
-	const int		samples_per_pixel = 100;
-
-	// World
 	t_hlist			*world;
-
-	// Camera
-	//t_camera		cam;
 
 	t_sphere		sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
 	t_sphere		sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100.0};
@@ -74,17 +67,13 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			t_color	pixel_color = {0.0, 0.0, 0.0};
-			for (int s = 0; s < samples_per_pixel; ++s)
-			{
-				double	u = ((i + random_double()) / (image_width - 1));
-				double	v = ((image_height - 1 - j + random_double()) / (image_height - 1));
-				t_ray		r;
-				r.origin = origin;
-				r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
-				add_(&pixel_color, ray_color(&r, world));
-			}
-			write_color(&mlx, pixel_color, (j * image_width + i), samples_per_pixel);
+			double	u = (double)i / (image_width - 1);
+			double	v = (double)(image_height - 1 - j) / (image_height - 1);
+			t_ray		r;
+			r.origin = origin;
+			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
+			t_color	pixel_color = ray_color(&r, world);
+			write_color(&mlx, pixel_color, (j * image_width + i));
 			++i;
 		}
 		j++;
