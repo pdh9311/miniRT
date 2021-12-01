@@ -1,7 +1,7 @@
 #ifndef TEST_H
 # define TEST_H
-#include <stdio.h>
-#include "element.h"
+# include <stdio.h>
+# include "element.h"
 
 # define CONT ((t_element *)(lst->content))
 

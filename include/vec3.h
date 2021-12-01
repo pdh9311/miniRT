@@ -48,9 +48,6 @@ t_vec3	refract(t_vec3 uv, t_vec3 n, double etai_over_etat);
 t_vec3	color_(double e1, double e2, double e3);
 t_vec3	point3_(double e1, double e2, double e3);
 
-//t_vec3 (*color_)(double e1, double e2, double e3) = vec3_;
-//t_vec3 (*point3_)(double e1, double e2, double e3) = vec3_;
-
 typedef t_vec3	t_point3;
 typedef t_vec3	t_color;
 

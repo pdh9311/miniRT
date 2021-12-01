@@ -16,7 +16,7 @@ t_hittable	sphere_(t_point3 center, double radius, t_material material)
 	return (h);
 }
 
-int	hit_sphere(t_sphere *s, t_ray *r, double t_min, double t_max, t_hit_record *rec)
+int	hit_sphere(t_sphere *s, t_ray *r, t_range range, t_hit_record *rec)
 {
 	t_vec3	oc;
 	t_vec3	outward_normal;
@@ -37,10 +37,10 @@ int	hit_sphere(t_sphere *s, t_ray *r, double t_min, double t_max, t_hit_record *
 	sqrtd = sqrt(discriminant);
 
 	root = (-half_b - sqrtd) / a;
-	if (root < t_min || t_max < root)
+	if (root < range.t_min || range.t_max < root)
 	{
 		root = (-half_b + sqrtd) / a;
-		if (root < t_min || t_max < root)
+		if (root < range.t_min || range.t_max < root)
 			return (FALSE);
 	}
 

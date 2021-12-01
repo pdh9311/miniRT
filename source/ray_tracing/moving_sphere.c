@@ -29,7 +29,7 @@ static t_point3	center(t_moving_sphere *s, double time)
 	return (center);
 }
 
-int hit_moving_sphere(t_moving_sphere *s, t_ray *r, double t_min, double t_max, t_hit_record *rec)
+int hit_moving_sphere(t_moving_sphere *s, t_ray *r, t_range range, t_hit_record *rec)
 {
 	t_point3	cen;
 	t_vec3		oc;
@@ -54,10 +54,10 @@ int hit_moving_sphere(t_moving_sphere *s, t_ray *r, double t_min, double t_max, 
 	sqrtd = sqrt(discriminant);
 
 	root = (-half_b - sqrtd) / a;
-	if (root < t_min || t_max < root)
+	if (root < range.t_min || range.t_max < root)
 	{
 		root = (-half_b + sqrtd) / a;
-		if (root < t_min || t_max < root)
+		if (root < range.t_min || range.t_max < root)
 			return (FALSE);
 	}
 

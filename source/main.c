@@ -12,7 +12,7 @@ t_color	ray_color(t_ray* r, t_hlist *world)
 	t_color			tmp1;
 	t_color			tmp2;
 
-	if (hit(world, r, 0.001, INFINITY, &rec))
+	if (hit(world, r, (t_range){0.001, INFINITY}, &rec))
 		return ((multiply(add(rec.normal, (t_color){1.0, 1.0, 1.0}), 0.5)));
 	unit_direction = unit_vector(r->direction);
 	t = 0.5 * (unit_direction.y + 1.0);
@@ -72,9 +72,8 @@ int	main()
 			t_ray		r;
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
-			//t_color	pixel_color = ray_color(&r);
 			t_color	pixel_color = ray_color(&r, world);
-			write_color(&mlx, pixel_color, j, i, image_width);
+			write_color(&mlx, pixel_color, (j * image_width + i));
 			++i;
 		}
 		j++;

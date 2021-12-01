@@ -7,7 +7,7 @@
 # include <mlx.h>
 # include <fcntl.h>
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
