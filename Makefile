@@ -20,7 +20,21 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= miniRT.h element.h utils.h list.h test.h
+INCLUDES	:= 	color.h \
+				element.h \
+				hittable_list.h \
+				hittable.h \
+				keycode.h \
+				list.h \
+				material.h \
+				miniRT.h \
+				moving_sphere.h \
+				ray.h \
+				rtweekend.h \
+				sphere.h \
+				test.h \
+				utils.h \
+				vec3.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
@@ -40,9 +54,15 @@ SOURCES		:=	main.c \
 				list/pp_lstsize.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
-				ray_tracing/rtweekend.c \
-				ray_tracing/ray.c \
+				ray_tracing/color.c \
+				ray_tracing/hittable_list_1.c \
+				ray_tracing/hittable_list_2.c \
+				ray_tracing/hittable.c \
 				ray_tracing/material.c \
+				ray_tracing/moving_sphere.c \
+				ray_tracing/ray.c \
+				ray_tracing/rtweekend.c \
+				ray_tracing/sphere.c \
 				ray_tracing/vec3-1.c \
 				ray_tracing/vec3-2.c \
 				ray_tracing/vec3-3.c \

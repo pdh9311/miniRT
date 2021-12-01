@@ -1,47 +1,66 @@
 #include "rtweekend.h"
-#include "color.h"
-#include "hittable_list.h"
-#include "sphere.h"
 #include "miniRT.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <mlx.h>
 
-t_color	ray_color(t_ray* r, t_hlist *world)
+/*
+void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
 {
-	t_hit_record	rec;
-	t_vec3			unit_direction;
-	double			t;
-	t_color			tmp1;
-	t_color			tmp2;
 
-	if (hit(world, r, 0.001, INFINITY, &rec))
-		return ((multiply(add(rec.normal, (t_color){1.0, 1.0, 1.0}), 0.5)));
-	unit_direction = unit_vector(r->direction);
+	mlx->color[0] = (int)(255.999 * pixel_color.x) << 16;
+	mlx->color[1] = (int)(255.999 * pixel_color.y) << 8;
+	mlx->color[2] = (int)(255.999 * pixel_color.z);
+
+	int color = mlx->color[0] + mlx->color[1] + mlx->color[2];
+	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
+}
+*/
+
+double	hit_sphere(const t_point3 center, double radius, const t_ray r)
+{
+	t_vec3	oc = subtract(r.origin, center);
+	
+	//double	a = dot(r.direction, r.direction);
+	//double	b = 2.0 * dot(oc, r.direction);
+	//double	c = dot(oc, oc) - (radius * radius);
+	//double	discriminant = (b * b) - (4 * a * c);
+	double	a = length_squared(r.direction);
+	double	half_b = dot(oc, r.direction);
+	double	c = length_squared(oc) - (radius * radius);
+	double	discriminant = half_b * half_b - (a * c);
+	if (discriminant < 0)
+		return (-1.0);
+	//return ((-b - sqrt(discriminant)) / (2.0 * a));
+	return ((-half_b - sqrt(discriminant)) / a);
+}
+
+t_color	ray_color(const t_ray* r)
+{
+	// abs(ㄱㅓ리) - abs(r)
+	double t = hit_sphere((t_point3){0, 0, -1.0}, 0.5, *r);
+	if (t > 0.0) {
+		t_vec3 N = unit_vector(subtract(at(r, t), (t_vec3){0, 0, -1}));
+		return (multiply((t_color){N.x + 1, N.y + 1, N.z + 1}, 0.5));
+	}
+	t_vec3	unit_direction = unit_vector(r->direction);
+	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
 	t = 0.5 * (unit_direction.y + 1.0);
-	tmp1 = (t_color){1.0, 1.0, 1.0};
-	tmp2 = (t_color){0.5, 0.7, 1.0};
+	t_color	tmp1 = {1.0, 1.0, 1.0};
+	t_color	tmp2 = {0.5, 0.7, 1.0};
 	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
 }
 
 int	main()
 {
-	t_mlx			mlx;
+	t_mlx		mlx;
+
 	const double	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
-	t_hlist			*world;
 
-	t_sphere		sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
-	t_sphere		sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100.0};
-	t_hittable		hittable1;
-	t_hittable		hittable2;
-
-	hittable1.geometry = _sphere;
-	hittable1.pointer = &sphere1;
-	hittable2.geometry = _sphere;
-	hittable2.pointer = &sphere2;
-
-	push(&world, list_(hittable1));
-	push(&world, list_(hittable2));
-
+	// Camera
 	double			viewport_height = 2.0;
 	double			viewport_width = aspect_ratio * viewport_height;
 	double			focal_length = 1.0;
@@ -72,8 +91,7 @@ int	main()
 			t_ray		r;
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
-			//t_color	pixel_color = ray_color(&r);
-			t_color	pixel_color = ray_color(&r, world);
+			t_color	pixel_color = ray_color(&r);
 			write_color(&mlx, pixel_color, j, i, image_width);
 			++i;
 		}
