@@ -29,13 +29,13 @@ t_hittable	sphere_(t_point3 center, double radius, t_material material)
 int	hit_sphere(t_sphere *s, t_ray *r, double t_min, double t_max, t_hit_record *rec)
 {
 	t_vec3	oc;
-	t_vec3 outward_normal;
+	t_vec3	outward_normal;
 	double	a;
 	double	half_b;
 	double	c;
 	double	discriminant;
-	double sqrtd;
-	double root;
+	double	sqrtd;
+	double	root;
 	
 	oc = subtract(r->origin, s->center);
 	a = length_squared(r->direction);

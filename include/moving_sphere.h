@@ -15,8 +15,8 @@ typedef struct s_moving_sphere
 
 t_hittable moving_sphere_(t_point3 cen0, t_point3 cen1, double time0, double time1, double radius, t_material material)
 {
-	t_hittable h;
-	t_moving_sphere *s;
+	t_hittable		h;
+	t_moving_sphere	*s;
 
 	h.geometry = _moving_sphere;
 	h.material = material;

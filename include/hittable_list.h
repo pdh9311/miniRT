@@ -2,8 +2,8 @@
 # define HITTABLE_LIST_H
 
 # include "hittable.h"
-//# include "sphere.h"
-//# include "moving_sphere.h"
+# include "sphere.h"
+# include "moving_sphere.h"
 
 typedef struct	s_hlist
 {
@@ -15,7 +15,7 @@ t_hlist	*list_(t_hittable object)
 {
 	t_hlist	*new_node;
 
-	new_node = malloc(sizeof(t_hlist));
+	new_node = (t_hlist *)malloc(sizeof(t_hlist));
 	if (new_node)
 	{
 		new_node->object = object;
@@ -65,10 +65,10 @@ static int hit_(t_hittable *object, t_ray *r, double t_min, double t_max, t_hit_
 	switch (object->geometry)
 	{
 		case _sphere:
-			is_hit = hit_sphere(object->pointer, r, t_min, t_max, rec);
+			is_hit = hit_sphere((t_sphere*)object->pointer, r, t_min, t_max, rec);
 			break;
 		case _moving_sphere:
-			is_hit = hit_moving_sphere(object->pointer, r, t_min, t_max, rec);
+			is_hit = hit_moving_sphere((t_moving_sphere*)object->pointer, r, t_min, t_max, rec);
 			break;
 	}
 	if (is_hit)

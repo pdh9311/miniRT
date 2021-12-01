@@ -47,7 +47,8 @@ double	hit_sphere(const t_point3 center, double radius, const t_ray r)
 
 t_color	ray_color(const t_ray* r)
 {
-	double t = hit_sphere((t_point3){0, 0, -1}, 0.5, *r);
+	// abs(ㄱㅓ리) - abs(r)
+	double t = hit_sphere((t_point3){0, 0, -1.0}, 0.5, *r);
 	if (t > 0.0) {
 		t_vec3 N = unit_vector(subtract(at(r, t), (t_vec3){0, 0, -1}));
 		return (multiply((t_color){N.x + 1, N.y + 1, N.z + 1}, 0.5));
