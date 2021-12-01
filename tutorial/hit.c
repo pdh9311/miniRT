@@ -7,6 +7,9 @@
 #define KEY_RELEASE 3
 #define ESC 53
 
+#define FALSE 0
+#define TRUE 1
+
 typedef struct s_vec
 {
 	double	x;
@@ -130,8 +133,18 @@ t_vec	ray_at(t_ray ray, double t)
 	return (tmp);
 }
 
+typedef struct s_hit_record
+{
+	t_point3	p;
+	t_vec		normal;
+	double		tmin;
+	double		tmax;
+	double		t;
 
-double	hit_sphere(t_vec center, double radius, t_ray ray)
+}	t_hit_record;
+
+
+double	hit_sphere(t_vec center, double radius, t_ray ray, double tmin, double tmax, t_hit_record *rec)
 {
 	t_vec	oc = vec(ray.orig.x - center.x,
 					ray.orig.y - center.y,
@@ -141,18 +154,29 @@ double	hit_sphere(t_vec center, double radius, t_ray ray)
 	double	c = vec_dot(oc, oc) - (radius * radius);
 	double discriminant = (half_b * half_b) - (a * c);
 	if (discriminant < 0)
-		return (-1.0);
-	return ((-half_b - sqrt(discriminant)) / a);
+		return (FALSE);
+	double	sqrtd = sqrt(discriminant);
+
+	double root = (-half_b - sqrtd) / a;
+	if (root < tmin || root > tmax)
+	{
+		root = (-half_b + sqrtd) / a;
+		if (root < tmin || root > tmax)
+			return (FALSE);
+	}
+	rec->t = root;
+	rec->p = ray_at(ray, rec->t);
+	rec->normal = vec_div_t(vec_sub(rec->p, center), radius);
+	return (TRUE);
 }
 
 t_vec	ray_color(t_ray ray)
 {
-	double	t;
+	t_hit_record	rec;
 
-	t = hit_sphere(vec(0, 0, -1), 0.5, ray);
-	if (t > 0.0)
+	if (hit_sphere(vec(0, 0, -1), 0.5, ray, 0, INFINITY, &rec))
 	{
-		t_vec tmp = ray_at(ray, t);
+		t_vec tmp = ray_at(ray, rec.t);
 		t_vec N = unit_vector(vec(tmp.x - 0, tmp.y - 0, tmp.z - (-1)));
 		t_vec color = vec_mul_t(vec(N.x + 1, N.y + 1, N.z + 1), 0.5);
 		return (color);
@@ -208,7 +232,7 @@ int	main(int ac, char **av)
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);
 	//////////////////////////////////////////////////////////////////
 
-	// Camera	(32/9, 2)
+	// Camera	(32/9 = 3.55555, 2)
 	double	viewport_height = 2.0;									// ray 방향에 있는 viewport의 높이
 	double	viewport_width = data.aspect_ratio * viewport_height;	// ray 방향에 있는 viewport의 너비
 	double	focal_length = 1.0;										// 초점 거리
