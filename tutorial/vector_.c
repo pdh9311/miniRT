@@ -145,7 +145,7 @@ void close(int keycode, t_data *data)	// 이벤트 발생시 call될 함수
 	 * mlx_destroy_display(data->mlx);
 	 * free(data->mlx);
 	 */
-	system("leaks image_render");	// memory leaks check
+	system("leaks vector_");	// memory leaks check
 	exit(EXIT_SUCCESS);
 }
 
@@ -177,7 +177,7 @@ int	main(void)
 	data.width = 400;
 	data.height = data.width / data.aspect_ratio;
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial 1");
+	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial");
 	data.img = mlx_new_image(data.mlx,  data.width, data.height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);

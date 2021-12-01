@@ -14,92 +14,30 @@ endif
 MLX_LIB = $(MLX_DIR)libmlx.a
 MLX_INC = $(MLX_DIR)
 
-LIBFT_DIR	:= ./libft/
-LIBFT_LIB	:= $(LIBFT_DIR)libft.a
-LIBFT_INC	:= $(LIBFT_DIR)
-
-INC_DIR		:= ./include/
-INCLUDES	:=
-INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
-
-SRCS_DIR	:=	./source/
-SOURCES		:=	main.c
-SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
-
-OBJS_DIR	:=	./object/
-OBJECTS		:=	$(SOURCES:.c=.o)
-OBJS		:=	$(addprefix $(OBJS_DIR), $(OBJECTS))
-
-LIBRARY		:= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx $(MLX)
-HEADERS		:= -I$(INC_DIR) -I$(LIBFT_INC) -I$(MLX_INC)
-
-NAME		:= miniRT
-
-# colors
-RED			:=	\033[31m
-GREEN 		:=	\033[32m
-YELLOW 		:=	\033[33m
-BLUE 		:=	\033[34m
-MAGENTA		:=	\033[35m
-CYAN		:=	\033[36m
-WHITE		:=	\033[37m
-PINK		:=	\033[38;5;201m
-OBJS_DOT	:=	\033[38;5;201m\033[48;5;252m\033[1m\033[3m
-MENT		:=	\033[38;5;191m\033[1m
-RE_MENT		:=	\033[38;5;63m\033[1m
-RESET		:=	\033[0m
-
 .PHONY		: all clean fclean re
-
-$(NAME) : $(LIBFT_LIB) $(MLX_LIB) $(OBJS_DIR) $(OBJS)
-	@$(CC) -o $@ $(OBJS) $(CFLAGS) $(LIBRARY) $(HEADERS)
-
-$(OBJS_DIR) :
-	@mkdir -p $(OBJS_DIR)
-
-$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@$(CC) -c $? -o $@ $(CFLAGS) $(HEADERS)
-	@echo "$(GREEN).$(RESET)\c"
-
-$(LIBFT_LIB) :
-	@$(MAKE) -sC $(LIBFT_DIR)
-	@$(MAKE) clean -sC $(LIBFT_DIR)
 
 $(MLX_LIB) :
 	@$(MAKE) -sC $(MLX_DIR)
 
-all : $(NAME)
+1 : $(MLX_LIB)
+	@$(CC) ray.c -o ray -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
 
-clean :
-	@$(MAKE) clean -sC $(LIBFT_DIR)
-	@$(MAKE) clean -sC $(MLX_DIR)
-	@rm -rf $(OBJS_DIR)
+2 : $(MLX_LIB)
+	@$(CC) circle.c -o circle -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
 
-fclean : clean
-	@$(MAKE) fclean -sC $(LIBFT_DIR)
-	@rm -f $(NAME)
-
-re : fclean all
-
-test :
-	@./miniRT
-
-t1 : $(MLX_LIB)
-	@rm -rf image_render
-	@$(CC) image_render.c -o image_render -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
-
-t2 : $(MLX_LIB)
-	@rm -rf image_render
-	@$(CC) vec_image_render.c -o vec_image_render -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
-
-t2-2 : $(MLX_LIB)
-	@rm -rf image_render2
-	@$(CC) vec_image_render2.c -o vec_image_render2 -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
-
-t3 : $(MLX_LIB)
-	@rm -rf sphere
+3 : $(MLX_LIB)
 	@$(CC) sphere.c -o sphere -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
 
-t4 : $(MLX_LIB)
-	@rm -rf sphere2
-	@$(CC) sphere2.c -o sphere2 -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+4 : $(MLX_LIB)
+	@$(CC) normal_v0.c -o normal -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+5 : $(MLX_LIB)
+	@$(CC) normal_v1.c -o normal -L$(MLX_DIR) -lmlx $(MLX) -I$(MLX_INC)
+
+# @$(MAKE) clean -sC $(MLX_DIR)
+clean :
+	@rm -rf ray
+	@rm -rf circle
+	@rm -rf sphere
+	@rm -rf normal
+	@rm -rf hit

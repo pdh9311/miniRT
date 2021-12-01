@@ -137,12 +137,12 @@ double	hit_sphere(t_vec center, double radius, t_ray ray)
 					ray.orig.y - center.y,
 					ray.orig.z - center.z);
 	double	a = vec_dot(ray.dir, ray.dir);
-	double	b = 2.0 * vec_dot(oc, ray.dir);
+	double	half_b = vec_dot(oc, ray.dir);
 	double	c = vec_dot(oc, oc) - (radius * radius);
-	double discriminant = (b * b) - (4 * a * c);
+	double discriminant = (half_b * half_b) - (a * c);
 	if (discriminant < 0)
 		return (-1.0);
-	return ((-b - sqrt(discriminant)) / (2.0 * a));
+	return ((-half_b - sqrt(discriminant)) / a);
 }
 
 
@@ -177,7 +177,7 @@ void close(t_data *data)	// 이벤트 발생시 call될 함수
 	 * mlx_destroy_display(data->mlx);
 	 * free(data->mlx);
 	 */
-	system("leaks sphere2");	// memory leaks check
+	system("leaks normal");	// memory leaks check
 	exit(EXIT_SUCCESS);
 }
 
@@ -205,7 +205,7 @@ int	main(int ac, char **av)
 	data.width = 1200;								// 생성할 이미지의 너비
 	data.height = data.width / data.aspect_ratio;	// 생성할 이미지의 높이
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial 1");
+	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial");
 	data.img = mlx_new_image(data.mlx,  data.width, data.height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);

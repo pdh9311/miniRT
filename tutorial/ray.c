@@ -1,7 +1,5 @@
 #include "mlx.h"
-#include "libft.h"
 #include <stdlib.h>
-#include <math.h>
 #include <stdio.h>
 
 #define KEY_PRESS 2
@@ -20,6 +18,8 @@ typedef struct	s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+
+	int		trgb;
 }	t_data;
 
 void close(int keycode, t_data *data)	// 이벤트 발생시 call될 함수
@@ -30,7 +30,7 @@ void close(int keycode, t_data *data)	// 이벤트 발생시 call될 함수
 	 * mlx_destroy_display(data->mlx);
 	 * free(data->mlx);
 	 */
-	system("leaks image_render");	// memory leaks check
+	system("leaks ray");	// memory leaks check
 	exit(EXIT_SUCCESS);
 }
 
@@ -49,12 +49,17 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*((unsigned int *)dst) = color;
 }
 
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
 int	main(void)
 {
 	t_data	data;
 
-	data.width = 1980;
-	data.height = 1080;
+	data.width = 256 * 2;
+	data.height = 256 * 2;
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial");
 	data.img = mlx_new_image(data.mlx, data.width, data.height);
@@ -62,9 +67,25 @@ int	main(void)
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);
 	mlx_hook(data.win, KEY_RELEASE, 1L<<1, key_hook, &data);
 	//////////////////////////////////////////////////////////////////
+	int i, j;
+	for (j = 0; j < data.height ; j++)
+	{
+		for (i = 0; i < data.width; i++) {
+			double r = (double)i / (data.width - 1);	// 0 ≤ r ≤ 1
+			double g = (double)(data.height - 1 - j) / (data.height - 1);	// 0 ≤ g ≤ 1
+			double b = 0.5;
 
-	//////////////////////////////////////////////////////////////////
+			int ir = 255.999 * r;
+			int ig = 255.999 * g;
+			int ib = 255.999 * b;
+			data.trgb = create_trgb(0, ir, ig, ib);
+
+			my_mlx_pixel_put(&data, i, j, data.trgb);
+		}
+	}
+	////////////////////////////////////////////////////////////////
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_loop(data.mlx);
 	return (0);
 }
+

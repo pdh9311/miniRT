@@ -37,7 +37,7 @@ typedef struct	s_data
 
 typedef struct s_ray
 {
-	t_point3	orig;			// 원점 좌표
+	t_point3	orig;		// 원점 좌표
 	t_vec		dir;		// 방향 벡터
 }	t_ray;
 
@@ -131,27 +131,35 @@ t_vec	ray_at(t_ray ray, double t)
 }
 
 
-int	hit_sphere(t_vec center, double radius, t_ray ray)
+double	hit_sphere(t_vec center, double radius, t_ray ray)
 {
 	t_vec	oc = vec(ray.orig.x - center.x,
 					ray.orig.y - center.y,
 					ray.orig.z - center.z);
 	double	a = vec_dot(ray.dir, ray.dir);
 	double	b = 2.0 * vec_dot(oc, ray.dir);
-	double	c = vec_dot(oc, oc) - radius * radius;
-	double discriminant = b * b - 4 * a * c;
-	if (discriminant > 0)
-		return (1);
-	return (0);
+	double	c = vec_dot(oc, oc) - (radius * radius);
+	double discriminant = (b * b) - (4 * a * c);
+	if (discriminant < 0)
+		return (-1.0);
+	return ((-b - sqrt(discriminant)) / (2.0 * a));
 }
 
 
 t_vec	ray_color(t_ray ray)
 {
-	if (hit_sphere(vec(0, 0, -1), 0.5, ray))
-		return (vec(1, 0, 0));
-	t_vec	unit_direction = unit_vector(ray.dir);	// -1 <= unit_direction.y <= 1
-	double	t = 0.5 * (unit_direction.y + 1.0);		// y 값에 따라 t를 만들어 줄건데, color에는 음수값이 없기 때문에 +1 한후 2로 나누어 주었다.
+	double	t;
+
+	t = hit_sphere(vec(0, 0, -1), 0.5, ray);
+	if (t > 0.0)
+	{
+		t_vec tmp = ray_at(ray, t);
+		t_vec N = unit_vector(vec(tmp.x - 0, tmp.y - 0, tmp.z - (-1)));
+		t_vec color = vec_mul_t(vec(N.x + 1, N.y + 1, N.z + 1), 0.5);
+		return (color);
+	}
+	t_vec unit_direction = unit_vector(ray.dir);	// -1 <= unit_direction.y <= 1
+	t = 0.5 * (unit_direction.y + 1.0);		// y 값에 따라 t를 만들어 줄건데, color에는 음수값이 없기 때문에 +1 한후 2로 나누어 주었다.
 	t_vec	a = vec(1.0, 1.0, 1.0);
 	t_vec	b = vec(0.5, 0.7, 1.0);
 	return (vec_add(vec_mul_t(a, 1.0 - t), vec_mul_t(b, t)));	// R(t) = (1-t)A + tB
@@ -169,7 +177,7 @@ void close(t_data *data)	// 이벤트 발생시 call될 함수
 	 * mlx_destroy_display(data->mlx);
 	 * free(data->mlx);
 	 */
-	system("leaks sphere");	// memory leaks check
+	system("leaks normal");	// memory leaks check
 	exit(EXIT_SUCCESS);
 }
 
@@ -194,14 +202,13 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	data.aspect_ratio = 16.0 / 9.0;					// 화면 비율
-	data.width = 400;								// 생성할 이미지의 너비
+	data.width = 1200;								// 생성할 이미지의 너비
 	data.height = data.width / data.aspect_ratio;	// 생성할 이미지의 높이
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, data.width, data.height, "Tutorial");
 	data.img = mlx_new_image(data.mlx,  data.width, data.height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);
-	mlx_hook(data.win, KEY_RELEASE, 1L<<1, key_hook, &data);
 	//////////////////////////////////////////////////////////////////
 
 	// Camera	(32/9, 2)
