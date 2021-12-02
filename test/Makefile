@@ -47,9 +47,8 @@ SOURCES		:=	readfile.c \
 				ray_tracing/vec3-4.c \
 				ray_tracing/vec3-5.c \
 				ray_tracing/vec3-6.c
-SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
-OBJS_DIR	:= ./objs/
+SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 .PHONY		: all clean fclean re
 
@@ -61,13 +60,13 @@ $(TARGET) : $(OBJS)
 $(OBJS) : $(SRCS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I../minilibx -I../include
 
-1 :
+1 : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
-2 :
+2 : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
@@ -79,7 +78,7 @@ normal : fclean
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
-sphere : fclean
+sphere_test : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
@@ -91,7 +90,7 @@ sphere_move : fclean
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
-ray : fclean
+ray_test : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
@@ -109,11 +108,11 @@ clean :
 
 fclean : clean
 	@rm -f $(TARGET)
-	@rm -f ray
-	@rm -f sphere
-	@rm -f sphere_move
-	@rm -f normal
 	@rm -f 1
 	@rm -f 2
+	@rm -f normal
+	@rm -f sphere_test
+	@rm -f sphere_move
+	@rm -f ray_test
 	@rm -f blend
 	@echo "fclean Done!!"
