@@ -46,9 +46,10 @@ SOURCES		:=	readfile.c \
 				ray_tracing/vec3-3.c \
 				ray_tracing/vec3-4.c \
 				ray_tracing/vec3-5.c \
-				ray_tracing/vec3-6.c \
-				test.c
+				ray_tracing/vec3-6.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
+
+OBJS_DIR	:= ./objs/
 
 .PHONY		: all clean fclean re
 
@@ -61,45 +62,45 @@ $(OBJS) : $(SRCS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I../minilibx -I../include
 
 1 :
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 2 :
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 normal : fclean
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 sphere : fclean
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 sphere_move : fclean
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 ray : fclean
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
-blend : 
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./
-	$(CC) -o $@ *.o -I../include -I./ -L./ $(MLX_FLAG) -lft
+blend : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
 clean :

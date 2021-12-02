@@ -16,7 +16,7 @@ typedef struct	s_mlx
 	int			color[3];
 }				t_mlx;
 
-void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
+static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
 {
 
 	mlx->color[0] = (int)(255.999 * pixel_color.x) << 16;
@@ -27,13 +27,13 @@ void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
-color	ray_color(const ray* r)
+static t_color	ray_color(const t_ray* r)
 {
 	t_vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
 	double	t = 0.5 * (unit_direction.y + 1.0);
-	color	tmp1 = {1.0, 1.0, 1.0};
-	color	tmp2 = {0.5, 0.7, 1.0};
+	t_color	tmp1 = {1.0, 1.0, 1.0};
+	t_color	tmp2 = {0.5, 0.7, 1.0};
 	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
 }
 
@@ -50,7 +50,7 @@ int	main()
 	double			viewport_width = aspect_ratio * viewport_height;
 	double			focal_length = 1.0;
 
-	point3			origin = {5, 5, 5};
+	t_point3		origin = {5, 5, 5};
 	t_vec3			horizontal = {viewport_width, 0, 0};
 	t_vec3			vertical = {0, viewport_height, 0};
 	t_vec3			tmp = {0, 0, focal_length};
@@ -73,10 +73,10 @@ int	main()
 		{
 			double	u = (double)i / (image_width - 1);
 			double	v = (double)(image_height - 1 - j) / (image_height - 1);
-			ray		r;
+			t_ray		r;
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
-			color	pixel_color = ray_color(&r);
+			t_color	pixel_color = ray_color(&r);
 			write_color(&mlx, pixel_color, j, i, image_width);
 			++i;
 		}

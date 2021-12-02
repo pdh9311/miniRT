@@ -16,7 +16,7 @@ typedef struct	s_mlx
 	int			color[3];
 }				t_mlx;
 
-void	write_color(t_mlx *mlx, color pixel_color, int j, int i)
+static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i)
 {
 
 	mlx->color[0] = (int)(255.999 * pixel_color.x) << 16;
@@ -50,7 +50,7 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			color pixel_color = {(double)i/(image_width - 1),
+			t_color pixel_color = {(double)i/(image_width - 1),
 								(double)(image_height - 1 - j)/(image_height - 1),
 								0.25};
 			write_color(&mlx, pixel_color, j, i);

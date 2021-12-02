@@ -19,7 +19,7 @@ typedef struct	s_mlx
 
 t_mlx		mlx;
 
-void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
+static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
 {
 
 	mlx->color[0] = (int)(255.999 * pixel_color.x) << 16;
@@ -30,7 +30,7 @@ void	write_color(t_mlx *mlx, color pixel_color, int j, int i, int width)
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
-int	hit_sphere(const point3 center, double radius, const ray r)
+static int	hit_sphere(const t_point3 center, double radius, const t_ray r)
 {
 	t_vec3	oc = subtract(r.origin, center);
 	double	a = dot(r.direction, r.direction);
@@ -40,15 +40,15 @@ int	hit_sphere(const point3 center, double radius, const ray r)
 	return (discriminant > 0);
 }
 
-color	ray_color(const ray* r)
+static t_color	ray_color(const t_ray* r)
 {
-	if (hit_sphere((point3){0, 0, -1}, 0.5, *r))
-		return ((color){1, 0, 0});
+	if (hit_sphere((t_point3){0, 0, -1}, 0.5, *r))
+		return ((t_color){1, 0, 0});
 	t_vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
 	double	t = 0.5 * (unit_direction.y + 1.0);
-	color	tmp1 = {1.0, 1.0, 1.0};
-	color	tmp2 = {0.5, 0.7, 1.0};
+	t_color	tmp1 = {1.0, 1.0, 1.0};
+	t_color	tmp2 = {0.5, 0.7, 1.0};
 	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
 }
 
@@ -61,14 +61,14 @@ typedef struct s_data
 	double		viewport_width;
 	double		focal_length;
 
-	point3		origin;
+	t_point3		origin;
 	t_vec3		horizontal;
 	t_vec3		vertical;
 	t_vec3		tmp;
 	t_vec3		lower_left_corner;
 }				t_data;
 
-int	draw(void *param)
+static int	draw(void *param)
 {
 	t_data	*data = (t_data *)param;
 	int j = 0;
@@ -81,11 +81,11 @@ int	draw(void *param)
 		{
 			double	u = (double)i / (data->image_width - 1);
 			double	v = (double)(data->image_height - 1 - j) / (data->image_height - 1);
-			ray		r;
+			t_ray		r;
 			r.origin = data->origin;
 			r.direction = subtract(add(add(data->lower_left_corner, \
 						multiply(data->horizontal, u)), multiply(data->vertical, v)), data->origin);
-			color	pixel_color = ray_color(&r);
+			t_color	pixel_color = ray_color(&r);
 			write_color(&mlx, pixel_color, j, i, data->image_width);
 			++i;
 		}
@@ -133,7 +133,7 @@ int	main()
 	data.viewport_width = data.aspect_ratio * data.viewport_height;
 	data.focal_length = 1.0;
 
-	data.origin = (point3){0, 0, 0};
+	data.origin = (t_point3){0, 0, 0};
 	data.horizontal = (t_vec3){data.viewport_width, 0, 0};
 	data.vertical = (t_vec3){0, data.viewport_height, 0};
 	data.tmp = (t_vec3){0, 0, data.focal_length};
