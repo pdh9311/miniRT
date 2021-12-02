@@ -4,7 +4,7 @@
 #include "sphere.h"
 #include "miniRT.h"
 
-t_color	ray_color(t_ray* r, t_hlist *world)
+static t_color	ray_color(t_ray* r, t_hlist *world)
 {
 	t_hit_record	rec;
 	t_vec3			unit_direction;
@@ -73,7 +73,7 @@ int	main()
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);
 			t_color	pixel_color = ray_color(&r, world);
-			write_color(&mlx, pixel_color, (j * image_width + i));
+			write_color(&mlx, pixel_color, (j * image_width + i), 1.0);
 			++i;
 		}
 		j++;

@@ -72,6 +72,12 @@ $(OBJS) : $(SRCS)
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
+ray_test : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
+	rm *.o
+
 normal : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
@@ -84,19 +90,25 @@ sphere_test : fclean
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
+sphere_test2 : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
+	rm *.o
+
+two_sphere : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
+	rm *.o
+
 sphere_move : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
-ray_test : fclean
-	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
-	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
-	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
-	rm *.o
-
-blend : fclean
+antialiase : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
@@ -110,9 +122,11 @@ fclean : clean
 	@rm -f $(TARGET)
 	@rm -f 1
 	@rm -f 2
+	@rm -f ray_test
 	@rm -f normal
 	@rm -f sphere_test
+	@rm -f sphere_test2
+	@rm -f two_sphere
 	@rm -f sphere_move
-	@rm -f ray_test
-	@rm -f blend
+	@rm -f antialiase
 	@echo "fclean Done!!"

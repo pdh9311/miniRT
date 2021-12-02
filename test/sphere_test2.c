@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include <mlx.h>
 
-/*
-void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
+static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
 {
 
 	mlx->color[0] = (int)(255.999 * pixel_color.x) << 16;
@@ -16,9 +15,8 @@ void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width)
 	int color = mlx->color[0] + mlx->color[1] + mlx->color[2];
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
-*/
 
-double	hit_sphere(const t_point3 center, double radius, const t_ray r)
+static double	hit_sphere(const t_point3 center, double radius, const t_ray r)
 {
 	t_vec3	oc = subtract(r.origin, center);
 	
