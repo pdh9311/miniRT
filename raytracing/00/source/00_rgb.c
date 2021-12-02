@@ -14,16 +14,16 @@ int	main(void)
 	data.img = mlx_new_image(data.mlx, img_width, img_height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
 	mlx_hook(data.win, KEY_PRESS, 1L<<0, key_hook, &data);
+	// mlx_hook(data.win, KEY_RELEASE, 1L<<1, key_hook, &data);
 	//////////////////////////////////////////////////////////////////
 	int i, j;
 	for (j = img_height - 1; j >= 0 ; j--) {
 		fprintf(stderr, "Scanlines remaining: %d\n", j);	fflush(stderr);
 		for (i = 0; i < img_width; i++) {
-			double r = (double)i / (img_width - 1);	// 0 ≤ r ≤ 1
-			double g = (double)j / (img_height - 1);	// 0 ≤ g ≤ 1
-			double b = 0.3;
-
-			// high dynamic range
+			// set_color
+			double r = (double)i / (img_width - 1);						// 0 ≤ r ≤ 1	0 → 1
+			double g = (double)(img_height - 1 - j) / (img_height - 1);	// 0 ≤ g ≤ 1	0 → 1
+			double b = 0.5;
 			data.rgb[0] = 255. * r;
 			data.rgb[1] = 255. * g;
 			data.rgb[2] = 255. * b;

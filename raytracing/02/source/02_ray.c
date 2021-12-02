@@ -69,10 +69,15 @@ int	main(void)
 	for (j = img_height - 1; j >= 0 ; j--) {
 		// fprintf(stderr, "Scanlines remaining: %d\n", j);	fflush(stderr);
 		for (i = 0; i < img_width; i++) {
+			/** ray
+			 * ray는 "왼쪽 아래 점"부터 "오른쪽 위 점"으로 이동하므로
+			 * u, v 가 점점 증가해야한다.
+			 * 	u : 0 → 1
+			 * 	v : 0 → 1
+			 */
 			double u = (double)i / (img_width - 1);
-			double v = (double)(img_height - 1 - j) / (img_height - 1);		// ray의 v 값을 점점 증가 시키기 위해서
+			double v = (double)(img_height - 1 - j) / (img_height - 1);
 			fprintf(stderr, "u: %lf, v: %lf\t\t", u, v);
-			// ray
 			t_ray	r = ray_(origin, \
 					add(lower_left_corner, add(multiply(horizontal, u), multiply(vertical, v))), \
 					0);

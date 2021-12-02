@@ -21,7 +21,7 @@ int	main(void)
 	for (j = img_height - 1; j >= 0 ; j--) {
 		fprintf(stderr, "Scanlines remaining: %d\n", j);	fflush(stderr);
 		for (i = 0; i < img_width; i++) {
-			t_color pixel_color = vec3_((double)i / (img_width - 1), (double)j / (img_height - 1), 0.3);
+			t_color pixel_color = vec3_((double)i / (img_width - 1), (double)(img_height - 1 - j) / (img_height - 1), 0.5);
 			input_color(&data, pixel_color);
 			my_mlx_pixel_put(&data, i, j, data.color);
 		}

@@ -7,7 +7,7 @@
 # include "minirt.h"
 # include "keycode.h"
 
-void	close(t_data *data);
+void	close_screen(t_data *data);
 int		key_hook(int keycode, t_data *data);
 
 #endif
