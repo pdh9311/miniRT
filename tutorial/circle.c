@@ -133,6 +133,7 @@ t_vec	ray_at(t_ray ray, double t)
 t_vec	ray_color(t_ray ray)
 {
 	t_vec	unit_direction = unit_vector(ray.dir);	// -1 <= unit_direction.y <= 1
+	// t_vec	unit_direction = vec(0, ray.dir.y, 0);	// -1 <= unit_direction.y <= 1
 	double	t = 0.5 * (unit_direction.y + 1.0);		// y 값에 따라 t를 만들어 줄건데, color에는 음수값이 없기 때문에 +1 한후 2로 나누어 주었다.
 	t_vec	a = vec(1.0, 1.0, 1.0);
 	t_vec	b = vec(0.5, 0.7, 1.0);
