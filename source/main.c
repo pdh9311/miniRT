@@ -46,6 +46,7 @@ int	main()
 	hittable2.geometry = _sphere;
 	hittable2.pointer = &sphere2;
 
+	world = NULL;
 	push(&world, list_(hittable1));
 	push(&world, list_(hittable2));
 
