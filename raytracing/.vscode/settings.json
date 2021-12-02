@@ -1,5 +1,10 @@
 {
 	"files.associations": {
-		"algorithm": "c"
+		"algorithm": "c",
+		"keyhook.h": "c",
+		"minirt.h": "c",
+		"keycode.h": "c",
+		"stdlib.h": "c",
+		"ray.h": "c"
 	}
 }
