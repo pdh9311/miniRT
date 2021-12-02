@@ -114,6 +114,12 @@ antialiase : fclean
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
+diffuse : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
+	rm *.o
+
 clean :
 	@rm -f *.o
 	@echo "Removed OBJS"
@@ -129,4 +135,5 @@ fclean : clean
 	@rm -f two_sphere
 	@rm -f sphere_move
 	@rm -f antialiase
+	@rm -f diffuse
 	@echo "fclean Done!!"
