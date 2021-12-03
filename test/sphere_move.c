@@ -61,7 +61,10 @@ typedef struct s_data
 	double		viewport_width;
 	double		focal_length;
 
-	t_point3		origin;
+	t_point3	origin;
+	double		alpha;
+	double		beta;
+	double		gamma;
 	t_vec3		horizontal;
 	t_vec3		vertical;
 	t_vec3		tmp;
@@ -74,8 +77,6 @@ static int	draw(void *param)
 	int j = 0;
 	while (j < data->image_height)
 	{
-		//fprintf(stderr, "\rScanlines remaining: %d\n", j);
-		//fflush(stdout);
 		int i = 0;
 		while (i < data->image_width)
 		{
@@ -91,7 +92,6 @@ static int	draw(void *param)
 		}
 		j++;
 	}
-	//fprintf(stderr, "\nDone\n");
 	mlx_put_image_to_window (mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0 );
 	return (0);
 }
@@ -117,6 +117,34 @@ int	key_hook(int keycode, void *param)
 		update(&(data->origin), x, y, z + 0.1);
 	else if (keycode == ENG_D)
 		update(&(data->origin), x, y, z - 0.1);
+	else if (keycode == ENG_Z)
+	{
+		data->alpha++;
+		data->tmp.y = sin(degrees_to_radians(data->alpha));
+		data->tmp.z = cos(degrees_to_radians(data->alpha));
+	}
+	else if (keycode == ENG_X)
+	{
+		data->alpha--;
+		data->tmp.y = sin(degrees_to_radians(data->alpha));
+		data->tmp.z = cos(degrees_to_radians(data->alpha));
+	}
+	else if (keycode == ENG_C)
+	{
+		data->beta++;
+		data->tmp.x = sin(degrees_to_radians(data->beta));
+		data->tmp.z = cos(degrees_to_radians(data->beta));
+	}
+	else if (keycode == ENG_V)
+	{
+		data->beta--;
+		data->tmp.x = sin(degrees_to_radians(data->beta));
+		data->tmp.z = cos(degrees_to_radians(data->beta));
+	}
+	data->lower_left_corner = subtract(subtract(subtract(data->origin, divide(data->horizontal, 2)), \
+												divide(data->vertical, 2)), data->tmp);
+	//printf("%lf %lf %lf %lf %lf\n", data->alpha, data->beta, data->tmp.x, data->tmp.y, data->tmp.z);
+	printf("%lf %lf %lf %lf\n", data->beta, data->lower_left_corner.x, data->lower_left_corner.y, data->lower_left_corner.z);
 	return (0);
 }
 
@@ -133,29 +161,15 @@ int	main()
 	data.viewport_width = data.aspect_ratio * data.viewport_height;
 	data.focal_length = 1.0;
 
+	data.alpha = 0.0;
+	data.beta = 0.0;
+	data.gamma = 0.0;
 	data.origin = (t_point3){0, 0, 0};
-	data.horizontal = (t_vec3){data.viewport_width, 0, 0};
-	data.vertical = (t_vec3){0, data.viewport_height, 0};
-	data.tmp = (t_vec3){0, 0, data.focal_length};
+	data.horizontal = (t_vec3){data.viewport_width, 0, 0};	// FIXED VALUE
+	data.vertical = (t_vec3){0, data.viewport_height, 0};	// FIXED VALUE
+	data.tmp = (t_vec3){0, 0, data.focal_length};			// FIXED VALUE
 	data.lower_left_corner = subtract(subtract(subtract(data.origin, divide(data.horizontal, 2)), \
 												divide(data.vertical, 2)), data.tmp);
-/*
-	const double	aspect_ratio = 16.0 / 9.0;
-	const int		image_width = 800;
-	const int		image_height = (int)(image_width / aspect_ratio);
-
-	// Camera
-	double			viewport_height = 2.0;
-	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 1.0;
-
-	point3			origin = {0, 0, 0};
-	t_vec3			horizontal = {viewport_width, 0, 0};
-	t_vec3			vertical = {0, viewport_height, 0};
-	t_vec3			tmp = {0, 0, focal_length};
-	t_vec3			lower_left_corner = subtract(subtract(subtract(origin, divide(horizontal, 2)), \
-												divide(vertical, 2)), tmp);
-												*/
 
 	mlx.mlx_ptr = mlx_init();
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, data.image_width, data.image_height, "rainbow");

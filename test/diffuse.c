@@ -33,9 +33,9 @@ int	main()
 {
 	t_mlx			mlx;
 	const double	aspect_ratio = 16.0 / 9.0;
-	const int		image_width = 1600;
+	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
-	const int		samples_per_pixel = 20;
+	const int		samples_per_pixel = 10;
 	const int		max_depth = 50;
 
 	// World
@@ -55,14 +55,14 @@ int	main()
 	hittable2.pointer = &sphere2;
 
 	world = NULL;
-	push(&world, list_(hittable1));
+	//push(&world, list_(hittable1));
 	push(&world, list_(hittable2));
 
 	double			viewport_height = 2.0;
 	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 1.0;
+	double			focal_length = 0.5;
 
-	t_point3			origin = {0, 0, 0};
+	t_point3			origin = {0, 5, 0};
 	t_vec3			horizontal = {viewport_width, 0, 0};
 	t_vec3			vertical = {0, viewport_height, 0};
 	t_vec3			tmp = {0, 0, focal_length};

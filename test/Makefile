@@ -1,7 +1,7 @@
 TARGET		:= test
 
 CC			:= gcc
-CFLAGS		:= -Wall -Werror -Wextra
+CFLAGS		:= -Wall -Werror -Wextra -ggdb -O0
 MLX_FLAG	:= -lm -lmlx -framework OpenGL -framework AppKit
 
 MLX_DIR		:= ../minilibx
@@ -108,6 +108,12 @@ sphere_move : fclean
 	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
 	rm *.o
 
+sphere_move2 : fclean
+	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
+	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
+	$(CC) -o $@ *.o -I../include -I./stuff -L./stuff $(MLX_FLAG) -lft
+	rm *.o
+
 antialiase : fclean
 	$(CC) $(CFLAGS) -c $(SRCS) -I../include -I./stuff
 	$(CC) $(CFLAGS) -c $@.c -I../include -I./stuff
@@ -134,6 +140,7 @@ fclean : clean
 	@rm -f sphere_test2
 	@rm -f two_sphere
 	@rm -f sphere_move
+	@rm -f sphere_move2
 	@rm -f antialiase
 	@rm -f diffuse
 	@echo "fclean Done!!"
