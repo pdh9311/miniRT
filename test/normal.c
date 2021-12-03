@@ -45,6 +45,7 @@ static t_color	ray_color(const t_ray* r)
 	double t = hit_sphere((t_point3){0, 0, -1}, 0.5, *r);
 	if (t > 0.0) {
 		t_vec3 N = unit_vector(subtract(at(r, t), (t_vec3){0, 0, -1}));
+		printf("%lf %lf %lf\n", N.x, N.y, N.z);
 		return (multiply((t_color){N.x + 1, N.y + 1, N.z + 1}, 0.5));
 	}
 	t_vec3	unit_direction = unit_vector(r->direction);
@@ -84,7 +85,7 @@ int	main()
 	int j = 0;
 	while (j < image_height)
 	{
-		fprintf(stderr, "\rScanlines remaining: %d\n", j);
+		//fprintf(stderr, "\rScanlines remaining: %d\n", j);
 		fflush(stdout);
 		int i = 0;
 		while (i < image_width)
