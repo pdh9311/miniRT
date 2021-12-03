@@ -26,7 +26,7 @@ typedef struct s_hit_record
 	t_vec3		normal;
 	t_material	material;
 	double		t;
-	int			front_face;
+	int			front_face;	// 물체 안에 있는지 밖에 있는지 판단하는 변수
 }	t_hit_record;
 
 t_material	material_(t_surface s, t_color c, double f, double ir);

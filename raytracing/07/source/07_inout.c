@@ -28,7 +28,9 @@ t_bool	hit_sphere(const t_point3 center, double radius, const t_ray r, \
 	// 허용범위에 있을때
 	rec->t = root;				// 광선과 구가 교차한다.
 	rec->p = at(&r, rec->t);	// 광선과 구가 교차하는 점
-	rec->normal = divide(subtract(rec->p, center), radius);		// 광선과 구가 교차하는 점에서의 법선 벡터의 단위 벡터
+	// rec->normal = divide(subtract(rec->p, center), radius);
+	t_vec3	outward_normal = divide(subtract(rec->p, center), radius);	// 광선과 구가 교차하는 점에서의 법선 벡터의 단위 벡터
+	set_face_normal(rec, r, outward_normal);
 	return (TRUE);
 }
 

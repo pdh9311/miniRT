@@ -26,9 +26,10 @@ INCLUDES	:= minirt.h keycode.h keyhook.h \
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
-SOURCES		:=	minirt.c keyhook.c 06_hittable.c \
+SOURCES		:=	minirt.c keyhook.c 07_inout.c \
 				vec3.c rtweekend.c color.c \
-				ray.c
+				ray.c \
+				hittable.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/
