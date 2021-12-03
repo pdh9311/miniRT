@@ -6,26 +6,10 @@
 #include "color.h"
 #include "ray.h"
 #include <math.h>
+#include "hittable.h"
 
-/** 광선이 구와 만나는 가장 가까운 위치의 교차점 에서의 t값을 계산
- * 	t^2 b·b + 2 b·(A-C)t +(A-C)·(A-C)-r^2 = 0
- * 	(A-C) → oc
- */
-/*
-	double	hit_sphere(const t_point3 center, double radius, const t_ray r)
-	{
-		t_vec3	oc = subtract(r.origin, center);
-		double	a = dot(r.direction, r.direction);
-		double	b = 2.0 * dot(r.direction, oc);
-		double	c = dot(oc, oc) - (radius * radius);
-		double	discriminant = (b * b) - (4 * a * c);
-		if (discriminant < 0)
-			return (-1.0);
-		else
-			return ((-b - sqrt(discriminant)) / (2.0 * a));
-	}
-*/
-double	hit_sphere(const t_point3 center, double radius, const t_ray r)
+t_bool	hit_sphere(const t_point3 center, double radius, const t_ray r, \
+					double tmin, double tmax, t_hit_record *rec)
 {
 	t_vec3	oc = subtract(r.origin, center);
 	double	a = dot(r.direction, r.direction);
@@ -33,18 +17,28 @@ double	hit_sphere(const t_point3 center, double radius, const t_ray r)
 	double	c = dot(oc, oc) - (radius * radius);
 	double	discriminant = (half_b * half_b) - (a * c);
 	if (discriminant < 0)
-		return (-1.0);
-	else
-		return ((-half_b - sqrt(discriminant)) / a);
+		return (FALSE);
+	// 허용 범위 안에 가장 가까운 해가 있는지 확인한다.
+	double	root = (-half_b - sqrt(discriminant)) / a;
+	if (root < tmin || tmax  < root) {
+		root = (-half_b + sqrt(discriminant)) / a;
+		if (root < tmin || tmax < root)
+			return (FALSE);
+	}
+	// 허용범위에 있을때
+	rec->t = root;				// 광선과 구가 교차한다.
+	rec->p = at(&r, rec->t);	// 광선과 구가 교차하는 점
+	rec->normal = divide(subtract(rec->p, center), radius);		// 광선과 구가 교차하는 점에서의 법선 벡터의 단위 벡터
+	return (TRUE);
 }
 
 t_color	ray_color(const t_ray r)
 {
-	t_point3	center = vec3_(0.0, 0.0, -1.0);
-	double		t = hit_sphere(center, 0.5, r);
+	t_point3		center = vec3_(0.0, 0.0, -1.0);
+	t_hit_record	rec;
+	double			t = hit_sphere(center, 0.5, r, 0, INFINITY, &rec);
 	if (t > 0.0) {
-		t_vec3	P = at(&r, t);
-		t_vec3	N = unit_vector(subtract(P, center));				// N : 법선 단위 벡터
+		t_vec3	N = rec.normal;			// N : 법선 단위 벡터
 		return (multiply(vec3_(N.x + 1, N.y + 1, N.z + 1), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
 	}
 	t_vec3	unit_direction = unit_vector(r.direction);
@@ -53,12 +47,7 @@ t_color	ray_color(const t_ray r)
 				multiply(vec3_(0.5, 0.7, 1.0), t)));
 }
 
-/**
- * 법선 벡터를 시각화하는 일반적인 트릭은 법선 벡터의 각 성분을 0에서 1의 범위로 매핑한 다음,
- * 매핑된 법선 벡터의 성분 x/y/z를 r/g/b로 다시 매핑하는 것입니다.
- * ( n(법선 벡터)이 단위 길이 벡터라고 가정하는 것이 쉽고 직관적이기 때문입니다. 그러므로 단위 길이 법선 벡터의 각 성분은 -1 ~ 1사이의 값입니다. )
- * 법선 벡터를 구하기 위해서는 단지 교차하는지가 아닌 교차점이 필요합니다.
- */
+
 int	main(void)
 {
 	t_data	data;
