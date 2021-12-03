@@ -37,23 +37,42 @@ HEADERS		:= -I$(INC_DIR) -I$(LIBFT_INC) -I$(MLX_INC)
 
 NAME		:= tutorial
 
+# colors
+RED			:=	\033[31m
+GREEN 		:=	\033[32m
+YELLOW 		:=	\033[33m
+BLUE 		:=	\033[34m
+MAGENTA		:=	\033[35m
+CYAN		:=	\033[36m
+WHITE		:=	\033[37m
+PINK		:=	\033[38;5;201m
+OBJS_DOT	:=	\033[38;5;201m\033[48;5;252m\033[1m\033[3m
+MENT		:=	\033[38;5;191m\033[1m
+RE_MENT		:=	\033[38;5;63m\033[1m
+RESET		:=	\033[0m
+
 .PHONY		: all clean fclean re
 
 $(NAME) : $(LIBFT_LIB) $(MLX_LIB) $(OBJS_DIR) $(OBJS)
 	@$(CC) -o $@ $(OBJS) $(CFLAGS) $(LIBRARY) $(HEADERS)
+	@echo "$(CYAN)tutorial created.$(RESET)"
 
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
+	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@$(CC) -c $? -o $@ $(CFLAGS) $(HEADERS)
+	@echo "$(GREEN).$(RESET)\c"
 
 $(LIBFT_LIB) :
 	@$(MAKE) -sC $(LIBFT_DIR)
 	@$(MAKE) clean -sC $(LIBFT_DIR)
+	@echo "$(PINK)[ Created libft.a ... ]$(RESET)"
 
 $(MLX_LIB) :
 	@$(MAKE) -sC $(MLX_DIR)
+	@echo "$(PINK)[ Created libmlx.a ... ]$(RESET)"
 
 all : $(NAME)
 
