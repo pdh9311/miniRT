@@ -8,7 +8,7 @@
 #include <math.h>
 #include "hittable.h"
 
-t_bool	hit_sphere(const t_point3 center, double radius, const t_ray r, \
+int	hit_sphere(const t_point3 center, double radius, const t_ray r, \
 					double tmin, double tmax, t_hit_record *rec)
 {
 	t_vec3	oc = subtract(r.origin, center);
@@ -48,7 +48,6 @@ t_color	ray_color(const t_ray r)
 	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
 				multiply(vec3_(0.5, 0.7, 1.0), t)));
 }
-
 
 int	main(void)
 {

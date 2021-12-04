@@ -17,8 +17,6 @@ typedef struct	s_data
 	int		color;
 }	t_data;
 
-typedef int	t_bool;
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif
