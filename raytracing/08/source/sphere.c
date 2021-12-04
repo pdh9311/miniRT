@@ -2,22 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_hittable sphere_(t_point3 center, double radius, t_material material)
-{
-	t_hittable		h;
-	t_sphere		*s;
-
-	h.geometry = _sphere;
-	h.material = material;
-	h.pointer = malloc(sizeof(t_sphere));
-	if ((s = h.pointer))
-	{
-		s->center = center;
-		s->radius = radius;
-	}
-	return (h);
-}
-
 int hit_sphere(t_sphere *s, t_ray r, double t_min, double t_max, t_hit_record *rec)
 {
 	t_vec3 oc = subtract(r.origin, s->center);

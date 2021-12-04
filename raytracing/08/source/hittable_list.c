@@ -52,17 +52,10 @@ static int hit_(t_hittable *object, t_ray r, double t_min, double t_max, t_hit_r
 {
 	int is_hit;
 
-	switch (object->geometry)
-	{
-		case _sphere:
-			is_hit = hit_sphere(object->pointer, r, t_min, t_max, rec);
-			break;
-		case _moving_sphere:
-			// is_hit = hit_moving_sphere(object->pointer, r, t_min, t_max, rec);
-			break;
+	is_hit = FALSE;
+	if (object->geometry == _sphere) {
+		is_hit = hit_sphere(object->pointer, r, t_min, t_max, rec);
 	}
-	if (is_hit)
-		rec->material = object->material;
 	return (is_hit);
 }
 

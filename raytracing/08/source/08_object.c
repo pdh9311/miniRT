@@ -10,23 +10,6 @@
 #include "hittable_list.h"
 #include "sphere.h"
 
-///////// ray_color
-/*
-t_color	ray_color(const t_ray r)
-{
-	t_point3		center = vec3_(0.0, 0.0, -1.0);
-	t_hit_record	rec;
-	double			t = hit_sphere(center, 0.5, r, 0, INFINITY, &rec);
-	if (t > 0.0) {
-		t_vec3	N = rec.normal;			// N : 법선 단위 벡터
-		return (multiply(vec3_(N.x + 1, N.y + 1, N.z + 1), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
-	}
-	t_vec3	unit_direction = unit_vector(r.direction);
-	t = 0.5 * (unit_direction.y + 1.0);
-	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
-				multiply(vec3_(0.5, 0.7, 1.0), t)));
-}
-*/
 t_color	ray_color(const t_ray r, t_hlist *world)
 {
 	t_hit_record	rec;
@@ -53,6 +36,7 @@ int	main(void)
 	// World
 	t_hlist		*world;
 
+	world = NULL;
 	t_sphere	sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
 	t_sphere	sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100};
 
