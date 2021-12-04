@@ -8,34 +8,10 @@
 #include <math.h>
 #include "hittable.h"
 #include "hittable_list.h"
-
-t_bool	hit_sphere(const t_point3 center, double radius, const t_ray r, \
-					double tmin, double tmax, t_hit_record *rec)
-{
-	t_vec3	oc = subtract(r.origin, center);
-	double	a = dot(r.direction, r.direction);
-	double	half_b = dot(r.direction, oc);
-	double	c = dot(oc, oc) - (radius * radius);
-	double	discriminant = (half_b * half_b) - (a * c);
-	if (discriminant < 0)
-		return (FALSE);
-	// 허용 범위 안에 가장 가까운 해가 있는지 확인한다.
-	double	root = (-half_b - sqrt(discriminant)) / a;
-	if (root < tmin || tmax  < root) {
-		root = (-half_b + sqrt(discriminant)) / a;
-		if (root < tmin || tmax < root)
-			return (FALSE);
-	}
-	// 허용범위에 있을때
-	rec->t = root;				// 광선과 구가 교차한다.
-	rec->p = at(&r, rec->t);	// 광선과 구가 교차하는 점
-	// rec->normal = divide(subtract(rec->p, center), radius);
-	t_vec3	outward_normal = divide(subtract(rec->p, center), radius);	// 광선과 구가 교차하는 점에서의 법선 벡터의 단위 벡터
-	set_face_normal(rec, r, outward_normal);
-	return (TRUE);
-}
+#include "sphere.h"
 
 ///////// ray_color
+/*
 t_color	ray_color(const t_ray r)
 {
 	t_point3		center = vec3_(0.0, 0.0, -1.0);
@@ -50,7 +26,20 @@ t_color	ray_color(const t_ray r)
 	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
 				multiply(vec3_(0.5, 0.7, 1.0), t)));
 }
-
+*/
+t_color	ray_color(const t_ray r, t_hlist *world)
+{
+	t_hit_record	rec;
+	double t = hit(world, r, 0, INFINITY, &rec);
+	if (t > 0.0) {
+		t_vec3	N = rec.normal;			// N : 법선 단위 벡터
+		return (multiply(vec3_(N.x + 1, N.y + 1, N.z + 1), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
+	}
+	t_vec3	unit_direction = unit_vector(r.direction);
+	t = 0.5 * (unit_direction.y + 1.0);
+	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
+				multiply(vec3_(0.5, 0.7, 1.0), t)));
+}
 
 int	main(void)
 {

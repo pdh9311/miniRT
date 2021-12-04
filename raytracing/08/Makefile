@@ -22,14 +22,16 @@ INC_DIR		:= ./include/
 INCLUDES	:= minirt.h keycode.h keyhook.h \
 				vec3.h rtweekend.h color.h \
 				ray.h \
-				hittable.h
+				hittable.h \
+				sphere.h hittable_list.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
 SOURCES		:=	minirt.c keyhook.c 08_object.c \
 				vec3.c rtweekend.c color.c \
 				ray.c \
-				hittable.c
+				hittable.c \
+				sphere.c hittable_list.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/
