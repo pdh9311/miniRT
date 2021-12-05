@@ -67,7 +67,7 @@ int	main()
 	hittable2.geometry = _sphere;
 	hittable2.pointer = &sphere2;
 	hittable2.material.albedo = (t_color){0.7, 0.3, 0.3};
-	hittable2.material.surface = lambertian;
+	hittable2.material.surface = dielectric;
 
 	hittable3.geometry = _sphere;
 	hittable3.pointer = &sphere3;
