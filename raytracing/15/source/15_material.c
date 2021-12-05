@@ -17,14 +17,20 @@ t_color	ray_color(const t_ray r, t_hlist *world, int depth)
 
 	if (depth <= 0)
 		return (color_(0.0, 0.0, 0.0));
-	int is_hit = hit(world, r, 0.001, INFINITY, &rec);
-	if (is_hit) {
-		// t_vec3	target = add(rec.p, random_in_hemisphere(rec.normal));
-		t_vec3	target = add(rec.p, random_unit_hemisphere(rec.normal));
-		t_ray	new_ray;
-		new_ray.origin = rec.p;
-		new_ray.direction = subtract(target, rec.p);
-		return (multiply(ray_color(new_ray, world, depth - 1), 0.5));	// 0.5 : 밝기를 0.5 배 낮춘다는 의미로 볼 수 있다.
+	// int is_hit = hit(world, r, 0.001, INFINITY, &rec);
+	// if (is_hit) {
+	if (hit(world, r, 0.001, INFINITY, &rec)) {
+		t_ray	scattered;		// 산발적인
+		t_color	attenuation;	// 감쇠
+		if (scatter(r, &rec, &attenuation, &scattered))
+			return (multiply__(attenuation, ray_color(scattered, world, depth - 1)));
+		return (color_(0.0, 0.0, 0.0));
+
+		// t_vec3	target = add(rec.p, random_unit_hemisphere(rec.normal));
+		// t_ray	new_ray;
+		// new_ray.origin = rec.p;
+		// new_ray.direction = subtract(target, rec.p);
+		// return (multiply(ray_color(new_ray, world, depth - 1), 0.5));	// 0.5 : 밝기를 0.5 배 낮춘다는 의미로 볼 수 있다.
 	}
 	t_vec3	unit_direction = unit_vector(r.direction);
 	double t = 0.5 * (unit_direction.y + 1.0);
@@ -40,23 +46,42 @@ int	main(void)
 	double	aspect_ratio = 16.0 / 9.0;
 	int		img_height = 450;
 	int		img_width = img_height * aspect_ratio;
-	int		samples_per_pixel = 50;
+	int		samples_per_pixel = 10;
 	int		depth = 30;
 
 	// World
 	t_hlist		*world;
 
-	world = NULL;
 	t_sphere	sphere1 = {point3_(0.0, -100.5, -1.0), 100};
-	t_sphere	sphere2 = {point3_(0.0, 0.0, -1.5), 0.5};
-	t_sphere	sphere3 = {point3_(-1.0, 0.0, -1.5), 0.5};
-	t_sphere	sphere4 = {point3_(1.0, 0.0, -1.5), 0.5};
+	t_sphere	sphere2 = {point3_(0.0, 0.0, -1.0), 0.5};
+	t_sphere	sphere3 = {point3_(-1.0, 0.0, -1.0), 0.5};
+	t_sphere	sphere4 = {point3_(1.0, 0.0, -1.0), 0.5};
+	t_hittable	hittable1;
+	t_hittable	hittable2;
+	t_hittable	hittable3;
+	t_hittable	hittable4;
 
-	t_hittable	hittable1 = {_sphere, lambertian, &sphere1};
-	t_hittable	hittable2 = {_sphere, lambertian, &sphere2};
-	t_hittable	hittable3 = {_sphere, metal, &sphere3};
-	t_hittable	hittable4 = {_sphere, metal, &sphere4};
+	hittable1.geometry = _sphere;
+	hittable1.pointer = &sphere1;
+	hittable1.material.albedo = color_(0.8, 0.8, 0.0);
+	hittable1.material.surface = lambertian;
 
+	hittable2.geometry = _sphere;
+	hittable2.pointer = &sphere2;
+	hittable2.material.albedo = color_(0.7, 0.3, 0.3);
+	hittable2.material.surface = lambertian;
+
+	hittable3.geometry = _sphere;
+	hittable3.pointer = &sphere3;
+	hittable3.material.albedo = color_(0.8, 0.8, 0.8);
+	hittable3.material.surface = metal;
+
+	hittable4.geometry = _sphere;
+	hittable4.pointer = &sphere4;
+	hittable4.material.albedo = color_(0.8, 0.6, 0.2);
+	hittable4.material.surface = metal;
+
+	world = NULL;
 	push(&world, list_(hittable1));
 	push(&world, list_(hittable2));
 	push(&world, list_(hittable3));
@@ -95,7 +120,7 @@ int	main(void)
 				double v = (double)(img_height - 1 - j + random_double()) / (img_height - 1);
 				t_ray r;
 				r.origin = cam.origin;
-				r.direction = add(cam.lower_left_corner, add(multiply(cam.horizontal, u), multiply(cam.vertical, v)));
+				r.direction = subtract(add(cam.lower_left_corner, add(multiply(cam.horizontal, u), multiply(cam.vertical, v))), cam.origin);
 				add_(&pixel_color, ray_color(r, world, depth));
 			}
 			input_color(&data, pixel_color, samples_per_pixel);

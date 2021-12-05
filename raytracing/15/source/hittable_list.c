@@ -56,6 +56,8 @@ static int hit_(t_hittable *object, t_ray r, double t_min, double t_max, t_hit_r
 	if (object->geometry == _sphere) {
 		is_hit = hit_sphere(object->pointer, r, t_min, t_max, rec);
 	}
+	if (is_hit)
+		rec->material = object->material;
 	return (is_hit);
 }
 

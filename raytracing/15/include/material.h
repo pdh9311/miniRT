@@ -30,6 +30,6 @@ typedef struct s_hit_record
 }	t_hit_record;
 
 t_material	material_(t_surface s, t_color c, double f, double ir);
-int			scatter(t_ray *r_in, t_hit_record *rec, t_color *attenuation, t_ray *scattered);
+int			scatter(t_ray r_in, t_hit_record *rec, t_color *attenuation, t_ray *scattered);
 
 #endif
