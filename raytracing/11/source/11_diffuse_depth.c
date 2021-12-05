@@ -23,7 +23,7 @@ t_color	ray_color(const t_ray r, t_hlist *world, int depth)
 		t_ray	new_ray;
 		new_ray.origin = rec.p;
 		new_ray.direction = subtract(target, rec.p);
-		return (multiply(ray_color(new_ray, world, depth - 1), 0.5));	// 0.5 : 밝기를 0.5 배 낮춘다는 의미로 볼 수 있다.
+		return (multiply(ray_color(new_ray, world, depth - 1), 0.5));	// 0.5: ray는 물체를 반사할 때마다 절반(0.5)의 에너지를 흡수한다는 의미. (밝기를 0.5 배 낮춘다는 의미로도 볼 수 있다.)
 	}
 	t_vec3	unit_direction = unit_vector(r.direction);
 	double t = 0.5 * (unit_direction.y + 1.0);
