@@ -17,12 +17,16 @@ t_color	ray_color(t_ray* r, t_hlist *world, int depth)
 		return ((t_color){0.0, 0.0, 0.0});
 	if (hit(world, r, (t_range){0.001, INFINITY}, &rec))
 	{
-		//t_point3	target = add(add(rec.p, rec.normal), random_unit_vector());
-		//t_point3	target = add(add(rec.p, rec.normal), random_in_unit_sphere());
-		t_point3	target = add(rec.p, random_unit_hemisphere(rec.normal));
+		t_ray scattered;
+		t_color attenuation;
+		if (scatter(r, &rec, &attenuation, &scattered))
+			return (multiply__(attenuation, ray_color(&scattered, world, depth - 1)));
+		return ((t_color){0.0, 0.0, 0.0});
+		/*
+		t_point3	target = add(add(rec.p, rec.normal), random_unit_vector());
 		t_ray		tmp = {rec.p, subtract(target, rec.p), 0.0};
 		return (multiply(ray_color(&tmp, world, depth - 1), 0.5));
-		//return ((multiply(add(rec.normal, (t_color){1.0, 1.0, 1.0}), 0.5)));
+		*/
 	}
 	unit_direction = unit_vector(r->direction);
 	t = 0.5 * (unit_direction.y + 1.0);
@@ -37,7 +41,7 @@ int	main()
 	const double	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
-	const int		samples_per_pixel = 100;
+	const int		samples_per_pixel = 10;
 	const int		max_depth = 50;
 
 	// World
@@ -46,23 +50,44 @@ int	main()
 	// Camera
 	//t_camera		cam;
 
-	t_sphere		sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
-	t_sphere		sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100.0};
+	t_sphere		sphere1 = {(t_point3){0.0, -100.5, -1.0}, 100.0};
+	t_sphere		sphere2 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
+	t_sphere		sphere3 = {(t_point3){-1.0, 0.0, -1.0}, 0.5};
+	t_sphere		sphere4 = {(t_point3){1.0, 0.0, -1.0}, 0.5};
 	t_hittable		hittable1;
 	t_hittable		hittable2;
+	t_hittable		hittable3;
+	t_hittable		hittable4;
 
 	hittable1.geometry = _sphere;
 	hittable1.pointer = &sphere1;
+	hittable1.material.albedo = (t_color){0.8, 0.8, 0.0};
+	hittable1.material.surface = lambertian;
+
 	hittable2.geometry = _sphere;
 	hittable2.pointer = &sphere2;
+	hittable2.material.albedo = (t_color){0.7, 0.3, 0.3};
+	hittable2.material.surface = lambertian;
+
+	hittable3.geometry = _sphere;
+	hittable3.pointer = &sphere3;
+	hittable3.material.albedo = (t_color){0.8, 0.8, 0.8};
+	hittable3.material.surface = metal;
+
+	hittable4.geometry = _sphere;
+	hittable4.pointer = &sphere4;
+	hittable4.material.albedo = (t_color){0.8, 0.6, 0.2};
+	hittable4.material.surface = metal;
 
 	world = NULL;
 	push(&world, list_(hittable1));
 	push(&world, list_(hittable2));
+	push(&world, list_(hittable3));
+	push(&world, list_(hittable4));
 
 	double			viewport_height = 2.0;
 	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 0.5;
+	double			focal_length = 1.0;
 
 	t_point3			origin = {0, 0, 0};
 	t_vec3			horizontal = {viewport_width, 0, 0};

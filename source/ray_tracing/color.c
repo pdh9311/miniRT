@@ -9,9 +9,9 @@ void	write_color(t_mlx *mlx, t_color pixel_color, int idx, int samples_per_pixel
 	double	scale;
 
 	scale = 1.0 / samples_per_pixel;
-	r = pixel_color.x * scale;
-	g = pixel_color.y * scale;
-	b = pixel_color.z * scale;
+	r = sqrt(pixel_color.x * scale);
+	g = sqrt(pixel_color.y * scale);
+	b = sqrt(pixel_color.z * scale);
 
 	mlx->color[0] = (int)(255.999 * clamp(r, 0.0, 0.999)) << 16;
 	mlx->color[1] = (int)(255.999 * clamp(g, 0.0, 0.999)) << 8;
