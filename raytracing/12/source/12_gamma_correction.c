@@ -19,7 +19,7 @@ t_color	ray_color(const t_ray r, t_hlist *world, int depth)
 		return (color_(0.0, 0.0, 0.0));
 	int is_hit = hit(world, r, 0.001, INFINITY, &rec);
 	if (is_hit) {
-		t_vec3	target = add(rec.normal, random_in_unit_sphere());
+		t_vec3	target = add(rec.p, add(rec.normal, random_in_unit_sphere()));
 		t_ray	new_ray;
 		new_ray.origin = rec.p;
 		new_ray.direction = subtract(target, rec.p);
@@ -37,9 +37,9 @@ int	main(void)
 
 	// Image
 	double	aspect_ratio = 16.0 / 9.0;
-	int		img_height = 900;
+	int		img_height = 450;
 	int		img_width = img_height * aspect_ratio;
-	int		samples_per_pixel = 20;
+	int		samples_per_pixel = 100;
 	int		depth = 50;
 
 	// World
