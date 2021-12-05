@@ -19,8 +19,8 @@ t_color	ray_color(const t_ray r, t_hlist *world, int depth)
 		return (color_(0.0, 0.0, 0.0));
 	int is_hit = hit(world, r, 0.001, INFINITY, &rec);
 	if (is_hit) {
-		// t_vec3	target = add(rec.normal, random_in_unit_sphere());
-		t_vec3	target = add(rec.normal, random_unit_vector());	// 이전보다 좀 더 법선 벡터 방향으로 산란되기 때문에 더 많은 빛이 카메라를 향해 반사되므로 더 밝게 나타납니다.
+		// t_vec3	target = add(rec.p, add(rec.normal, random_in_unit_sphere()));
+		t_vec3	target = add(rec.p, add(rec.normal, random_unit_vector()));	// 이전보다 좀 더 법선 벡터 방향으로 산란되기 때문에 더 많은 빛이 카메라를 향해 반사되므로 더 밝게 나타납니다.
 		t_ray	new_ray;
 		new_ray.origin = rec.p;
 		new_ray.direction = subtract(target, rec.p);
