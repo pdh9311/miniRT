@@ -23,11 +23,12 @@ INCLUDES	:= minirt.h keycode.h keyhook.h \
 				vec3.h rtweekend.h color.h \
 				ray.h \
 				hittable.h \
-				sphere.h hittable_list.h
+				sphere.h hittable_list.h material.h \
+				camera.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
-SOURCES		:=	minirt.c keyhook.c 08_object.c \
+SOURCES		:=	minirt.c keyhook.c 09_antialiasing.c \
 				vec3.c rtweekend.c color.c \
 				ray.c \
 				hittable.c \

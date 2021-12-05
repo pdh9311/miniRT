@@ -9,34 +9,18 @@
 #include "hittable.h"
 #include "hittable_list.h"
 #include "sphere.h"
+#include "camera.h"
 
-///////// ray_color
-/*
-t_color	ray_color(const t_ray r)
-{
-	t_point3		center = vec3_(0.0, 0.0, -1.0);
-	t_hit_record	rec;
-	double			t = hit_sphere(center, 0.5, r, 0, INFINITY, &rec);
-	if (t > 0.0) {
-		t_vec3	N = rec.normal;			// N : 법선 단위 벡터
-		return (multiply(vec3_(N.x + 1, N.y + 1, N.z + 1), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
-	}
-	t_vec3	unit_direction = unit_vector(r.direction);
-	t = 0.5 * (unit_direction.y + 1.0);
-	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
-				multiply(vec3_(0.5, 0.7, 1.0), t)));
-}
-*/
 t_color	ray_color(const t_ray r, t_hlist *world)
 {
 	t_hit_record	rec;
-	double t = hit(world, r, 0, INFINITY, &rec);
-	if (t > 0.0) {
+	int is_hit = hit(world, r, 0.001, INFINITY, &rec);
+	if (is_hit) {
 		t_vec3	N = rec.normal;			// N : 법선 단위 벡터
-		return (multiply(vec3_(N.x + 1, N.y + 1, N.z + 1), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
+		return (multiply(vec3_(N.x + 1., N.y + 1., N.z + 1.), 0.5));	// -1 ≤ N ≤ 1 을 0 과 1 사이의 범위로 변환.
 	}
 	t_vec3	unit_direction = unit_vector(r.direction);
-	t = 0.5 * (unit_direction.y + 1.0);
+	double t = 0.5 * (unit_direction.y + 1.0);
 	return (add(multiply(vec3_(1.0, 1.0, 1.0), 1.0 - t),
 				multiply(vec3_(0.5, 0.7, 1.0), t)));
 }
@@ -47,14 +31,19 @@ int	main(void)
 
 	// Image
 	double	aspect_ratio = 16.0 / 9.0;
-	int		img_height = 450;
+	int		img_height = 900;
 	int		img_width = img_height * aspect_ratio;
 
 	// World
 	t_hlist		*world;
 
-	t_sphere	sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
-	t_sphere	sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100};
+	world = NULL;
+	t_sphere	sphere1;
+	t_sphere	sphere2;
+	sphere1.center = point3_(0.0, 0.0, -1.0);
+	sphere1.radius = 0.5;
+	sphere2.center = point3_(0.0, -100.5, -1.0);
+	sphere2.radius = 100;
 
 	t_hittable	hittable1;
 	t_hittable	hittable2;
@@ -71,11 +60,12 @@ int	main(void)
 	double	viewport_width = aspect_ratio * viewport_height;
 	int		facal_length = 1.0;
 
-	t_point3 origin = point3_(0, 0, 0);
-	t_vec3 horizontal = vec3_(viewport_width, 0, 0);
-	t_vec3 vertical = vec3_(0, viewport_height, 0);
+	t_camera	cam;
+	cam.origin = point3_(0, 0, 0);
+	cam.horizontal = vec3_(viewport_width, 0, 0);
+	cam.vertical = vec3_(0, viewport_height, 0);
 	t_vec3 focal = vec3_(0, 0, -facal_length);
-	t_vec3 lower_left_corner = add(subtract(focal, origin), add(divide(horizontal, -2), divide(vertical, -2)));
+	cam.lower_left_corner = add(subtract(focal, cam.origin), add(divide(cam.horizontal, -2), divide(cam.vertical, -2)));
 
 	// mlx setting1
 	int		win_height = img_height;
@@ -89,22 +79,25 @@ int	main(void)
 	//////////////////////////////////////////////////////////////////
 
 	// Render
-	int i, j;
+	int i, j, s, samples_per_pixel = 20;
 	for (j = img_height - 1; j >= 0 ; j--) {
-		// fprintf(stderr, "Scanlines remaining: %d\n", j);	fflush(stderr);
+		fprintf(stderr, "Scanlines remaining: %d\n", j);	fflush(stderr);
 		for (i = 0; i < img_width; i++) {
-			double u = (double)i / (img_width - 1);
-			double v = (double)(img_height - 1 - j) / (img_height - 1);
-
-			t_ray	r = ray_(origin, \
-					add(lower_left_corner, add(multiply(horizontal, u), multiply(vertical, v))), 0);
-			t_color pixel_color = ray_color(r, world);
-			input_color(&data, pixel_color);
+			t_color pixel_color = color_(0.0, 0.0, 0.0);
+			for (s = 0; s < samples_per_pixel; s++) {
+				double u = ((double)i + random_double())/ (img_width - 1);
+				double v = (double)(img_height - 1 - j + random_double()) / (img_height - 1);
+				t_ray r;
+				r.origin = cam.origin;
+				r.direction = add(cam.lower_left_corner, add(multiply(cam.horizontal, u), multiply(cam.vertical, v)));
+				add_(&pixel_color, ray_color(r, world));
+			}
+			input_color(&data, pixel_color, samples_per_pixel);
 			my_mlx_pixel_put(&data, i, j, data.color);
 			// usleep(100000);
 		}
 	}
-	// fprintf(stderr, "\nDone.\n");	fflush(stderr);
+	fprintf(stderr, "\nDone.\n");	fflush(stderr);
 	////////////////////////////////////////////////////////////////
 
 	// mlx setting2

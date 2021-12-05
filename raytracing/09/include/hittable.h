@@ -14,7 +14,6 @@ typedef enum e_geometry
 typedef struct s_hittable
 {
 	t_geometry	geometry;
-	t_material	material;
 	void		*pointer;
 }	t_hittable;
 
