@@ -11,18 +11,13 @@ static void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 void	write_color(t_scene *scene, int y, int x)
 {
 	t_camera	*camera;
-	int			ir;
-	int			ig;
-	int			ib;
-	int			color;
+	t_mlx		*mlx;
 
+	mlx = &scene->mlx;
 	camera = &scene->camera;
-	double r = (double)x / (camera->image_width - 1);
-	double g = (double)(camera->image_height - y - 1) / (camera->image_height - 1);
-	double b = 0.25;
-	ir = (int)(255.999 * r);
-	ig = (int)(255.999 * g);
-	ib = (int)(255.999 * b);
-	color = ir  << 16 | ig << 8 | ib;
-	my_mlx_pixel_put(&scene->mlx, x, y, color);
+	mlx->rgb[0] = (int)(mlx->pixel_color.x * 255.);
+	mlx->rgb[1] = (int)(mlx->pixel_color.y * 255.);
+	mlx->rgb[2] = (int)(mlx->pixel_color.z * 255.);
+	mlx->color = mlx->rgb[0] << 16 | mlx->rgb[1] << 8 | mlx->rgb[2];
+	my_mlx_pixel_put(&scene->mlx, x, y, mlx->color);
 }

@@ -21,7 +21,9 @@ typedef struct s_mlx
 	int			bpp;
 	int			size_l;
 	int			endian;
-	int			color[3];
+	t_color		pixel_color;
+	int			rgb[3];
+	int			color;
 }				t_mlx;
 
 typedef struct s_light
