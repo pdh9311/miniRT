@@ -30,7 +30,7 @@ static void	init_mlx(t_scene *scene)
 	arg->mlx_ptr = mlx_init();
 	arg->win_ptr = mlx_new_window(arg->mlx_ptr, cam->image_width, cam->image_height, "rainbow");
 	arg->img_ptr = mlx_new_image(arg->mlx_ptr, cam->image_width, cam->image_height);
-	arg->data = (int *)mlx_get_data_addr(arg->img_ptr, &arg->bpp, &arg->size_l, &mlx->endian);
+	arg->data = (int *)mlx_get_data_addr(arg->img_ptr, &arg->bpp, &arg->size_l, &arg->endian);
 }
 
 void	init(t_scene *scene)

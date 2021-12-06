@@ -3,9 +3,9 @@
 void	init_mlx(t_mlx *arg)
 {
 	arg->mlx_ptr = mlx_init();
-	arg->win_ptr = mlx_new_window(mlx.mlx_ptr, image_width, image_height, "rainbow");
-	arg->img_ptr = mlx_new_image(mlx.mlx_ptr, image_width, image_height);
-	arg->data = (int *)mlx_get_data_addr(mlx.img_ptr, &mlx.bpp, &mlx.size_l, &mlx.endian);
+	arg->win_ptr = mlx_new_window(mlx->mlx_ptr, image_width, image_height, "rainbow");
+	arg->img_ptr = mlx_new_image(mlx->mlx_ptr, image_width, image_height);
+	arg->data = (int *)mlx_get_data_addr(mlx->img_ptr, &mlx.bpp, &mlx.size_l, &mlx.endian);
 }
 
 int main(int argc, char *argv[])
