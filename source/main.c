@@ -1,27 +1,23 @@
-#include "rtweekend.h"
-#include "color.h"
-#include "hittable_list.h"
-#include "sphere.h"
-#include "camera.h"
 #include "miniRT.h"
 
-t_color	ray_color(t_ray* r, t_hlist *world)
+void	init_mlx(t_mlx *arg)
 {
-	t_hit_record	rec;
-	t_vec3			unit_direction;
-	double			t;
-	t_color			tmp1;
-	t_color			tmp2;
-
-	if (hit(world, r, (t_range){0.001, INFINITY}, &rec))
-		return ((multiply(add(rec.normal, (t_color){1.0, 1.0, 1.0}), 0.5)));
-	unit_direction = unit_vector(r->direction);
-	t = 0.5 * (unit_direction.y + 1.0);
-	tmp1 = (t_color){1.0, 1.0, 1.0};
-	tmp2 = (t_color){0.5, 0.7, 1.0};
-	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
+	arg->mlx_ptr = mlx_init();
+	arg->win_ptr = mlx_new_window(mlx.mlx_ptr, image_width, image_height, "rainbow");
+	arg->img_ptr = mlx_new_image(mlx.mlx_ptr, image_width, image_height);
+	arg->data = (int *)mlx_get_data_addr(mlx.img_ptr, &mlx.bpp, &mlx.size_l, &mlx.endian);
 }
 
+int main(int argc, char *argv[])
+{
+	(void)argc;
+	(void)argv;
+
+	t_scene scene;
+	init_mlx(&scene.mlx);
+}
+
+/*
 int	main()
 {
 	t_mlx			mlx;
@@ -94,3 +90,4 @@ int	main()
 	mlx_put_image_to_window ( mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0 );
 	mlx_loop(mlx.mlx_ptr);
 }
+*/
