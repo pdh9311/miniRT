@@ -20,16 +20,13 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= 	camera.h \
+INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
+				hit.h \
+				camera.h \
 				color.h \
-				element.h \
-				keycode.h \
-				list.h \
 				miniRT.h \
 				ray.h \
 				sphere.h \
-				test.h \
-				utils.h \
 				vec3.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
@@ -52,8 +49,10 @@ SOURCES		:=	main.c \
 				list/pp_lstdelone.c \
 				ray_tracing/camera.c \
 				ray_tracing/color.c \
-				ray_tracing/random_clamp.c \
+				ray_tracing/hit_1.c \
+				ray_tracing/hit_2.c \
 				ray_tracing/init.c \
+				ray_tracing/random_clamp.c \
 				ray_tracing/ray.c \
 				ray_tracing/sphere.c \
 				ray_tracing/vec3-1.c \

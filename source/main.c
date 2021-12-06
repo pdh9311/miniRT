@@ -1,29 +1,16 @@
 #include "color.h"
 
-double	hit(const t_ray *r, const t_sphere *sphere)
+t_color	ray_color(t_ray *r, t_hlist *list)
 {
-	t_vec3	oc = subtract(r->origin, sphere->center);
-	double	a = dot(r->direction, r->direction);
-	double	half_b = dot(oc, r->direction);
-	double	c = dot(oc, oc) - (pow(sphere->radius, 2));
-	double	discrimiant = pow(half_b, 2) - (a * c);	// 판별식
-	double	root = (-half_b - sqrt(pow(half_b, 2) - a * c)) / a;
-	if (discrimiant < 0.0)
-		return (-1.0);
-	return (root);	 
-}
+	t_color			pixel_color;
+	t_vec3			unit_dir;
+	t_hit_record	rec;
+	double			t;
 
-t_color	ray_color(const t_ray *r, const t_sphere *sphere)
-{
-	t_color	pixel_color;
-	t_vec3	normal;
-	t_vec3	unit_dir;
-	double	t;
-	t = hit(r, sphere);
-	if (t > 0.0)
-	{	
-		normal = subtract(at(r, t), sphere->center);
-		pixel_color = multiply(add(unit_vector(normal), (t_vec3){1.0, 1.0, 1.0}), 0.5);
+	init_hit_record(&rec);
+	if (hit(list, r, &rec))
+	{
+		pixel_color = multiply(add(rec.normal, (t_vec3){1.0, 1.0, 1.0}), 0.5);
 		return (pixel_color);
 	}
 	unit_dir = unit_vector(r->direction);
@@ -37,7 +24,6 @@ void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
 	double		u;
 	double		v;
 	t_ray		r;
-	t_sphere	sphere;
 
 	for (int y = camera->image_width - 1; y >= 0; --y)
 	{
@@ -46,11 +32,18 @@ void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
 			u = (double)x / camera->image_width;
 			v = (double)(camera->image_height - 1 - y) / camera->image_height;
 			r = ray_(camera->origin, new_ray_dir(camera, u, v));
-			sphere = (t_sphere){point3_(0.0, 0.0, -1.0), 0.5};
-			mlx->pixel_color = ray_color(&r, &sphere);
+			mlx->pixel_color = ray_color(&r, scene->list);
 			write_color(scene, y, x);
 		}
 	}
+}
+
+void	add_object(t_hlist **list)
+{
+	t_object object1 = sphere_((t_point3){0.0, 0.0, -1.0}, 0.5);
+	t_object object2 = sphere_((t_point3){0.0, -100.5, -1.0}, 100.0);
+	push(list, list_(object1));
+	push(list, list_(object2));
 }
 
 int	main(int argc, char *argv[])
@@ -64,6 +57,7 @@ int	main(int argc, char *argv[])
 	init(&scene);
 	camera = &scene.camera;
 	mlx = &scene.mlx;
+	add_object(&scene.list);
 	draw(&scene, camera, mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 	mlx_loop(mlx->mlx_ptr);

@@ -48,8 +48,8 @@ int	main()
 
 	t_sphere		sphere1 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
 	t_sphere		sphere2 = {(t_point3){0.0, -100.5, -1.0}, 100.0};
-	t_hittable		hittable1;
-	t_hittable		hittable2;
+	t_object		hittable1;
+	t_object		hittable2;
 
 	hittable1.geometry = _sphere;
 	hittable1.pointer = &sphere1;

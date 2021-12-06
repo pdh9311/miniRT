@@ -1,6 +1,6 @@
 #ifndef KEYCODE_H
-
 # define KEYCODE_H
+
 # define MS_LEFT		1
 # define MS_RIGHT		2
 # define MS_WHEEL		3
@@ -116,4 +116,5 @@
 # define NUMPAD_STAR	67
 # define NUMPAD_ENTER	76
 # define NUMPAD_DOT		65
+
 #endif

@@ -50,4 +50,5 @@ void	init(t_scene *scene)
 	init_camera(&scene->camera);
 	init_mlx(scene);
 	init_light(&scene->light);
+	scene->list = NULL;
 }

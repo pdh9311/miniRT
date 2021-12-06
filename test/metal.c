@@ -54,10 +54,10 @@ int	main()
 	t_sphere		sphere2 = {(t_point3){0.0, 0.0, -1.0}, 0.5};
 	t_sphere		sphere3 = {(t_point3){-1.0, 0.0, -1.0}, 0.5};
 	t_sphere		sphere4 = {(t_point3){1.0, 0.0, -1.0}, 0.5};
-	t_hittable		hittable1;
-	t_hittable		hittable2;
-	t_hittable		hittable3;
-	t_hittable		hittable4;
+	t_object		hittable1;
+	t_object		hittable2;
+	t_object		hittable3;
+	t_object		hittable4;
 
 	hittable1.geometry = _sphere;
 	hittable1.pointer = &sphere1;

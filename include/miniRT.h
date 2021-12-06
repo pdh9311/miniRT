@@ -11,6 +11,7 @@
 # include "mlx.h"
 # include "ray.h"
 # include "sphere.h"
+# include "hit.h"
 
 typedef struct s_mlx
 {
@@ -38,6 +39,7 @@ typedef struct s_scene
 	t_mlx		mlx;
 	t_camera	camera;
 	t_light		light; // Ambient
+	t_hlist		*list;
 }				t_scene;
 
 // init.c
