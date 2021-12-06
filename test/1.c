@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 #include <stdio.h>
 #include <mlx.h>
 

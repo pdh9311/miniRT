@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 
 int	near_zero(t_vec3 v)
 {

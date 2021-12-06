@@ -21,17 +21,11 @@ LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
 INCLUDES	:= 	camera.h \
-				color.h \
 				element.h \
-				hittable_list.h \
-				hittable.h \
 				keycode.h \
 				list.h \
-				material.h \
 				miniRT.h \
-				moving_sphere.h \
 				ray.h \
-				rtweekend.h \
 				sphere.h \
 				test.h \
 				utils.h \
@@ -56,14 +50,9 @@ SOURCES		:=	main.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
 				ray_tracing/camera.c \
-				ray_tracing/color.c \
-				ray_tracing/hittable_list_1.c \
-				ray_tracing/hittable_list_2.c \
-				ray_tracing/hittable.c \
-				ray_tracing/material.c \
-				ray_tracing/moving_sphere.c \
+				ray_tracing/random_clamp.c \
+				ray_tracing/init.c \
 				ray_tracing/ray.c \
-				ray_tracing/rtweekend.c \
 				ray_tracing/sphere.c \
 				ray_tracing/vec3-1.c \
 				ray_tracing/vec3-2.c \

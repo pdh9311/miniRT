@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 
 void	subtract_(t_vec3 *u, t_vec3 v)
 {

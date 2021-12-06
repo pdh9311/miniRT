@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 
 t_vec3	divide(t_vec3 v, double t)
 {

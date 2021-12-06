@@ -30,10 +30,19 @@ static void	init_mlx(t_scene *scene)
 	arg->mlx_ptr = mlx_init();
 	arg->win_ptr = mlx_new_window(arg->mlx_ptr, cam->image_width, cam->image_height, "rainbow");
 	arg->img_ptr = mlx_new_image(arg->mlx_ptr, cam->image_width, cam->image_height);
-	arg->data = (int *)mlx_get_data_addr(arg->img_ptr, &arg->bpp, &arg->size_l, &arg->endian);
+	arg->addr = (char *)mlx_get_data_addr(arg->img_ptr, &arg->bpp, &arg->size_l, &arg->endian);
+}
+
+static void init_light(t_light *light)
+{
+	light->origin = (t_point3){0.0, 0.0, 0.0};
+	light->color = (t_color){1.0, 1.0, 1.0};
+	light->bright_ratio = 1.0;
 }
 
 void	init(t_scene *scene)
 {
 	init_camera(&scene->camera);
+	init_mlx(scene);
+	init_light(&scene->light);
 }

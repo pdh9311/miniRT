@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 
 t_vec3	random_in_unit_sphere(void)
 {

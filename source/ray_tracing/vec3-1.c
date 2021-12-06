@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 
 t_vec3	vec3_(double e1, double e2, double e3)
 {

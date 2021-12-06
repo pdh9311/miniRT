@@ -1,4 +1,4 @@
-#include "rtweekend.h"
+#include "miniRT.h"
 #include "keycode.h"
 #include <stdlib.h>
 #include <unistd.h>

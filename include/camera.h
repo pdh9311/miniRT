@@ -18,6 +18,4 @@ typedef struct s_camera
 	t_vec3		lower_left_corner;
 }				t_camera;
 
-void			init_camera(t_camera *cam);
-
 #endif
