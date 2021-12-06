@@ -5,8 +5,6 @@ void	init_hit_record(t_hit_record *hit_record)
 	hit_record->p = (t_point3){0.0, 0.0, 0.0};
 	hit_record->normal = (t_point3){0.0, 0.0, 0.0}; 
 	hit_record->t = -1.0;
-	hit_record->tmin = 0.001;
-	hit_record->tmax = INFINITY;
 }
 
 static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
@@ -31,22 +29,18 @@ int	hit(t_hlist *current, t_ray *r, t_hit_record *rec)
 	int				hit_anything;
 	
 	hit_anything = FALSE;
-	closest_so_far = rec->tmax;
-	temp_rec.tmax = rec->tmax;
-	temp_rec.tmin = rec->tmin;
+	closest_so_far = TMAX;
 	while (current)
 	{
-		/** 광선을  쏘아서 맞은 지점의 p, normal, t값을 저장해줄텐데 저장할때 
-		 * t값이 tmin, tmax에 대한 조건을 만족하면 저장하게 된다.
-		 * 
-		 */
-		if (hit_(&current->object, r, &temp_rec))
+		if (hit_(&current->object, r, &temp_rec))	// p, normal, t
+		{
 			if (temp_rec.t < closest_so_far)
 			{
 				hit_anything = TRUE;
 				closest_so_far = temp_rec.t; 
 				*rec = temp_rec;
 			}
+		}
 		current = current->next;
 	}
 	return (hit_anything);

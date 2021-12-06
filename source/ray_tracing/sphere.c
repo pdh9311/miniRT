@@ -18,10 +18,10 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 		return (FALSE);
 
 	rec->t = (-half_b - sqrt(discrimiant)) / a;
-	if (rec->t < rec->tmin || rec->tmax < rec->t)
+	if (rec->t < TMIN || TMAX < rec->t)
 	{
 		rec->t = (-half_b + sqrt(discrimiant)) / a;
-		if (rec->t < rec->tmin || rec->tmax < rec->t)
+		if (rec->t < TMIN || TMAX < rec->t)
 			return (FALSE);
 	}
 	rec->p = at(r, rec->t);

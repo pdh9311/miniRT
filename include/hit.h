@@ -4,12 +4,15 @@
 # include "vec3.h"
 # include "ray.h"
 
+# define TMIN 0.0001
+# define TMAX 3.40282347E+38
+
 typedef struct s_hit_record
 {
 	t_point3	p;
 	t_vec3		normal;
-	double		tmin;
-	double		tmax;
+	// double		tmin;
+	// double		tmax;
 	double		t;
 }				t_hit_record;
 
