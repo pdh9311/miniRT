@@ -3,12 +3,12 @@
 
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
 
 # include "camera.h"
+# include "mlx.h"
 # include "ray.h"
 # include "sphere.h"
 
@@ -17,7 +17,7 @@ typedef struct s_mlx
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
-	char			*addr;
+	char		*addr;
 	int			bpp;
 	int			size_l;
 	int			endian;
@@ -35,11 +35,13 @@ typedef struct s_scene
 {
 	t_mlx		mlx;
 	t_camera	camera;
-	t_light		light;
+	t_light		light; // Ambient
 }				t_scene;
 
+// init.c
 void	init(t_scene *scene);
 
+// random_clamp.c
 double	degrees_to_radians(double degrees);
 double	random_double(void);
 double	random_double_(double min, double max);

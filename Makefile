@@ -21,6 +21,7 @@ LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
 INCLUDES	:= 	camera.h \
+				color.h \
 				element.h \
 				keycode.h \
 				list.h \
@@ -50,6 +51,7 @@ SOURCES		:=	main.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
 				ray_tracing/camera.c \
+				ray_tracing/color.c \
 				ray_tracing/random_clamp.c \
 				ray_tracing/init.c \
 				ray_tracing/ray.c \
