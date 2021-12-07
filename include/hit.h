@@ -12,6 +12,7 @@ typedef struct s_hit_record
 	t_point3	p;
 	t_vec3		normal;
 	double		t;
+	t_color		albedo;
 }				t_hit_record;
 
 typedef enum e_type
@@ -23,6 +24,7 @@ typedef enum e_type
 typedef struct s_object
 {
 	t_type	type;
+	t_color	albedo;
 	void	*figure;
 }				t_object;
 

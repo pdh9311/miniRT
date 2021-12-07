@@ -48,6 +48,7 @@ t_vec3	refract(t_vec3 uv, t_vec3 n, double etai_over_etat);
 t_vec3	color_(double e1, double e2, double e3);
 t_vec3	point3_(double e1, double e2, double e3);
 t_vec3	random_unit_hemisphere(t_vec3 n);
+void	vec_min(t_vec3 *v, t_vec3 max);
 
 typedef t_vec3	t_point3;
 typedef t_vec3	t_color;

@@ -38,8 +38,11 @@ typedef struct s_scene
 {
 	t_mlx		mlx;
 	t_camera	camera;
-	t_light		light; // Ambient
+	t_ray		ray;
 	t_hlist		*list;
+	//t_object	*lights;
+	t_light		light;
+	t_light		ambient; // Ambient
 }				t_scene;
 
 // init.c

@@ -38,17 +38,18 @@ static void	init_mlx(t_scene *scene)
 					&arg->size_l, &arg->endian);
 }
 
-static void	init_light(t_light *light)
+static void	init_ambient(t_light *ambient)
 {
-	light->origin = (t_point3){0.0, 0.0, 0.0};
-	light->color = (t_color){1.0, 1.0, 1.0};
-	light->bright_ratio = 1.0;
+	ambient->origin = (t_point3){0.0, 0.0, 0.0};
+	ambient->bright_ratio = 1.0;
+	ambient->color = (t_color){0.0, 0.0, 0.0}; // change later
 }
 
 void	init(t_scene *scene)
 {
 	init_camera(&scene->camera);
 	init_mlx(scene);
-	init_light(&scene->light);
+	init_ambient(&scene->ambient);
 	scene->list = NULL;
+	scene->light = (t_light){(t_point3){0, 5, -2}, (t_color){1.0, 1.0, 1.0}, 0.0};
 }

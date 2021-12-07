@@ -19,6 +19,8 @@ static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 			is_hit = hit_sphere(r, object->figure, rec);
 		}
 	}
+	if (is_hit)
+		rec->albedo = object->albedo;
 	return (is_hit);
 }
 

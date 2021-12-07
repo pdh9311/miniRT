@@ -30,3 +30,13 @@ t_vec3	random_unit_hemisphere(t_vec3 n)
 	else
 		return (negate(unit_vector));
 }
+
+void	vec_min(t_vec3 *v, t_vec3 max)
+{
+	if (v->x >= max.x)
+		v->x = max.x;
+	if (v->y >= max.y)
+		v->y = max.y; 
+	if (v->z >= max.z)
+		v->z = max.z;
+}	

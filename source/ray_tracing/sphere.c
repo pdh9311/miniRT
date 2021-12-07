@@ -16,7 +16,6 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	discrimiant = pow(half_b, 2) - (a * c);
 	if (discrimiant < 0.0)
 		return (FALSE);
-
 	rec->t = (-half_b - sqrt(discrimiant)) / a;
 	if (rec->t < TMIN || TMAX < rec->t)
 	{
@@ -31,17 +30,18 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	return (TRUE);	 
 }
 
-t_object	sphere_(t_point3 center, double radius)
+t_object	sphere_(t_point3 center, double radius, t_color albedo)
 {
-	t_object	h;
+	t_object	new_sp;
 	t_sphere	*s;
 
-	h.type = _sphere;
-	h.figure = malloc(sizeof(t_sphere));
-	if ((s = (t_sphere *)h.figure))
+	new_sp.type = _sphere;
+	new_sp.albedo = albedo;
+	new_sp.figure = malloc(sizeof(t_sphere));
+	if ((s = (t_sphere *)new_sp.figure))
 	{
 		s->center = center;
 		s->radius = radius;
 	}
-	return (h);
+	return (new_sp);
 }
