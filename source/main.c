@@ -1,6 +1,5 @@
 #include "color.h"
 
-//t_color	ray_color(t_ray *r, t_hlist *list)
 t_color	ray_color(t_scene *scene)
 {
 	t_color			pixel_color;
@@ -39,11 +38,9 @@ t_color	ray_color(t_scene *scene)
 		reflect_dir = reflect(negate(light_dir), rec.normal);
 		spec = pow(fmax(dot(view_dir, reflect_dir), 0.0), ksn);
 		specular = multiply(pixel_color, ks * spec);
-		// multiply_(&pixel_color, ks * spec);
 		add_(&pixel_color, specular);
 
-		//return (multiply__(pixel_color, rec.albedo));
-		return (multiply__(pixel_color, rec.albedo));
+		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
 	unit_dir = unit_vector(scene->ray.direction);
 	t = (scene->ray.direction.y + 1) * 0.5;
