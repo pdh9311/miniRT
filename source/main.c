@@ -27,6 +27,21 @@ t_color	ray_color(t_scene *scene)
 		kd = fmax(dot(rec.normal, light_dir), 0.0);
 		multiply_(&pixel_color, kd);
 
+		// specular
+		t_color	specular;
+		double	ksn = 256;	// shininess value
+		double	ks = 0.5;	// specular strength
+		t_vec3	view_dir;
+		t_vec3	reflect_dir;
+		double 	spec;
+
+		view_dir = unit_vector(negate(scene->ray.direction));
+		reflect_dir = reflect(negate(light_dir), rec.normal);
+		spec = pow(fmax(dot(view_dir, reflect_dir), 0.0), ksn);
+		specular = multiply(pixel_color, ks * spec);
+		// multiply_(&pixel_color, ks * spec);
+		add_(&pixel_color, specular);
+
 		//return (multiply__(pixel_color, rec.albedo));
 		return (multiply__(pixel_color, rec.albedo));
 	}
