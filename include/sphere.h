@@ -9,9 +9,10 @@ typedef struct s_sphere
 {
 	t_point3	center;
 	double		radius;
+	t_color		color;
 }				t_sphere;
 
 int			hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec);
-t_object	sphere_(t_point3 center, double radius, t_color albedo);
+t_object	sphere_(t_point3 center, double radius, t_color albedo, t_color color);
 
 #endif

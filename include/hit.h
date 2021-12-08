@@ -13,12 +13,15 @@ typedef struct s_hit_record
 	t_vec3		normal;
 	double		t;
 	t_color		albedo;
+	t_color		color;
 }				t_hit_record;
 
 typedef enum e_type
 {
 	_none,
-	_sphere
+	_sphere,
+	_plane,
+	_cylinder
 }				t_type;
 
 typedef struct s_object

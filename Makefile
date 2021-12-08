@@ -65,6 +65,7 @@ SOURCES		:=	main.c \
 				ray_tracing/diffuse.c \
 				ray_tracing/shadow.c \
 				ray_tracing/specular.c \
+				ray_tracing/plane.c \
 				test.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 

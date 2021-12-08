@@ -1,4 +1,5 @@
 #include "sphere.h"
+#include "plane.h"
 
 void	init_hit_record(t_hit_record *hit_record)
 {
@@ -15,9 +16,9 @@ static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 	if (object->type != _none)
 	{
 		if (object->type == _sphere)
-		{
 			is_hit = hit_sphere(r, object->figure, rec);
-		}
+		else if (object->type == _plane)
+			is_hit = hit_plane(r, object->figure, rec);
 	}
 	if (is_hit)
 		rec->albedo = object->albedo;

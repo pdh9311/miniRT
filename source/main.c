@@ -11,12 +11,15 @@ t_color	ray_color(t_scene *scene)
 	init_hit_record(&rec);
 	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
-		pixel_color = multiply(add(rec.normal, (t_vec3){1.0, 1.0, 1.0}), 0.5);
+		// pixel_color = multiply(add(rec.normal, (t_vec3){1.0, 1.0, 1.0}), 0.5);
+		pixel_color = rec.color;
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
+		/*
 		if (set_shadow(scene, &rec, &phong))
-			return ((t_color){0.0, 0.0, 0.0});
+			multiply_(&pixel_color, 0.3);
 		set_specular(&pixel_color, scene, &rec, &phong);
+		*/
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
 	//unit_dir = unit_vector(scene->ray.direction);
@@ -48,12 +51,14 @@ void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
 
 void	add_object(t_hlist **list)
 {
-	t_object object1 = sphere_((t_point3){-0.5, 0.0, -1.0}, 0.5, (t_color){1.0, 1.0, 1.0});
-	t_object object2 = sphere_((t_point3){0.0, -100.5, -1.0}, 100.0, (t_color){1.0, 1.0, 1.0});
-	t_object object3 = sphere_((t_point3){0.5, 0.0, -1.0}, 0.5, (t_color){1.0, 1.0, 1.0});
+	t_object object1 = sphere_((t_point3){-0.5, 0.0, -1.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 0.0, 0.0});
+	t_object object2 = sphere_((t_point3){0.0, -100.5, -1.0}, 100.0, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 1.0, 0.0});
+	t_object object3 = sphere_((t_point3){0.5, 0.0, -1.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 0.0, 1.0});
+	t_object object4 = plane_((t_point3){0.0, 0.0, -3.0}, (t_vec3){0.0, 0.0, 1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0});
 	push(list, list_(object1));
 	push(list, list_(object2));
 	push(list, list_(object3));
+	push(list, list_(object4));
 }
 
 int	main(int argc, char *argv[])

@@ -27,21 +27,25 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	rec->normal = unit_vector(subtract(rec->p, sphere->center));
 	if (dot(r->direction, rec->normal) > 0)
 		rec->normal = negate(rec->normal);
+	rec->color = sphere->color;
 	return (TRUE);	 
 }
 
-t_object	sphere_(t_point3 center, double radius, t_color albedo)
+t_object	sphere_(t_point3 center, double radius, t_color albedo, t_color color)
 {
 	t_object	new_sp;
 	t_sphere	*s;
 
+	s = NULL;
 	new_sp.type = _sphere;
 	new_sp.albedo = albedo;
 	new_sp.figure = malloc(sizeof(t_sphere));
-	if ((s = (t_sphere *)new_sp.figure))
+	s = (t_sphere *)new_sp.figure;
+	if (s)
 	{
 		s->center = center;
 		s->radius = radius;
+		s->color = color;
 	}
 	return (new_sp);
 }
