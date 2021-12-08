@@ -3,7 +3,7 @@
 t_color	ray_color(t_scene *scene)
 {
 	t_color			pixel_color;
-	t_vec3			unit_dir;
+	//t_vec3			unit_dir;
 	t_hit_record	rec;
 	double			t;
 
@@ -42,7 +42,7 @@ t_color	ray_color(t_scene *scene)
 
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
-	unit_dir = unit_vector(scene->ray.direction);
+	//unit_dir = unit_vector(scene->ray.direction);
 	t = (scene->ray.direction.y + 1) * 0.5;
 	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), multiply(color_(0.5, 0.7, 1.0), t));
 	return (pixel_color);
@@ -54,7 +54,7 @@ void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
 	double		v;
 	//t_ray		r;
 
-	for (int y = camera->image_width - 1; y >= 0; --y)
+	for (int y = camera->image_height - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < camera->image_width; ++x)
 		{
@@ -91,6 +91,7 @@ int	main(int argc, char *argv[])
 	camera = &scene.camera;
 	mlx = &scene.mlx;
 	add_object(&scene.list);
+	printf("%d %d\n", camera->image_height, camera->image_width);
 	draw(&scene, camera, mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 	mlx_loop(mlx->mlx_ptr);
