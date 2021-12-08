@@ -21,6 +21,7 @@ int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 		return (FALSE);
 	rec->p = at(r, rec->t);
 	rec->color = plane->color;
+	rec->normal = unit_vector(negate(normal));
 	return (TRUE);
 }
 

@@ -4,7 +4,7 @@
 # include "vec3.h"
 # include "ray.h"
 
-# define TMIN 0.0001
+# define TMIN 0.01
 # define TMAX 3.40282347E+38
 
 typedef struct s_hit_record

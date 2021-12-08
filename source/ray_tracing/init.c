@@ -51,5 +51,5 @@ void	init(t_scene *scene)
 	init_mlx(scene);
 	init_ambient(&scene->ambient);
 	scene->list = NULL;
-	scene->light = (t_light){(t_point3){2, 1, +1}, (t_color){1.0, 1.0, 1.0}, 1.0};
+	scene->light = (t_light){(t_point3){0, 0, 1}, (t_color){1.0, 1.0, 1.0}, 1.0};
 }
