@@ -8,7 +8,7 @@ t_color	ray_color(t_scene *scene)
 	double			t;
 
 	init_hit_record(&rec);
-	if (hit(scene->list, &scene->ray, &rec))
+	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
 		pixel_color = multiply(add(rec.normal, (t_vec3){1.0, 1.0, 1.0}), 0.5);
 
@@ -20,11 +20,23 @@ t_color	ray_color(t_scene *scene)
 
 		// diffuse
 		t_vec3	light_dir;
+		t_vec3	light_unit_dir;
 		double	kd;
 
-		light_dir = unit_vector(subtract(scene->light.origin, rec.p));
-		kd = fmax(dot(rec.normal, light_dir), 0.0);
+		light_dir = subtract(scene->light.origin, rec.p);
+		light_unit_dir = unit_vector(light_dir);
+		kd = fmax(dot(rec.normal, light_unit_dir), 0.0);
 		multiply_(&pixel_color, kd);
+
+		/// shadow
+		t_ray			light_ray;
+		double			light_len;
+		t_hit_record	shadow_rec;
+
+		light_len = length(light_dir);
+		light_ray = ray_(rec.p, light_unit_dir);
+		if (hit(scene->list, &light_ray, &shadow_rec, light_len))
+			return ((t_color){0.0, 0.0, 0.0});
 
 		// specular
 		t_color	specular;
@@ -35,11 +47,11 @@ t_color	ray_color(t_scene *scene)
 		double 	spec;
 
 		view_dir = unit_vector(negate(scene->ray.direction));
-		reflect_dir = reflect(negate(light_dir), rec.normal);
+		reflect_dir = reflect(negate(light_unit_dir), rec.normal);
 		spec = pow(fmax(dot(view_dir, reflect_dir), 0.0), ksn);
 		specular = multiply(pixel_color, ks * spec);
 		add_(&pixel_color, specular);
-
+		vec_min(&pixel_color, (t_color){1.0, 1.0, 1.0});
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
 	//unit_dir = unit_vector(scene->ray.direction);

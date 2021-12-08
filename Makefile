@@ -1,5 +1,5 @@
 C			:= gcc
-CFLAGS		:= -g -Werror -Wextra -Wall
+CFLAGS		:= -g -Werror -Wextra -Wall  -fsanitize=address
 CHECK		:=	-fsanitize=address
 
 OS 			:= $(shell uname)

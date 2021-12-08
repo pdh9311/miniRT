@@ -35,7 +35,7 @@ typedef struct s_hlist
 }					t_hlist;
 
 void	init_hit_record(t_hit_record *rec);
-int		hit(t_hlist *current, t_ray *r, t_hit_record *rec);
+int		hit(t_hlist *current, t_ray *r, t_hit_record *rec, double max);
 
 t_hlist	*list_(t_object object);
 void	push(t_hlist **lst, t_hlist *new_node);
