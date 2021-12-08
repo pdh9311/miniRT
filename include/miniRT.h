@@ -45,6 +45,22 @@ typedef struct s_scene
 	t_light		ambient; // Ambient
 }				t_scene;
 
+typedef struct s_phong
+{
+	t_vec3			light_dir;
+	t_vec3			light_unit_dir;
+	double			kd;
+	t_ray			light_ray;
+	double			light_len;
+	t_hit_record	shadow_rec;
+	t_color			specular;
+	double			ksn;
+	double			ks;
+	t_vec3			view_dir;
+	t_vec3			reflect_dir;
+	double			spec;
+}				t_phong;
+
 // init.c
 void	init(t_scene *scene);
 
@@ -54,4 +70,12 @@ double	random_double(void);
 double	random_double_(double min, double max);
 double	clamp(double x, double min, double max);
 
+// ambient.c
+void	set_ambient(t_color *pixel_color, t_scene *scene, t_hit_record *rec);
+// diffuse.c
+void	set_diffuse(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong);
+// shadow.c
+int		set_shadow(t_scene *scene, t_hit_record *rec, t_phong *phong);
+// specular.c
+void	set_specular(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong);
 #endif
