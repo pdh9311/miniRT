@@ -15,8 +15,8 @@ t_color	ray_color(t_scene *scene)
 		pixel_color = rec.color;
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
-		if (set_shadow(scene, &rec, &phong))
-			multiply_(&pixel_color, 0.3);
+		// if (set_shadow(scene, &rec, &phong))
+		// 	multiply_(&pixel_color, 0.3);
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
@@ -49,16 +49,21 @@ void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
 
 void	add_object(t_hlist **list)
 {
-	t_object object1 = sphere_((t_point3){-0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 0.0, 0.0});
-	t_object object2 = sphere_((t_point3){0.0, -100.5, -2.0}, 100.0, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 1.0, 0.0});
-	t_object object3 = sphere_((t_point3){0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 0.0, 1.0});
+	//t_object object1 = sphere_((t_point3){-0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 0.0, 0.0});
+	// t_object object2 = sphere_((t_point3){0.0, -100.5, -2.0}, 100.0, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 1.0, 0.0});
+	// t_object object3 = sphere_((t_point3){0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 0.0, 1.0});
 	//t_object object4 = plane_((t_point3){0.0, 0.0, -3.0}, (t_vec3){0.0, 0.0, 1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0});
-	t_object object5 = plane_((t_point3){0.0, 0.5, 0.5}, (t_vec3){0.0, 0.0, 1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0});
-	push(list, list_(object1));
-	push(list, list_(object2));
-	push(list, list_(object3));
+	// t_object object5 = plane_((t_point3){0.0, 0.0, 1.0}, (t_vec3){-0.5, 0.0, -0.5}, (t_color){0.8, 0.7, 0.5}, (t_color){1.0, 1.0, 0.0});
+	// t_object object6 = cylinder_((t_point3){0.0, 0.0, -2.0}, (t_vec3){0.0, 1.0, 0.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0}, 0.5, 1);
+	t_object object7 = cylinder_((t_point3){0.0, 0.0, -1.0}, (t_vec3){1.0, 0.0, -1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0}, 0.5, 1);
+
+	//push(list, list_(object1));
+	// push(list, list_(object2));
+	// push(list, list_(object3));
 	//push(list, list_(object4));
-	push(list, list_(object5));
+	// push(list, list_(object5));
+	// push(list, list_(object6));
+	 push(list, list_(object7));
 }
 
 int	main(int argc, char *argv[])

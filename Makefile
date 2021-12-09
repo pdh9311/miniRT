@@ -21,13 +21,15 @@ LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
 INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
+				vec3.h \
 				hit.h \
 				camera.h \
 				color.h \
 				miniRT.h \
 				ray.h \
 				sphere.h \
-				vec3.h
+				plane.h \
+				cylinder.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
@@ -66,6 +68,7 @@ SOURCES		:=	main.c \
 				ray_tracing/shadow.c \
 				ray_tracing/specular.c \
 				ray_tracing/plane.c \
+				ray_tracing/cylinder.c \
 				test.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 

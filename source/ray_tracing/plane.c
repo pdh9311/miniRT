@@ -1,5 +1,4 @@
 #include "plane.h"
-#include "hit.h"
 
 int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 {

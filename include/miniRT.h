@@ -12,6 +12,7 @@
 # include "ray.h"
 # include "sphere.h"
 # include "plane.h"
+# include "cylinder.h"
 # include "hit.h"
 
 typedef struct s_mlx
