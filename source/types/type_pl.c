@@ -10,8 +10,8 @@ int	input_type_pl(char **split, t_lst **lst)
 	if (elem == NULL)
 		return (EXIT_FAILURE);
 	ft_memset(elem, 0, sizeof(t_element));
-	elem->coord = get_coord(split[1]);
-	elem->vector = get_coord(split[2]);
+	elem->coord = get_point3(split[1]);
+	elem->vector = get_point3(split[2]);
 	elem->rgb = get_color(split[3]);
 	elem->type = PL;
 	// lst에 추가

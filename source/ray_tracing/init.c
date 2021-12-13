@@ -1,24 +1,29 @@
 #include "miniRT.h"
 
-static void	init_camera(t_camera *cam)
+static void	init_camera(t_camera *cam, t_element *elem)
 {
 	cam->aspect_ratio = 16.0 / 9.0;
 	cam->image_width = 800;
 	cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
-	cam->vp_height = 2.0;
+	cam->focal = multiply(unit_vector((t_vec3)elem->vector), cam->focal_length);	////
+	cam->origin = elem->coord;			///
+	cam->fov = elem->fov;
+	cam->vp_height = 2 * cam->focal_length * tan(degrees_to_radian(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
-	cam->origin = (t_vec3){0.0, 0.0, 0.0};
-	cam->horizontal = (t_vec3){cam->vp_width, 0.0, 0.0};
-	cam->vertical = (t_vec3){0.0, cam->vp_height, 0.0};
-	cam->focal = (t_vec3){0.0, 0.0, cam->focal_length};
+	cam->vup = (t_vec3){0, 1, 0};
+	cam->w = unit_vector(subtract(cam->origin, cam->focal));
+	cam->u = unit_vector(cross(cam->vup, cam->w));
+	cam->v = cross(cam->w, cam->u);
+	cam->horizontal = multiply(cam->u, cam->vp_width);
+	cam->vertical = multiply(cam->v, cam->vp_height);
 	cam->lower_left_corner = subtract(
 			subtract(
 				subtract(cam->origin, divide(cam->horizontal, 2)),
 				divide(cam->vertical, 2)
 				),
-			cam->focal
+				cam->w
 			);
 }
 
@@ -45,9 +50,36 @@ static void	init_ambient(t_light *ambient)
 	ambient->color = (t_color){0.0, 0.0, 0.0}; // change later
 }
 
-void	init(t_scene *scene)
+void	tmp(t_scene *scene, t_lst *lst)
 {
-	init_camera(&scene->camera);
+	while (lst != NULL)
+	{
+		if (((t_element *)(lst->content))->type == A)
+		{
+
+		} else if (((t_element *)(lst->content))->type == C)
+		{
+			init_camera(&scene->camera, (t_element *)(lst->content));
+		} else if (((t_element *)(lst->content))->type == L)
+		{
+
+		} else if (((t_element *)(lst->content))->type == PL)
+		{
+
+		} else if (((t_element *)(lst->content))->type == SP)
+		{
+
+		} else if (((t_element *)(lst->content))->type == CY)
+		{
+
+		}
+		lst = lst->next;
+	}
+}
+
+void	init(t_scene *scene, t_lst *lst)
+{
+	init_camera(&scene->camera, lst);
 	init_mlx(scene);
 	init_ambient(&scene->ambient);
 	scene->list = NULL;

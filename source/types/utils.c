@@ -9,16 +9,16 @@ t_color	get_color(char *rgb)
 	char	**rgb_split;
 
 	rgb_split = ft_split(rgb, ',');
-	color.r = ft_atoi(rgb_split[0]);
-	color.g = ft_atoi(rgb_split[1]);
-	color.b = ft_atoi(rgb_split[2]);
+	color.x = ft_atoi(rgb_split[0]);
+	color.y = ft_atoi(rgb_split[1]);
+	color.z = ft_atoi(rgb_split[2]);
 	free_dptr(rgb_split, 0);
 	return (color);
 }
 
-t_coord	get_coord(char *data)
+t_point3	get_point3(char *data)
 {
-	t_coord	coord;
+	t_point3	coord;
 	char	**data_split;
 
 	data_split = ft_split(data, ',');

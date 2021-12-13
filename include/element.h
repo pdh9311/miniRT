@@ -2,6 +2,7 @@
 # define ELEMENT_H
 
 # include "list.h"
+# include "vec3.h"
 
 enum e_type
 {
@@ -12,20 +13,6 @@ enum e_type
 	SP,
 	CY
 };
-
-typedef struct s_coord
-{
-	double		x;
-	double		y;
-	double		z;
-}				t_coord;
-
-typedef struct s_color
-{
-	int			r;
-	int			g;
-	int			b;
-}				t_color;
 
 typedef struct s_check
 {
@@ -41,8 +28,8 @@ typedef struct s_check
 typedef struct s_element
 {
 	t_check		check;
-	t_coord		coord;
-	t_coord		vector;
+	t_point3	coord;
+	t_vec3		vector;
 	t_color		rgb;
 	double		brightness;
 	double		diameter;
@@ -60,6 +47,6 @@ int			input_type_pl(char **split, t_lst **lst);
 int			input_type_sp(char **split, t_lst **lst);
 int			input_type_cy(char **split, t_lst **lst);
 t_color		get_color(char *rgb);
-t_coord		get_coord(char *data);
+t_point3	get_point3(char *data);
 
 #endif

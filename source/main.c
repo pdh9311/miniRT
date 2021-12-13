@@ -1,4 +1,5 @@
 #include "color.h"
+#include "list.h"
 
 t_color	ray_color(t_scene *scene)
 {
@@ -68,13 +69,22 @@ void	add_object(t_hlist **list)
 
 int	main(int argc, char *argv[])
 {
-	(void)argc;
-	(void)argv;
 	t_scene		scene;
+	/*
 	t_camera	*camera;
 	t_mlx		*mlx;
+	*/
 
-	init(&scene);
+	t_lst		*lst;
+
+	if (argc != 2)
+		return (1);
+	lst = NULL;
+	readfile(argv[1], &lst);
+	print_lst(lst);
+
+	init(&scene, lst);
+/*
 	camera = &scene.camera;
 	mlx = &scene.mlx;
 	add_object(&scene.list);
@@ -82,4 +92,5 @@ int	main(int argc, char *argv[])
 	draw(&scene, camera, mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 	mlx_loop(mlx->mlx_ptr);
+	*/
 }

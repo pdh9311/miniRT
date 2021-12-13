@@ -14,6 +14,8 @@
 # include "plane.h"
 # include "cylinder.h"
 # include "hit.h"
+# include "list.h"
+# include "element.h"
 
 typedef struct s_mlx
 {
@@ -63,8 +65,11 @@ typedef struct s_phong
 	double			spec;
 }				t_phong;
 
+// readfile.c
+int		readfile(char *file, t_lst **lst);
+
 // init.c
-void	init(t_scene *scene);
+void	init(t_scene *scene, t_lst *lst);
 
 // random_clamp.c
 double	degrees_to_radians(double degrees);
@@ -80,4 +85,6 @@ void	set_diffuse(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phon
 int		set_shadow(t_scene *scene, t_hit_record *rec, t_phong *phong);
 // specular.c
 void	set_specular(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong);
+
+void	print_lst(t_lst *lst);
 #endif

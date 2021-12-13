@@ -10,7 +10,7 @@ int	input_type_sp(char **split, t_lst **lst)
 	if (elem == NULL)
 		return (EXIT_FAILURE);
 	ft_memset(elem, 0, sizeof(t_element));
-	elem->coord = get_coord(split[1]);
+	elem->coord = get_point3(split[1]);
 	elem->diameter = ft_atof(split[2]);
 	elem->rgb = get_color(split[3]);
 	elem->type = SP;
