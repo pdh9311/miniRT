@@ -19,8 +19,8 @@ typedef struct s_hit_record
 typedef enum e_type
 {
 	_none,
-	_sphere,
 	_plane,
+	_sphere,
 	_cylinder
 }				t_type;
 

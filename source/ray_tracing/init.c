@@ -10,7 +10,7 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->focal = multiply(unit_vector((t_vec3)elem->vector), cam->focal_length);	////
 	cam->origin = elem->coord;			///
 	cam->fov = elem->fov;
-	cam->vp_height = 2 * cam->focal_length * tan(degrees_to_radian(elem->fov / 2));
+	cam->vp_height = 2 * cam->focal_length * tan(degrees_to_radians(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
 	cam->vup = (t_vec3){0, 1, 0};
 	cam->w = unit_vector(subtract(cam->origin, cam->focal));
@@ -43,11 +43,26 @@ static void	init_mlx(t_scene *scene)
 					&arg->size_l, &arg->endian);
 }
 
-static void	init_ambient(t_light *ambient)
+static void init_light(t_light *light, t_element *elem)
 {
-	ambient->origin = (t_point3){0.0, 0.0, 0.0};
-	ambient->bright_ratio = 1.0;
-	ambient->color = (t_color){0.0, 0.0, 0.0}; // change later
+	light->origin = (t_point3)elem->coord;
+	light->bright_ratio = elem->brightness;
+	light->color = divide((t_color)elem->rgb, 255.999);
+}
+
+static void add_object(t_hlist **list, t_element *elem)
+{
+	t_object object;
+
+	if (elem->type == PL)
+		object = plane_(elem->coord, unit_vector(elem->vector), (t_color){1, 1, 1}, divide(elem->rgb, 255.999));
+	else if (elem->type == SP)
+		object = sphere_(elem->coord, elem->diameter / 2.0, (t_color){1, 1, 1}, divide(elem->rgb, 255.999));
+	else if (elem->type == CY)
+		object = cylinder_(elem->coord, unit_vector(elem->vector), (t_color){1, 1, 1}, divide(elem->rgb, 255.999), elem->diameter / 2, elem->height);
+	else
+		return ;
+	push(list, list_(object));
 }
 
 void	tmp(t_scene *scene, t_lst *lst)
@@ -56,32 +71,30 @@ void	tmp(t_scene *scene, t_lst *lst)
 	{
 		if (((t_element *)(lst->content))->type == A)
 		{
-
+			init_light(&scene->ambient, (t_element *)(lst->content));
 		} else if (((t_element *)(lst->content))->type == C)
 		{
 			init_camera(&scene->camera, (t_element *)(lst->content));
 		} else if (((t_element *)(lst->content))->type == L)
 		{
-
-		} else if (((t_element *)(lst->content))->type == PL)
+			init_light(&scene->light, (t_element *)(lst->content));
+		} else if (((t_element *)(lst->content))->type == PL
+				|| ((t_element *)(lst->content))->type == SP
+				|| ((t_element *)(lst->content))->type == CY)
 		{
-
-		} else if (((t_element *)(lst->content))->type == SP)
-		{
-
-		} else if (((t_element *)(lst->content))->type == CY)
-		{
-
+			add_object(&scene->list, (t_element *)(lst->content));
 		}
+
 		lst = lst->next;
 	}
 }
 
 void	init(t_scene *scene, t_lst *lst)
 {
-	init_camera(&scene->camera, lst);
-	init_mlx(scene);
-	init_ambient(&scene->ambient);
+	//init_camera(&scene->camera, lst);
+	//init_ambient(&scene->ambient);
 	scene->list = NULL;
-	scene->light = (t_light){(t_point3){2.0, 2.0, 1.0}, (t_color){1.0, 1.0, 1.0}, 1.0};
+	tmp(scene, lst);
+	init_mlx(scene);
+	//scene->light = (t_light){(t_point3){2.0, 2.0, 1.0}, (t_color){1.0, 1.0, 1.0}, 1.0};
 }

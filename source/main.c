@@ -16,8 +16,8 @@ t_color	ray_color(t_scene *scene)
 		pixel_color = rec.color;
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
-		// if (set_shadow(scene, &rec, &phong))
-		// 	multiply_(&pixel_color, 0.3);
+		if (set_shadow(scene, &rec, &phong))
+			multiply_(&pixel_color, 0.3);
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
@@ -67,30 +67,36 @@ void	add_object(t_hlist **list)
 	 push(list, list_(object7));
 }
 
+void print_hlist(t_hlist *hlist)
+{
+	while (hlist)
+	{
+		printf("%d\n", hlist->object.type);
+		hlist = hlist->next;
+	}
+}
+
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
-	/*
 	t_camera	*camera;
 	t_mlx		*mlx;
-	*/
 
 	t_lst		*lst;
 
 	if (argc != 2)
 		return (1);
-	lst = NULL;
-	readfile(argv[1], &lst);
-	print_lst(lst);
-
-	init(&scene, lst);
-/*
 	camera = &scene.camera;
 	mlx = &scene.mlx;
-	add_object(&scene.list);
+	lst = NULL;
+	readfile(argv[1], &lst);
+	// print_lst(lst);
+
+	init(&scene, lst);
+	// print_hlist(scene.list);
+	// add_object(&scene.list);
 	printf("%d %d\n", camera->image_height, camera->image_width);
 	draw(&scene, camera, mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 	mlx_loop(mlx->mlx_ptr);
-	*/
 }

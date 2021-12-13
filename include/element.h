@@ -4,7 +4,7 @@
 # include "list.h"
 # include "vec3.h"
 
-enum e_type
+enum	e_type_str
 {
 	A = 0,
 	C,

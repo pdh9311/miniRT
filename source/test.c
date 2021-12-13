@@ -32,7 +32,7 @@ void	print_lst(t_lst *lst)
 	{
 		printf("coord : [%lf, %lf, %lf]\n", CONT->coord.x, CONT->coord.y, CONT->coord.z);
 		printf("vector : [%lf, %lf, %lf]\n", CONT->vector.x, CONT->vector.y, CONT->vector.z);
-		printf("rgb : [%d, %d, %d]\n", CONT->rgb.x, CONT->rgb.y, CONT->rgb.z);
+		printf("rgb : [%lf, %lf, %lf]\n", CONT->rgb.x, CONT->rgb.y, CONT->rgb.z);
 		printf("brightness : %lf\n", CONT->brightness);
 		printf("diameter : %lf\n", CONT->diameter);
 		printf("height : %lf\n", CONT->height);

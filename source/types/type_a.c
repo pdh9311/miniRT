@@ -10,6 +10,7 @@ int	input_type_a(char **split, t_lst **lst)
 	if (elem == NULL)
 		return (EXIT_FAILURE);
 	ft_memset(elem, 0, sizeof(t_element));
+	elem->coord = (t_point3){0, 0, 0};
 	elem->brightness = ft_atof(split[1]);
 	elem->rgb = get_color(split[2]);
 	elem->type = A;
