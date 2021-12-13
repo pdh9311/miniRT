@@ -6,7 +6,8 @@ void	set_specular(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_pho
 	phong->ks = 0.5;	// phong->specular strength
 
 	phong->view_dir = unit_vector(negate(scene->ray.direction));
-	phong->reflect_dir = reflect(negate(phong->light_unit_dir), rec->normal);
+	phong->reflect_dir = reflect(phong->light_unit_dir, rec->normal);
+	// phong->reflect_dir = reflect(negate(phong->light_unit_dir), rec->normal);
 	phong->spec = pow(fmax(dot(phong->view_dir, phong->reflect_dir), 0.0), phong->ksn);
 	phong->specular = multiply(*pixel_color, phong->ks * phong->spec);
 	add_(pixel_color, phong->specular);

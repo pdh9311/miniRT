@@ -7,8 +7,10 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
-	cam->focal = multiply(unit_vector((t_vec3)elem->vector), cam->focal_length);	////
+	// cam->focal = multiply(unit_vector((t_vec3)elem->vector), cam->focal_length);	////
 	cam->origin = elem->coord;			///
+	cam->focal = multiply(unit_vector(\
+				subtract((t_vec3)elem->vector, elem->coord)), cam->focal_length);	////
 	cam->fov = elem->fov;
 	cam->vp_height = 2 * cam->focal_length * tan(degrees_to_radians(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
@@ -96,5 +98,5 @@ void	init(t_scene *scene, t_lst *lst)
 	scene->list = NULL;
 	tmp(scene, lst);
 	init_mlx(scene);
-	//scene->light = (t_light){(t_point3){2.0, 2.0, 1.0}, (t_color){1.0, 1.0, 1.0}, 1.0};
+	// scene->light = (t_light){(t_point3){0.0, 1.0, -0.5}, (t_color){1.0, 1.0, 1.0}, 1.0};
 }
