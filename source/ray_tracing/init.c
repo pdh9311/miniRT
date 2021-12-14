@@ -98,5 +98,5 @@ void	init(t_scene *scene, t_lst *lst)
 	scene->list = NULL;
 	tmp(scene, lst);
 	init_mlx(scene);
-	// scene->light = (t_light){(t_point3){0.0, 1.0, -0.5}, (t_color){1.0, 1.0, 1.0}, 1.0};
+	// scene->light = (t_light){(t_point3){0.0, 1.0, 1.0}, (t_color){1.0, 1.0, 1.0}, 1.0};
 }

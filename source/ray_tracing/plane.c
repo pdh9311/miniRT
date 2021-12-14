@@ -3,24 +3,28 @@
 int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 {
 	t_vec3	normal;
+	t_vec3	ray_dir;
 	double	check;
 
 	normal = plane->normal;
-	check = dot(r->direction, normal); 
-	if (check < 1e-6)
-	{
-		check = dot(r->direction, plane->n_normal);
-		if (check < 1e-6)
-			return (FALSE);
-		normal =  plane->n_normal;
-	}
+	ray_dir = unit_vector(r->direction);
+	check = dot(ray_dir, normal);
+	// if (check < 1e-6)
+	// {
+	// 	check = dot(r->direction, plane->n_normal);
+	// 	if (check < 1e-6)
+	// 		return (FALSE);
+	// 	normal =  plane->n_normal;
+	// }
+	if (check < 1e-6 && check > -1e-6)
+		return (FALSE);
 	rec->t = (dot(subtract(plane->point, r->origin), normal)) \
-			/ check; 
+			/ check;
 	if (rec->t < TMIN || TMAX < rec->t)
 		return (FALSE);
 	rec->p = at(r, rec->t);
 	rec->color = plane->color;
-	rec->normal = unit_vector(negate(normal));
+	rec->normal = normal;
 	return (TRUE);
 }
 
@@ -37,7 +41,7 @@ t_object	plane_(t_point3 origin, t_vec3 normal, t_color albedo, t_color color)
 	if (pl)
 	{
 		pl->point = origin;
-		pl->normal = normal;
+		pl->normal = unit_vector(normal);
 		pl->n_normal = negate(normal);
 		pl->color = color;
 	}

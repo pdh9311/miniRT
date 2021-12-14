@@ -5,7 +5,7 @@
 void	init_hit_record(t_hit_record *hit_record)
 {
 	hit_record->p = (t_point3){0.0, 0.0, 0.0};
-	hit_record->normal = (t_point3){0.0, 0.0, 0.0}; 
+	hit_record->normal = (t_point3){0.0, 0.0, 0.0};
 	hit_record->t = -1.0;
 }
 

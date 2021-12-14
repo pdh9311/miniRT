@@ -3,37 +3,42 @@
 int	hit_cylinder(const t_ray *r, t_cylinder *cylinder, t_hit_record *rec)
 {
 	double	a;
-	double	b;
+	double	half_b;
 	double	c;
 	double	discrimiant;
 	t_vec3	w;
 	double	is_between;
-	double	tmp;
+	double	tmp;	// ray가 원통의 평면과 교차할때의 t값
 
 	w = subtract(r->origin, cylinder->point);
 	a = dot(r->direction, r->direction) - pow(dot(r->direction, cylinder->unit_normal), 2);
-	b = dot(r->direction, w) - (dot(r->direction, cylinder->unit_normal) * dot(w, cylinder->unit_normal));
+	half_b = dot(r->direction, w) - (dot(r->direction, cylinder->unit_normal) * dot(w, cylinder->unit_normal));
 	c = dot(w, w) - pow(dot(w, cylinder->unit_normal), 2) - pow(cylinder->radius, 2);
-	discrimiant = pow(b, 2) - (a * c);
+	discrimiant = pow(half_b, 2) - (a * c);
 	rec->color = cylinder->color;
 	if (discrimiant < 0)
 		return (FALSE);
-	rec->t = (-b - sqrt(discrimiant)) / a;
+	rec->t = (-half_b - sqrt(discrimiant)) / a;
 	if (rec->t < TMIN || TMAX < rec->t)
 	{
-		rec->t = (-b + sqrt(discrimiant)) / a;
+		rec->t = (-half_b + sqrt(discrimiant)) / a;
 		if (rec->t < TMIN || TMAX < rec->t)
 			return (FALSE);
 	}
 	rec->p = at(r, rec->t);
-	rec->normal = unit_vector(subtract(rec->p, multiply(cylinder->unit_normal, dot(subtract(rec->p, cylinder->point), cylinder->unit_normal))));
+	rec->normal = unit_vector(
+		subtract(
+			subtract(rec->p, cylinder->point),
+					multiply(cylinder->unit_normal, dot(subtract(rec->p, cylinder->point), cylinder->unit_normal))
+		)
+	);
 	is_between = dot(subtract(rec->p, cylinder->point), cylinder->unit_normal);
 	if (is_between >= 0 && is_between <= cylinder->height)	// 첫 교차점이 cylinder 곡면이면
 		return (TRUE);
 	else if (is_between < 0)	// 첫 교차점이 cylinder 바닥면이면
 	{
 		tmp = (dot(subtract(cylinder->point, r->origin), cylinder->unit_normal)) / (dot(r->direction, cylinder->unit_normal));
-		if (tmp < (-b + sqrt(discrimiant)) / a)
+		if (tmp < (-half_b + sqrt(discrimiant)) / a)
 			rec->t = tmp;
 		rec->p = at(r, rec->t);
 		rec->normal = negate(cylinder->unit_normal);
@@ -44,7 +49,7 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cylinder, t_hit_record *rec)
 	else	// 첫 교차점이 cylinder 윗면이면
 	{
 		tmp = (dot(subtract(cylinder->point, r->origin), cylinder->unit_normal)) / (dot(r->direction, cylinder->unit_normal));
-		if (tmp < (-b + sqrt(discrimiant)) / a)
+		if (tmp < (-half_b + sqrt(discrimiant)) / a)
 			rec->t = tmp;
 		rec->p = at(r, rec->t);
 		rec->normal = cylinder->unit_normal;

@@ -25,10 +25,10 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	}
 	rec->p = at(r, rec->t);
 	rec->normal = unit_vector(subtract(rec->p, sphere->center));
-	if (dot(r->direction, rec->normal) > 0)
+	if (dot(unit_vector(r->direction), rec->normal) > 0)
 		rec->normal = negate(rec->normal);
 	rec->color = sphere->color;
-	return (TRUE);	 
+	return (TRUE);
 }
 
 t_object	sphere_(t_point3 center, double radius, t_color albedo, t_color color)

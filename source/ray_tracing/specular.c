@@ -2,7 +2,7 @@
 
 void	set_specular(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong)
 {
-	phong->ksn = 256;	// shininess value
+	phong->ksn = 128;	// shininess value
 	phong->ks = 0.5;	// phong->specular strength
 
 	phong->view_dir = unit_vector(negate(scene->ray.direction));
