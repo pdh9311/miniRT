@@ -3,21 +3,17 @@
 int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 {
 	t_vec3	normal;
-	t_vec3	ray_dir;
 	double	check;
 
 	normal = plane->normal;
-	ray_dir = unit_vector(r->direction);
-	check = dot(ray_dir, normal);
-	// if (check < 1e-6)
-	// {
-	// 	check = dot(r->direction, plane->n_normal);
-	// 	if (check < 1e-6)
-	// 		return (FALSE);
-	// 	normal =  plane->n_normal;
-	// }
-	if (check < 1e-6 && check > -1e-6)
-		return (FALSE);
+	check = dot(r->direction, normal);
+	if (check < 1e-6)
+	{
+		check = dot(r->direction, plane->n_normal);
+		if (check < 1e-6)
+			return (FALSE);
+		normal =  plane->n_normal;
+	}
 	rec->t = (dot(subtract(plane->point, r->origin), normal)) \
 			/ check;
 	if (rec->t < TMIN || TMAX < rec->t)

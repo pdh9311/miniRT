@@ -1,58 +1,77 @@
 #include "cylinder.h"
 
-int	hit_cylinder(const t_ray *r, t_cylinder *cylinder, t_hit_record *rec)
+static int	cy_plane(t_hit_cy *cy, t_cylinder *cylinder, const t_ray *r, t_hit_record *rec)
 {
-	double	a;
-	double	half_b;
-	double	c;
-	double	discrimiant;
-	t_vec3	w;
-	double	is_between;
-	double	tmp;	// ray가 원통의 평면과 교차할때의 t값
+	t_vec3 normal;
+	double check;
 
-	w = subtract(r->origin, cylinder->point);
-	a = dot(r->direction, r->direction) - pow(dot(r->direction, cylinder->unit_normal), 2);
-	half_b = dot(r->direction, w) - (dot(r->direction, cylinder->unit_normal) * dot(w, cylinder->unit_normal));
-	c = dot(w, w) - pow(dot(w, cylinder->unit_normal), 2) - pow(cylinder->radius, 2);
-	discrimiant = pow(half_b, 2) - (a * c);
-	rec->color = cylinder->color;
-	if (discrimiant < 0)
+	normal = cylinder->unit_normal;
+	check = dot(r->direction, normal);
+	if (check < 1e-6)
+	{
+		check = dot(r->direction, negate(cylinder->unit_normal));
+		if (check < 1e-10)
+			return (FALSE);
+		normal = negate(cylinder->unit_normal);
+	}
+	cy->tmp = (dot(subtract(cylinder->point, r->origin), normal)) \
+		/ check;
+	if (cy->tmp < TMIN || TMAX < cy->tmp)
 		return (FALSE);
-	rec->t = (-half_b - sqrt(discrimiant)) / a;
+	if (cy->tmp < (-(cy->half_b) + sqrt(cy->discrimiant)) / cy->a)		
+		rec->t = cy->tmp;
+	rec->p = at(r, cy->tmp);
+	rec->normal = normal;
+	return (TRUE);
+}
+
+static int	eq_solve(t_hit_cy *cy, t_cylinder *cylinder, const t_ray *r, t_hit_record *rec)
+{
+	cy->w = subtract(r->origin, cylinder->point);
+	cy->a = dot(r->direction, r->direction) \
+		- pow(dot(r->direction, cylinder->unit_normal), 2);
+	cy->half_b = dot(r->direction, cy->w) \
+		- (dot(r->direction, cylinder->unit_normal) * dot(cy->w, cylinder->unit_normal));
+	cy->c = dot(cy->w, cy->w) - pow(dot(cy->w, cylinder->unit_normal), 2) - pow(cylinder->radius, 2);
+	cy->discrimiant = pow(cy->half_b, 2) - (cy->a * cy->c);
+	rec->color = cylinder->color;
+	if (cy->discrimiant < 0)
+		return (FALSE);
+	rec->t = (-(cy->half_b) - sqrt(cy->discrimiant)) / cy->a;
 	if (rec->t < TMIN || TMAX < rec->t)
 	{
-		rec->t = (-half_b + sqrt(discrimiant)) / a;
+		rec->t = (-(cy->half_b) + sqrt(cy->discrimiant)) / cy->a;
 		if (rec->t < TMIN || TMAX < rec->t)
 			return (FALSE);
 	}
 	rec->p = at(r, rec->t);
-	rec->normal = unit_vector(
-		subtract(
-			subtract(rec->p, cylinder->point),
-					multiply(cylinder->unit_normal, dot(subtract(rec->p, cylinder->point), cylinder->unit_normal))
-		)
-	);
-	is_between = dot(subtract(rec->p, cylinder->point), cylinder->unit_normal);
-	if (is_between >= 0 && is_between <= cylinder->height)	// 첫 교차점이 cylinder 곡면이면
+	rec->normal = unit_vector(subtract(subtract(rec->p, cylinder->point),\
+		multiply(cylinder->unit_normal, \
+		dot(subtract(rec->p, cylinder->point), cylinder->unit_normal))));
+	return (TRUE);
+}
+
+int	hit_cylinder(const t_ray *r, t_cylinder *cylinder, t_hit_record *rec)
+{
+	t_hit_cy	cy;
+
+	if (!eq_solve(&cy, cylinder, r, rec))
+		return (FALSE);
+	cy.is_between = dot(subtract(rec->p, cylinder->point), cylinder->unit_normal);
+	if (cy.is_between >= 0 && cy.is_between <= cylinder->height)	// 첫 교차점이 cylinder 곡면이면
 		return (TRUE);
-	else if (is_between < 0)	// 첫 교차점이 cylinder 바닥면이면
+	else if (cy.is_between < 0)	// 첫 교차점이 cylinder 바닥면이면
 	{
-		tmp = (dot(subtract(cylinder->point, r->origin), cylinder->unit_normal)) / (dot(r->direction, cylinder->unit_normal));
-		if (tmp < (-half_b + sqrt(discrimiant)) / a)
-			rec->t = tmp;
-		rec->p = at(r, rec->t);
-		rec->normal = negate(cylinder->unit_normal);
+		if (!cy_plane(&cy, cylinder, r, rec))
+			return (FALSE);
 		if (length(subtract(rec->p, cylinder->point)) <= cylinder->radius)
 			return (TRUE);
 		return (FALSE);
 	}
 	else	// 첫 교차점이 cylinder 윗면이면
 	{
-		tmp = (dot(subtract(cylinder->point, r->origin), cylinder->unit_normal)) / (dot(r->direction, cylinder->unit_normal));
-		if (tmp < (-half_b + sqrt(discrimiant)) / a)
-			rec->t = tmp;
-		rec->p = at(r, rec->t);
-		rec->normal = cylinder->unit_normal;
+		if (!cy_plane(&cy, cylinder, r, rec))
+			return (FALSE);
 		if (length(subtract(rec->p, add(cylinder->point, multiply(cylinder->unit_normal, cylinder->height)))) <= cylinder->radius)
 			return (TRUE);
 		return (FALSE);
