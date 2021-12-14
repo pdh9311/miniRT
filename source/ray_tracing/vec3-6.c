@@ -36,7 +36,7 @@ void	vec_min(t_vec3 *v, t_vec3 max)
 	if (v->x >= max.x)
 		v->x = max.x;
 	if (v->y >= max.y)
-		v->y = max.y; 
+		v->y = max.y;
 	if (v->z >= max.z)
 		v->z = max.z;
 }	

@@ -3,23 +3,19 @@
 
 int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 {
-	t_vec3	oc;
-	double	a;
-	double	half_b;
-	double	c;
-	double	discrimiant;
+	t_hit_sphere	sp;
 
-	oc = subtract(r->origin, sphere->center);
-	a = dot(r->direction, r->direction);
-	half_b = dot(oc, r->direction);
-	c = dot(oc, oc) - (pow(sphere->radius, 2));
-	discrimiant = pow(half_b, 2) - (a * c);
-	if (discrimiant < 0.0)
+	sp.oc = subtract(r->origin, sphere->center);
+	sp.a = dot(r->direction, r->direction);
+	sp.half_b = dot(sp.oc, r->direction);
+	sp.c = dot(sp.oc, sp.oc) - (pow(sphere->radius, 2));
+	sp.discrimiant = pow(sp.half_b, 2) - (sp.a * sp.c);
+	if (sp.discrimiant < 0.0)
 		return (FALSE);
-	rec->t = (-half_b - sqrt(discrimiant)) / a;
+	rec->t = (-(sp.half_b) - sqrt(sp.discrimiant)) / sp.a;
 	if (rec->t < TMIN || TMAX < rec->t)
 	{
-		rec->t = (-half_b + sqrt(discrimiant)) / a;
+		rec->t = (-(sp.half_b) + sqrt(sp.discrimiant)) / sp.a;
 		if (rec->t < TMIN || TMAX < rec->t)
 			return (FALSE);
 	}
@@ -31,7 +27,8 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	return (TRUE);
 }
 
-t_object	sphere_(t_point3 center, double radius, t_color albedo, t_color color)
+t_object	sphere_(t_point3 center, double radius, \
+					t_color albedo, t_color color)
 {
 	t_object	new_sp;
 	t_sphere	*s;

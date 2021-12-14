@@ -72,7 +72,7 @@ int		readfile(char *file, t_lst **lst);
 void	init(t_scene *scene, t_lst *lst);
 
 // random_clamp.c
-double	degrees_to_radians(double degrees);
+double	deg_to_rad(double degrees);
 double	random_double(void);
 double	random_double_(double min, double max);
 double	clamp(double x, double min, double max);

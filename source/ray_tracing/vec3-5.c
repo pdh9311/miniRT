@@ -34,7 +34,6 @@ t_vec3	random_in_unit_disk(void)
 t_vec3	reflect(t_vec3 v, t_vec3 n)
 {
 	return (add(negate(v), multiply(n, 2 * dot(v, n))));
-	// return (subtract(v, multiply(n, 2 * dot(v, n))));
 }
 
 t_vec3	refract(t_vec3 uv, t_vec3 n, double etai_over_etat)

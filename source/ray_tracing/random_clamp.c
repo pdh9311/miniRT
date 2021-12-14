@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-double	degrees_to_radians(double degrees)
+double	deg_to_rad(double degrees)
 {
 	return (degrees * M_PI / 180.0);
 }

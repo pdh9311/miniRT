@@ -10,11 +10,9 @@ static void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	write_color(t_scene *scene, int y, int x)
 {
-	//t_camera	*camera;
-	t_mlx		*mlx;
+	t_mlx	*mlx;
 
 	mlx = &scene->mlx;
-	//camera = &scene->camera;
 	mlx->rgb[0] = (int)(mlx->pixel_color.x * 255.);
 	mlx->rgb[1] = (int)(mlx->pixel_color.y * 255.);
 	mlx->rgb[2] = (int)(mlx->pixel_color.z * 255.);

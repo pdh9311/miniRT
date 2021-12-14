@@ -12,7 +12,7 @@ int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 		check = dot(r->direction, plane->n_normal);
 		if (check < 1e-6)
 			return (FALSE);
-		normal =  plane->n_normal;
+		normal = plane->n_normal;
 	}
 	rec->t = (dot(subtract(plane->point, r->origin), normal)) \
 			/ check;
@@ -24,7 +24,8 @@ int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 	return (TRUE);
 }
 
-t_object	plane_(t_point3 origin, t_vec3 normal, t_color albedo, t_color color)
+t_object	plane_(t_point3 origin, t_vec3 normal, \
+				t_color albedo, t_color color)
 {
 	t_object	new_pl;
 	t_plane		*pl;
