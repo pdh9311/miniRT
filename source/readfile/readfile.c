@@ -28,7 +28,7 @@ static int	check_cam_light(t_lst *lst)
 			light_cnt++;
 		lst = lst->next;
 	}
-	if (cam_cnt == 0)
+	if (cam_cnt != 1)
 	{
 		ft_putendl_fd("Error\n  Not found camera", 2);
 		free_lst(lst);
