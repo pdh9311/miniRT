@@ -16,6 +16,7 @@
 # include "hit.h"
 # include "list.h"
 # include "element.h"
+# include "libft.h"
 
 typedef struct s_mlx
 {

@@ -35,7 +35,8 @@ INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
 SOURCES		:=	main.c \
-				readfile.c \
+				readfile/readfile.c \
+				readfile/type_parsing.c \
 				types/type_a.c \
 				types/type_c.c \
 				types/type_l.c \
@@ -111,6 +112,7 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)/types
 	@mkdir -p $(OBJS_DIR)/utils
 	@mkdir -p $(OBJS_DIR)/list
+	@mkdir -p $(OBJS_DIR)/readfile
 	@mkdir -p $(OBJS_DIR)/ray_tracing
 	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 

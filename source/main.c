@@ -52,22 +52,22 @@ int	main(int argc, char *argv[])
 	t_scene		scene;
 	t_camera	*camera;
 	t_mlx		*mlx;
-
 	t_lst		*lst;
 
 	if (argc != 2)
-		return (1);
+	{
+		ft_putendl_fd("Error\n  Wrong argument count", 2);
+		return (EXIT_FAILURE);
+	}
 	camera = &scene.camera;
 	mlx = &scene.mlx;
 	lst = NULL;
 	if (readfile(argv[1], &lst))
-	{
-		// system("leaks miniRT");
 		return (EXIT_FAILURE);
-	}
 	init(&scene, lst);
 	printf("%d %d\n", camera->image_height, camera->image_width);
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L<<0, key_hook, &scene);
 	mlx_loop_hook(mlx->mlx_ptr, &draw, &scene);
 	mlx_loop(mlx->mlx_ptr);
+	return (EXIT_SUCCESS);
 }

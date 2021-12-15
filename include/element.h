@@ -3,6 +3,7 @@
 
 # include "list.h"
 # include "vec3.h"
+# include "libft.h"
 
 enum	e_type_str
 {
@@ -38,7 +39,17 @@ typedef struct s_element
 	int			type;
 }				t_element;
 
+typedef struct s_rdfile
+{
+	int			fd;
+	char		*line;
+	int			flag;
+}				t_rdfile;
+
 int			readfile(char *file, t_lst **lst);
+
+int			line_split(char *line, t_lst **lst);
+int			check_type(char **split, char *type, t_lst **lst);
 
 int			input_type_a(char **split, t_lst **lst);
 int			input_type_c(char **split, t_lst **lst);
