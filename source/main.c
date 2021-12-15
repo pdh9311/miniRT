@@ -20,8 +20,9 @@ t_color	ray_color(t_scene *scene)
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
-	t = (scene->ray.direction.y + 1) * 0.5;
+	t = fabs((scene->ray.direction.y + 1) * 0.5);
 	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), multiply(color_(0.5, 0.7, 1.0), t));
+	//pixel_color = (t_color){0, 0, 0};
 	return (pixel_color);
 }
 
