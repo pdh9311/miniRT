@@ -55,7 +55,7 @@ static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	return (TRUE);
 }
 
-int	hit_cld(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
+int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
 

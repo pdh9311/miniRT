@@ -1,5 +1,5 @@
 C			:= gcc
-CFLAGS		:= -g -Werror -Wextra -Wall  -fsanitize=address
+CFLAGS		:= -g -Werror -Wextra -Wall
 CHECK		:=	-fsanitize=address
 
 OS 			:= $(shell uname)
@@ -29,7 +29,8 @@ INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
 				ray.h \
 				sphere.h \
 				plane.h \
-				cylinder.h
+				cylinder.h \
+				keycode.h keyhook.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
@@ -69,7 +70,8 @@ SOURCES		:=	main.c \
 				ray_tracing/specular.c \
 				ray_tracing/plane.c \
 				ray_tracing/cylinder.c \
-				test.c
+				test.c \
+				keyhook.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/

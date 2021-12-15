@@ -1,10 +1,10 @@
 #include "color.h"
 #include "list.h"
+#include "keyhook.h"
 
 t_color	ray_color(t_scene *scene)
 {
 	t_color			pixel_color;
-	//t_vec3			unit_dir;
 	t_hit_record	rec;
 	double			t;
 	t_phong			phong;
@@ -12,7 +12,6 @@ t_color	ray_color(t_scene *scene)
 	init_hit_record(&rec);
 	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
-		// pixel_color = multiply(add(rec.normal, (t_vec3){1.0, 1.0, 1.0}), 0.5);
 		pixel_color = rec.color;
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
@@ -21,59 +20,31 @@ t_color	ray_color(t_scene *scene)
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
 	}
-	//unit_dir = unit_vector(scene->ray.direction);
 	t = (scene->ray.direction.y + 1) * 0.5;
 	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), multiply(color_(0.5, 0.7, 1.0), t));
 	return (pixel_color);
 }
 
-void	draw(t_scene *scene, t_camera* camera, t_mlx *mlx)
+int	draw(void *param)
 {
 	double		u;
 	double		v;
-	//t_ray		r;
+	t_scene		*scene;
 
-	for (int y = camera->image_height - 1; y >= 0; --y)
+	scene = param;
+	for (int y = scene->camera.image_height - 1; y >= 0; --y)
 	{
-		for (int x = 0; x < camera->image_width; ++x)
+		for (int x = 0; x < scene->camera.image_width; ++x)
 		{
-			u = (double)x / camera->image_width;
-			v = (double)(camera->image_height - 1 - y) / camera->image_height;
-			//r = ray_(camera->origin, new_ray_dir(camera, u, v));
-			scene->ray = ray_(camera->origin, new_ray_dir(camera, u, v));
-			//mlx->pixel_color = ray_color(&r, scene->list);
-			mlx->pixel_color = ray_color(scene);
+			u = (double)x / scene->camera.image_width;
+			v = (double)(scene->camera.image_height - 1 - y) / scene->camera.image_height;
+			scene->ray = ray_(scene->camera.origin, new_ray_dir(&scene->camera, u, v));
+			scene->mlx.pixel_color = ray_color(scene);
 			write_color(scene, y, x);
 		}
 	}
-}
-
-void	add_object(t_hlist **list)
-{
-	//t_object object1 = sphere_((t_point3){-0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 0.0, 0.0});
-	// t_object object2 = sphere_((t_point3){0.0, -100.5, -2.0}, 100.0, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 1.0, 0.0});
-	// t_object object3 = sphere_((t_point3){0.5, 0.0, -2.0}, 0.5, (t_color){1.0, 1.0, 1.0}, (t_color){0.0, 0.0, 1.0});
-	//t_object object4 = plane_((t_point3){0.0, 0.0, -3.0}, (t_vec3){0.0, 0.0, 1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0});
-	// t_object object5 = plane_((t_point3){0.0, 0.0, 1.0}, (t_vec3){-0.5, 0.0, -0.5}, (t_color){0.8, 0.7, 0.5}, (t_color){1.0, 1.0, 0.0});
-	// t_object object6 = cylinder_((t_point3){0.0, 0.0, -2.0}, (t_vec3){0.0, 1.0, 0.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0}, 0.5, 1);
-	t_object object7 = cylinder_((t_point3){0.0, 0.0, -1.0}, (t_vec3){1.0, 0.0, -1.0}, (t_color){1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0}, 0.5, 1);
-
-	//push(list, list_(object1));
-	// push(list, list_(object2));
-	// push(list, list_(object3));
-	//push(list, list_(object4));
-	// push(list, list_(object5));
-	// push(list, list_(object6));
-	 push(list, list_(object7));
-}
-
-void print_hlist(t_hlist *hlist)
-{
-	while (hlist)
-	{
-		printf("%d\n", hlist->object.type);
-		hlist = hlist->next;
-	}
+	mlx_put_image_to_window(scene->mlx.mlx_ptr, scene->mlx.win_ptr, scene->mlx.img_ptr, 0, 0);
+	return (TRUE);
 }
 
 int	main(int argc, char *argv[])
@@ -90,13 +61,9 @@ int	main(int argc, char *argv[])
 	mlx = &scene.mlx;
 	lst = NULL;
 	readfile(argv[1], &lst);
-	// print_lst(lst);
-
 	init(&scene, lst);
-	// print_hlist(scene.list);
-	// add_object(&scene.list);
 	printf("%d %d\n", camera->image_height, camera->image_width);
-	draw(&scene, camera, mlx);
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
+	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L<<0, key_hook, &scene);
+	mlx_loop_hook(mlx->mlx_ptr, &draw, &scene);
 	mlx_loop(mlx->mlx_ptr);
 }
