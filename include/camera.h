@@ -8,6 +8,7 @@ typedef struct s_camera
 	int			image_width;
 	int			image_height;
 	t_vec3		origin;
+	t_vec3		origin2;
 	double		fov;
 	double		vp_height;
 	double		vp_width;

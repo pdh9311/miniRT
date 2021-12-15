@@ -6,8 +6,12 @@
 
 # define KEY_PRESS		2
 # define KEY_RELEASE	3
+# define BTN_PRESS		4
+# define BTN_RELEASE	5
+# define MOUSE_MOVE		6
+# define DESTROY		17
 
-void	close_screen(t_scene *scene);
+int		close_screen(void *param);
 int		key_hook(int keycode, t_scene *scene);
 
 #endif

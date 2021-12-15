@@ -8,8 +8,8 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
 	cam->origin = elem->coord;
-	cam->focal = multiply(unit_vector(\
-			subtract((t_vec3)elem->vector, elem->coord)), cam->focal_length);
+	cam->origin2 = elem->coord;
+	cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)elem->vector), cam->focal_length));
 	cam->fov = elem->fov;
 	cam->vp_height = 2 * cam->focal_length * tan(deg_to_rad(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
