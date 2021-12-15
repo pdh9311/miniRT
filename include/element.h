@@ -49,4 +49,9 @@ int			input_type_cy(char **split, t_lst **lst);
 t_color		get_color(char *rgb);
 t_point3	get_point3(char *data);
 
+int			check_rgb(t_color rgb);
+int			check_ratio(double ratio);
+int			check_axis(t_vec3 axis);
+int			check_fov(double fov);
+
 #endif

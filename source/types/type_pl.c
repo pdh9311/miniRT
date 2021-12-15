@@ -14,6 +14,12 @@ int	input_type_pl(char **split, t_lst **lst)
 	elem->vector = get_point3(split[2]);
 	elem->rgb = get_color(split[3]);
 	elem->type = PL;
+	if (check_axis(elem->vector) || check_rgb(elem->rgb))
+	{
+		free(elem);
+		ft_putendl_fd("Error\n  Not in range", 2);
+		return (EXIT_FAILURE);
+	}
 	// lst에 추가
 	pp_lstadd_back(lst, pp_lstnew(elem));
 	/*

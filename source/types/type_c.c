@@ -14,8 +14,14 @@ int	input_type_c(char **split, t_lst **lst)
 	elem->vector = get_point3(split[2]);
 	elem->fov = ft_atof(split[3]);
 	elem->type = C;
+	if (check_axis(elem->vector) || check_fov(elem->fov))
+	{
+		free(elem);
+		ft_putendl_fd("Error\n  Not in range", 2);
+		return (EXIT_FAILURE);
+	}
 	// lst에 추가
 	pp_lstadd_back(lst, pp_lstnew(elem));
 	// printf("%lf,%lf,%lf | %lf,%lf,%lf, | %lf\n", elem->coord.x, elem->coord.y, elem->coord.z, elem->vector.x, elem->vector.y, elem->vector.z, elem->fov);
-	return (EXIT_SUCCESS);	
-}	
+	return (EXIT_SUCCESS);
+}

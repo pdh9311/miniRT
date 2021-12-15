@@ -60,7 +60,11 @@ int	main(int argc, char *argv[])
 	camera = &scene.camera;
 	mlx = &scene.mlx;
 	lst = NULL;
-	readfile(argv[1], &lst);
+	if (readfile(argv[1], &lst))
+	{
+		// system("leaks miniRT");
+		return (EXIT_FAILURE);
+	}
 	init(&scene, lst);
 	printf("%d %d\n", camera->image_height, camera->image_width);
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L<<0, key_hook, &scene);

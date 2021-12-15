@@ -1,5 +1,5 @@
 C			:= gcc
-CFLAGS		:= -g -Werror -Wextra -Wall
+CFLAGS		:= -g -Werror -Wextra -Wall $(CHECK)
 CHECK		:=	-fsanitize=address
 
 OS 			:= $(shell uname)
@@ -43,6 +43,7 @@ SOURCES		:=	main.c \
 				types/type_sp.c \
 				types/type_cy.c \
 				types/utils.c \
+				types/check_utils.c \
 				utils/free.c \
 				list/pp_lstnew.c \
 				list/pp_lstadd_front.c \
@@ -50,6 +51,7 @@ SOURCES		:=	main.c \
 				list/pp_lstsize.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
+				list/pp_lstfree.c \
 				ray_tracing/camera.c \
 				ray_tracing/color.c \
 				ray_tracing/hit_1.c \

@@ -88,19 +88,6 @@ void	make_object_list(t_scene *scene, t_lst *lst)
 	}
 }
 
-void		free_lst(t_lst *lst)
-{
-	t_lst	*tmp;
-
-	while (lst != NULL)
-	{
-		tmp = lst->next;
-		free(lst->content);
-		free(lst);
-		lst = tmp;
-	}
-}
-
 void	init(t_scene *scene, t_lst *lst)
 {
 	scene->list = NULL;

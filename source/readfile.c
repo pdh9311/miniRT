@@ -6,9 +6,9 @@ int	check_type(char **split, char *type, t_lst **lst)
 {
 	static const int	total = 6;
 	static const char	*type_str[] = {
-		"A", "C", "L", "pl", "sp", "cy", NULL
+		"A", "C", "L", "pl", "sp", "cy"
 	};
-	static int			(*type_func[])(char **, t_lst **) = {
+	static	int			(*type_func[])(char **, t_lst **) = {
 		&input_type_a, &input_type_c,
 		&input_type_l, &input_type_pl,
 		&input_type_sp, &input_type_cy
@@ -16,19 +16,18 @@ int	check_type(char **split, char *type, t_lst **lst)
 	int					idx;
 
 	idx = -1;
-	while (++idx <= total)
-	{
+	while (++idx < total)
 		if (ft_strcmp(type_str[idx], type) == 0)
 			break ;
-	}
-	if (idx <= total)
+	printf("%s\n", type);
+	if (idx == total)
 	{
-		if (idx < total && type_func[idx](split, lst) == EXIT_FAILURE)
-			return (free_dptr(split, EXIT_FAILURE));
-		else
-			return (EXIT_SUCCESS);
+		ft_putendl_fd("Error\n  Wrong type", 2);
+		return (EXIT_FAILURE);
 	}
-	return (EXIT_FAILURE);
+	if (type_func[idx](split, lst) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static int	read_line(int fd, char **line, int *flag)
@@ -49,16 +48,29 @@ static int	line_split(char *line, t_lst **lst)
 
 	split = ft_multi_split(line, " \r\t\v\f\n");
 	if (split == NULL)
+		return (EXIT_FAILURE);
+	if (check_type(split, split[0], lst) == EXIT_FAILURE)
+		return (free_dptr(split, EXIT_FAILURE));
+	return (free_dptr(split, EXIT_SUCCESS));
+}
+
+int	check_camera(t_lst *lst)
+{
+	int	cnt;
+
+	cnt = 0;
+	while (lst != NULL)
 	{
-		free_ptr(line, 0);
+		if (((t_element *)(lst->content))->type == 1)
+			cnt++;
+		lst = lst->next;
+	}
+	if (cnt == 0)
+	{
+		ft_putendl_fd("Error\n  Not found camera", 2);
 		return (EXIT_FAILURE);
 	}
-	if (check_type(split, split[0], lst) == EXIT_FAILURE)
-	{
-		free_ptr(line, 0);
-		return (free_dptr(split, EXIT_FAILURE));
-	}
-	return (free_dptr(split, EXIT_SUCCESS));
+	return (EXIT_SUCCESS);
 }
 
 int	readfile(char *file, t_lst **lst)
@@ -75,11 +87,19 @@ int	readfile(char *file, t_lst **lst)
 	{
 		if (read_line(fd, &line, &flag))
 			break ;
+		if (ft_strcmp(line, "") == 0)
+			continue ;
+		printf("line: %s\n", line);
 		if (line_split(line, lst))
-			break ;
-		// print_str_arr(split);
+		{
+			free_ptr(line, 0);
+			if (*lst != NULL)
+				free_lst(*lst);
+			close(fd);
+			return (EXIT_FAILURE);
+		}
 		free_ptr(line, 0);
 	}
 	close(fd);
-	return (EXIT_SUCCESS);
+	return (check_camera(*lst));
 }
