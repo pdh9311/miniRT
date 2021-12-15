@@ -88,7 +88,7 @@ void	make_object_list(t_scene *scene, t_lst *lst)
 	}
 }
 
-int		free_lst(t_lst *lst)
+void		free_lst(t_lst *lst)
 {
 	t_lst	*tmp;
 
