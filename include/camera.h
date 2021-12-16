@@ -18,6 +18,9 @@ typedef struct s_camera
 	t_vec3		w;
 	t_vec3		u;
 	t_vec3		v;
+	t_vec3		init_w;
+	t_vec3		init_u;
+	t_vec3		init_v;
 	double		focal_length;
 	int			samples_per_pixel;
 	t_vec3		horizontal;

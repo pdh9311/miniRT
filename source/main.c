@@ -66,11 +66,13 @@ int	main(int argc, char *argv[])
 	if (readfile(argv[1], &lst))
 		return (EXIT_FAILURE);
 	init(&scene, lst);
+
 	printf("%d %d\n", camera->image_height, camera->image_width);
+	printf("alpha\tbeta\tcamera.vector\t\tcamera.u\t\tcamera.v\t\tcamera.w\t\torigin\n");
+
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L<<0, key_hook, &scene);
 	mlx_hook(mlx->win_ptr, DESTROY, 0, close_screen, &scene);
 	// mlx_hook(mlx->win_ptr, BTN_PRESS, 1L << 2, mouse_hook, &scene);
-
 	mlx_loop_hook(mlx->mlx_ptr, &draw, &scene);
 	mlx_loop(mlx->mlx_ptr);
 	return (EXIT_SUCCESS);

@@ -8,9 +8,7 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
 	cam->origin = elem->coord;
-	cam->origin2 = elem->coord;
 	cam->vector = elem->vector;
-	cam->vector2 = elem->vector;
 	cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)elem->vector), cam->focal_length));
 	cam->fov = elem->fov;
 	cam->vp_height = 2 * cam->focal_length * tan(deg_to_rad(elem->fov / 2));
@@ -27,6 +25,12 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->lower_left_corner = subtract(
 			subtract(subtract(cam->origin, divide(cam->horizontal, 2)),
 				divide(cam->vertical, 2)), cam->w);
+	// save_init_value
+	cam->origin2 = elem->coord;
+	cam->vector2 = elem->vector;	//
+	cam->init_w = cam->w;			//
+	cam->init_u = cam->u;			//
+	cam->init_v = cam->v;			//
 }
 
 static void	init_mlx(t_scene *scene)

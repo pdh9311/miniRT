@@ -1,4 +1,5 @@
 #include "keyhook.h"
+#include "utils.h"
 
 /*
 	[ ADD in Linux or Ubuntu ]
@@ -43,19 +44,39 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == ESC)
 		close_screen(scene);
 	if (keycode == ENG_D)
-		update(&cam->origin, x + 0.1, y, z);
+	{
+		cam->origin = add(cam->origin, multiply(cam->u, 0.1));
+		// update(&cam->origin, x + 0.1, y, z);
+	}
 	else if (keycode == ENG_A)
-		update(&cam->origin, x - 0.1, y, z);
+	{
+		cam->origin = add(cam->origin, multiply(cam->u, -0.1));
+		// update(&cam->origin, x - 0.1, y, z);
+	}
 	else if (keycode == ENG_W)
-		update(&cam->origin, x, y + 0.1, z);
+	{
+		cam->origin = add(cam->origin, multiply(cam->v, 0.1));
+		// update(&cam->origin, x, y + 0.1, z);
+	}
 	else if (keycode == ENG_S)
-		update(&cam->origin, x, y - 0.1, z);
+	{
+		cam->origin = add(cam->origin, multiply(cam->v, -0.1));
+		// update(&cam->origin, x, y - 0.1, z);
+	}
 	else if (keycode == ENG_E)
-		update(&cam->origin, x, y, z + 0.1);
+	{
+		cam->origin = add(cam->origin, multiply(unit_vector(cam->vector), -0.1));
+		// update(&cam->origin, x, y, z + 0.1);
+	}
 	else if (keycode == ENG_Q)
-		update(&cam->origin, x, y, z - 0.1);
+	{
+		cam->origin = add(cam->origin, multiply(unit_vector(cam->vector), 0.1));
+		// update(&cam->origin, x, y, z - 0.1);
+	}
 	else if (keycode == BACKTIK)
+	{
 		update(&cam->origin, cam->origin2.x, cam->origin2.y, cam->origin2.z);
+	}
 	else if (keycode == ENG_P)
 	{
 		cam->origin = cam->origin2;
@@ -90,7 +111,7 @@ int	key_hook(int keycode, t_scene *scene)
 		++cam->beta;
 		cam->vector.x = -(sin(deg_to_rad(cam->beta)));
 		cam->vector.z = -(cos(deg_to_rad(cam->beta)));
-		//printf("%lf %lf %lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
+		//printf("%+.2lf %+.2lf %+.2lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
 		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
 		cam->w = unit_vector(subtract(cam->origin, cam->focal));
 		cam->u = unit_vector(cross(cam->vup, cam->w));
@@ -103,7 +124,7 @@ int	key_hook(int keycode, t_scene *scene)
 		--cam->beta;
 		cam->vector.x = -(sin(deg_to_rad(cam->beta)));
 		cam->vector.z = -(cos(deg_to_rad(cam->beta)));
-		//printf("%lf %lf %lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
+		//printf("%+.2lf %+.2lf %+.2lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
 		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
 		cam->w = unit_vector(subtract(cam->origin, cam->focal));
 		cam->u = unit_vector(cross(cam->vup, cam->w));
@@ -116,7 +137,7 @@ int	key_hook(int keycode, t_scene *scene)
 		++cam->gamma;
 		cam->vector.x = -(cos(deg_to_rad(cam->gamma)));
 		cam->vector.y = -(sin(deg_to_rad(cam->gamma)));
-		//printf("%lf %lf %lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
+		//printf("%+.2lf %+.2lf %+.2lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
 		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
 		cam->w = unit_vector(subtract(cam->origin, cam->focal));
 		cam->u = unit_vector(cross(cam->vup, cam->w));
@@ -129,7 +150,75 @@ int	key_hook(int keycode, t_scene *scene)
 		--cam->gamma;
 		cam->vector.x = -(cos(deg_to_rad(cam->gamma)));
 		cam->vector.y = -(sin(deg_to_rad(cam->gamma)));
-		//printf("%lf %lf %lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
+		//printf("%+.2lf %+.2lf %+.2lf\n", cam->vector.x, cam->vector.y, cam->vector.z);
+		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
+		cam->w = unit_vector(subtract(cam->origin, cam->focal));
+		cam->u = unit_vector(cross(cam->vup, cam->w));
+		cam->v = cross(cam->w, cam->u);
+		cam->horizontal = multiply(cam->u, cam->vp_width);
+		cam->vertical = multiply(cam->v, cam->vp_height);
+	}
+	else if (keycode == UP)
+	{
+		cam->alpha += 10;
+		t_vec3	r1 = multiply(cam->vector2, cos(deg_to_rad(cam->alpha)));
+		t_vec3	r2 = multiply(cam->init_v, sin(deg_to_rad(cam->alpha) * length(cam->vector2)));
+		t_vec3	r3 = multiply(cam->vector2, cos(deg_to_rad(cam->beta)));
+		t_vec3	r4 = multiply(cam->init_u, sin(deg_to_rad(cam->beta) * length(cam->vector2)));
+		cam->vector = add(add(r1, r2), add(r3, r4));
+		// cam->vector = add(r1, r2);
+
+		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
+		cam->w = unit_vector(subtract(cam->origin, cam->focal));
+		cam->u = unit_vector(cross(cam->vup, cam->w));
+		cam->v = cross(cam->w, cam->u);
+		cam->horizontal = multiply(cam->u, cam->vp_width);
+		cam->vertical = multiply(cam->v, cam->vp_height);
+	}
+	else if (keycode == DOWN)
+	{
+		cam->alpha -= 10;
+		t_vec3	r1 = multiply(cam->vector2, cos(deg_to_rad(cam->alpha)));
+		t_vec3	r2 = multiply(cam->init_v, sin(deg_to_rad(cam->alpha) * length(cam->vector2)));
+		t_vec3	r3 = multiply(cam->vector2, cos(deg_to_rad(cam->beta)));
+		t_vec3	r4 = multiply(cam->init_u, sin(deg_to_rad(cam->beta) * length(cam->vector2)));
+		cam->vector = add(add(r1, r2), add(r3, r4));
+		// cam->vector = add(r1, r2);
+
+		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
+		cam->w = unit_vector(subtract(cam->origin, cam->focal));
+		cam->u = unit_vector(cross(cam->vup, cam->w));
+		cam->v = cross(cam->w, cam->u);
+		cam->horizontal = multiply(cam->u, cam->vp_width);
+		cam->vertical = multiply(cam->v, cam->vp_height);
+	}
+	else if (keycode == RIGHT)
+	{
+		cam->beta += 10;
+		t_vec3	r1 = multiply(cam->vector2, cos(deg_to_rad(cam->alpha)));
+		t_vec3	r2 = multiply(cam->init_v, sin(deg_to_rad(cam->alpha) * length(cam->vector2)));
+		t_vec3	r3 = multiply(cam->vector2, cos(deg_to_rad(cam->beta)));
+		t_vec3	r4 = multiply(cam->init_u, sin(deg_to_rad(cam->beta) * length(cam->vector2)));
+		cam->vector = add(add(r1, r2), add(r3, r4));
+		// cam->vector = add(r3, r4);
+
+		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
+		cam->w = unit_vector(subtract(cam->origin, cam->focal));
+		cam->u = unit_vector(cross(cam->vup, cam->w));
+		cam->v = cross(cam->w, cam->u);
+		cam->horizontal = multiply(cam->u, cam->vp_width);
+		cam->vertical = multiply(cam->v, cam->vp_height);
+	}
+	else if (keycode == LEFT)
+	{
+		cam->beta -= 10;
+		t_vec3	r1 = multiply(cam->vector2, cos(deg_to_rad(cam->alpha)));
+		t_vec3	r2 = multiply(cam->init_v, sin(deg_to_rad(cam->alpha) * length(cam->vector2)));
+		t_vec3	r3 = multiply(cam->vector2, cos(deg_to_rad(cam->beta)));
+		t_vec3	r4 = multiply(cam->init_u, sin(deg_to_rad(cam->beta) * length(cam->vector2)));
+		cam->vector = add(add(r1, r2), add(r3, r4));
+		// cam->vector = add(r3, r4);
+
 		cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)cam->vector), cam->focal_length));
 		cam->w = unit_vector(subtract(cam->origin, cam->focal));
 		cam->u = unit_vector(cross(cam->vup, cam->w));
@@ -140,6 +229,18 @@ int	key_hook(int keycode, t_scene *scene)
 	cam->lower_left_corner = subtract(
 		subtract(subtract(cam->origin, divide(cam->horizontal, 2)),
 			divide(cam->vertical, 2)), cam->w);
-	printf("%lf %lf %lf\n", scene->camera.origin.x, scene->camera.origin.y, scene->camera.origin.z);
+
+	printf("%+.2lf\t", cam->alpha);
+	printf("%+.2lf\t", cam->beta);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\t", C_AQUA, scene->camera.vector.x, scene->camera.vector.y, scene->camera.vector.z, C_NC);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\t", C_RED, scene->camera.u.x, scene->camera.u.y, scene->camera.u.z, C_NC);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\t", C_GREEN, scene->camera.v.x, scene->camera.v.y, scene->camera.v.z, C_NC);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\t", C_BLUE, scene->camera.w.x, scene->camera.w.y, scene->camera.w.z, C_NC);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\n", C_RED, scene->camera.origin.x, scene->camera.origin.y, scene->camera.origin.z, C_NC);
+
+	// printf("%s%+.2lf %+.2lf %+.2lf%s\n", C_BLUE, \
+	// 		((t_sphere *)(scene->list->object.figure))->center.x,\
+	// 		((t_sphere *)(scene->list->object.figure))->center.y, \
+	// 		((t_sphere *)(scene->list->object.figure))->center.z, C_NC);
 	return (0);
 }
