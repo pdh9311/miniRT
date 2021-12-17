@@ -68,7 +68,7 @@ int	main(int argc, char *argv[])
 	init(&scene, lst);
 
 	printf("%d %d\n", camera->image_height, camera->image_width);
-	printf("alpha\tbeta\tcamera.vector\t\tcamera.u\t\tcamera.v\t\tcamera.w\t\torigin\n");
+	printf("alpha\tbeta\tgamma\tcamera.vector\t\tcamera.u\t\tcamera.v\t\tcamera.w\t\torigin\n");
 
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L<<0, key_hook, &scene);
 	mlx_hook(mlx->win_ptr, DESTROY, 0, close_screen, &scene);

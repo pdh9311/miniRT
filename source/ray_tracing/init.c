@@ -3,8 +3,10 @@
 static void	init_camera(t_camera *cam, t_element *elem)
 {
 	cam->aspect_ratio = 16.0 / 9.0;
-	cam->image_width = 800;
-	cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
+	// cam->image_width = 800;
+	// cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
+	cam->image_width = 400;
+	cam->image_height = 400;
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
 	cam->origin = elem->coord;
@@ -25,6 +27,7 @@ static void	init_camera(t_camera *cam, t_element *elem)
 	cam->lower_left_corner = subtract(
 			subtract(subtract(cam->origin, divide(cam->horizontal, 2)),
 				divide(cam->vertical, 2)), cam->w);
+	// cam->lower_left_corner = add(cam->origin, add(cam->focal, add(divide(cam->horizontal, -2), divide(cam->vertical, -2))));
 	// save_init_value
 	cam->origin2 = elem->coord;
 	cam->vector2 = elem->vector;	//
