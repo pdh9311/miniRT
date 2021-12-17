@@ -42,11 +42,14 @@ typedef struct s_light
 typedef struct s_scene
 {
 	t_mlx		mlx;
-	t_camera	camera;
+	t_lst		*cam_list;
+	t_lst		*cam_list_move;
+	t_camera	*camera;
 	t_ray		ray;
 	t_hlist		*list;
-	//t_object	*lights;
-	t_light		light;
+	t_light		*light;
+	t_lst		*light_list;
+	t_lst		*light_list_move;
 	t_light		ambient; // Ambient
 }				t_scene;
 
@@ -71,6 +74,23 @@ int		readfile(char *file, t_lst **lst);
 
 // init.c
 void	init(t_scene *scene, t_lst *lst);
+
+// camera_init.c
+int		make_cam_list(t_scene *scene, t_element *elem);
+void	init_camera(t_camera *cam, t_element *elem);
+void	set_camera(t_scene *scene);
+
+// camear_util.c
+void	next_camera(t_scene *scene);
+void	previous_camera(t_scene *scene);
+int		free_cameras(t_lst *cam_list);
+
+// light_init.c
+void	init_light(t_light *light, t_element *elem);
+void	set_light(t_scene *scene);
+int		make_light_list(t_scene *scene, t_element *elem);
+void	next_light(t_scene *scene);
+void	previous_light(t_scene *scene);
 
 // random_clamp.c
 float	deg_to_rad(float degrees);

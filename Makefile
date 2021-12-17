@@ -58,6 +58,9 @@ SOURCES		:=	main.c \
 				ray_tracing/hit_1.c \
 				ray_tracing/hit_2.c \
 				ray_tracing/init.c \
+				ray_tracing/camera_init.c \
+				ray_tracing/camera_util.c \
+				ray_tracing/light_init.c \
 				ray_tracing/random_clamp.c \
 				ray_tracing/ray.c \
 				ray_tracing/sphere.c \

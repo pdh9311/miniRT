@@ -22,19 +22,19 @@ static int	check_cam_light(t_lst *lst)
 	light_cnt = 0;
 	while (lst != NULL)
 	{
-		if (((t_element *)(lst->content))->type == 1)
+		if (((t_element *)(lst->content))->type == C)
 			cam_cnt++;
-		if (((t_element *)(lst->content))->type == 2)
+		if (((t_element *)(lst->content))->type == L)
 			light_cnt++;
 		lst = lst->next;
 	}
-	if (cam_cnt != 1)
+	if (cam_cnt < 1)
 	{
 		ft_putendl_fd("Error\n  Not found camera", 2);
 		free_lst(lst);
 		return (EXIT_FAILURE);
 	}
-	if (light_cnt > 1)
+	if (light_cnt > 100)
 	{
 		ft_putendl_fd("Error\n  Wrong light count", 2);
 		free_lst(lst);

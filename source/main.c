@@ -18,7 +18,7 @@ t_color	ray_color(t_scene *scene)
 		if (set_shadow(scene, &rec, &phong))
 			multiply_(&pixel_color, 0.3);
 		set_specular(&pixel_color, scene, &rec, &phong);
-		return (multiply(multiply__(pixel_color, rec.albedo), scene->light.bright_ratio));
+		return (multiply(multiply__(pixel_color, rec.albedo), scene->light->bright_ratio));
 	}
 	t = fabs((scene->ray.direction.y + 1) * 0.5);
 	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), multiply(color_(0.5, 0.7, 1.0), t));
@@ -28,18 +28,18 @@ t_color	ray_color(t_scene *scene)
 
 int	draw(void *param)
 {
-	float		u;
-	float		v;
+	double		u;
+	double		v;
 	t_scene		*scene;
 
 	scene = param;
-	for (int y = scene->camera.image_height - 1; y >= 0; --y)
+	for (int y = scene->camera->image_height - 1; y >= 0; --y)
 	{
-		for (int x = 0; x < scene->camera.image_width; ++x)
+		for (int x = 0; x < scene->camera->image_width; ++x)
 		{
-			u = (float)x / scene->camera.image_width;
-			v = (float)(scene->camera.image_height - 1 - y) / scene->camera.image_height;
-			scene->ray = ray_(scene->camera.origin, new_ray_dir(&scene->camera, u, v));
+			u = (double)x / scene->camera->image_width;
+			v = (double)(scene->camera->image_height - 1 - y) / scene->camera->image_height;
+			scene->ray = ray_(scene->camera->origin, new_ray_dir(scene->camera, u, v));
 			scene->mlx.pixel_color = ray_color(scene);
 			write_color(scene, y, x);
 		}
@@ -60,12 +60,12 @@ int	main(int argc, char *argv[])
 		ft_putendl_fd("Error\n  Wrong argument count", 2);
 		return (EXIT_FAILURE);
 	}
-	camera = &scene.camera;
 	mlx = &scene.mlx;
 	lst = NULL;
 	if (readfile(argv[1], &lst))
 		return (EXIT_FAILURE);
 	init(&scene, lst);
+	camera = scene.camera;
 
 	printf("%d %d\n", camera->image_height, camera->image_width);
 	printf("alpha\tbeta\tgamma\tcamera.vector\t\tcamera.u\t\tcamera.v\t\tcamera.w\t\torigin\n");

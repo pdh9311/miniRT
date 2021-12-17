@@ -9,7 +9,7 @@
 void	set_diffuse(t_color *pixel_color, t_scene *scene, \
 				t_hit_record *rec, t_phong *phong)
 {
-	phong->light_dir = subtract(scene->light.origin, rec->p);
+	phong->light_dir = subtract(scene->light->origin, rec->p);
 	phong->light_unit_dir = unit_vector(phong->light_dir);
 	if (dot(phong->light_unit_dir, rec->normal) < 0)
 		rec->normal = negate(rec->normal);

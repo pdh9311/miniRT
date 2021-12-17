@@ -30,6 +30,9 @@ typedef struct s_camera
 	float		alpha;
 	float		beta;
 	float		gamma;
+	float		move;
+	float		rotate;
+	float		z_rotate;
 }				t_camera;
 
 #endif
