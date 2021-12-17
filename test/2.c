@@ -50,8 +50,8 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			t_color pixel_color = {(double)i/(image_width - 1),
-								(double)(image_height - 1 - j)/(image_height - 1),
+			t_color pixel_color = {(float)i/(image_width - 1),
+								(float)(image_height - 1 - j)/(image_height - 1),
 								0.25};
 			write_color(&mlx, pixel_color, j, i);
 			++i;

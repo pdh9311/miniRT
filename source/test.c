@@ -2,7 +2,7 @@
 #include "element.h"
 
 void	print_str_arr(char **str_arr)
-{	
+{
 	int	i;
 
 	i = 0;
@@ -19,10 +19,10 @@ void	print_str_arr(char **str_arr)
 	t_point3		coord;
 	t_point3		vector;
 	t_color		rgb;
-	double		brightness;
-	double		diameter;
-	double		height;
-	double		fov;
+	float		brightness;
+	float		diameter;
+	float		height;
+	float		fov;
     int			type;
  */
 # define CONT ((t_element *)(lst->content))

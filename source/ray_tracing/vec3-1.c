@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_vec3	vec3_(double e1, double e2, double e3)
+t_vec3	vec3_(float e1, float e2, float e3)
 {
 	t_vec3	v;
 
@@ -12,16 +12,16 @@ t_vec3	vec3_(double e1, double e2, double e3)
 
 t_vec3	vec3_random(void)
 {
-	return (vec3_(random_double(), random_double(), random_double()));
+	return (vec3_(random_float(), random_float(), random_float()));
 }
 
-t_vec3	vec3_random_(double min, double max)
+t_vec3	vec3_random_(float min, float max)
 {
-	return (vec3_(random_double_(min, max), \
-			random_double_(min, max), random_double_(min, max)));
+	return (vec3_(random_float_(min, max), \
+			random_float_(min, max), random_float_(min, max)));
 }
 
-void	update(t_vec3 *v, double e1, double e2, double e3)
+void	update(t_vec3 *v, float e1, float e2, float e3)
 {
 	v->x = e1;
 	v->y = e2;

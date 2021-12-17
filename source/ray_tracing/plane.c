@@ -3,7 +3,7 @@
 int	hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec)
 {
 	t_vec3	normal;
-	double	check;
+	float	check;
 
 	normal = plane->normal;
 	check = dot(r->direction, normal);

@@ -27,13 +27,13 @@ static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
-static double	hit_sphere(const t_point3 center, double radius, const t_ray r)
+static float	hit_sphere(const t_point3 center, float radius, const t_ray r)
 {
 	t_vec3	oc = subtract(r.origin, center);
-	double	a = dot(r.direction, r.direction);
-	double	b = 2.0 * dot(oc, r.direction);
-	double	c = dot(oc, oc) - (radius * radius);
-	double	discriminant = (b * b) - (4 * a * c);
+	float	a = dot(r.direction, r.direction);
+	float	b = 2.0 * dot(oc, r.direction);
+	float	c = dot(oc, oc) - (radius * radius);
+	float	discriminant = (b * b) - (4 * a * c);
 	return (discriminant > 0);
 }
 
@@ -43,7 +43,7 @@ static t_color	ray_color(const t_ray* r)
 		return ((t_color){1, 0, 0});
 	t_vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
-	double	t = 0.5 * (unit_direction.y + 1.0);
+	float	t = 0.5 * (unit_direction.y + 1.0);
 	t_color	tmp1 = {1.0, 1.0, 1.0};
 	t_color	tmp2 = {0.5, 0.7, 1.0};
 	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
@@ -53,14 +53,14 @@ int	main()
 {
 	t_mlx		mlx;
 
-	const double	aspect_ratio = 16.0 / 9.0;
+	const float	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
 
 	// Camera
-	double			viewport_height = 2.0;
-	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 1.0;
+	float			viewport_height = 2.0;
+	float			viewport_width = aspect_ratio * viewport_height;
+	float			focal_length = 1.0;
 
 	t_point3			origin = {0, 0, 0};
 	t_vec3			horizontal = {viewport_width, 0, 0};
@@ -83,8 +83,8 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			double	u = (double)i / (image_width - 1);
-			double	v = (double)(image_height - 1 - j) / (image_height - 1);
+			float	u = (float)i / (image_width - 1);
+			float	v = (float)(image_height - 1 - j) / (image_height - 1);
 			t_ray		r;
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);

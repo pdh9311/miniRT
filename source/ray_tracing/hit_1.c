@@ -28,10 +28,10 @@ static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 	return (is_hit);
 }
 
-int	hit(t_hlist *current, t_ray *r, t_hit_record *rec, double max)
+int	hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 {
 	t_hit_record	temp_rec;
-	double			closest_so_far;
+	float			closest_so_far;
 	int				hit_anything;
 
 	hit_anything = FALSE;

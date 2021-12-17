@@ -11,7 +11,7 @@ typedef struct s_hit_record
 {
 	t_point3	p;
 	t_vec3		normal;
-	double		t;
+	float		t;
 	t_color		albedo;
 	t_color		color;
 }				t_hit_record;
@@ -38,7 +38,7 @@ typedef struct s_hlist
 }					t_hlist;
 
 void	init_hit_record(t_hit_record *rec);
-int		hit(t_hlist *current, t_ray *r, t_hit_record *rec, double max);
+int		hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max);
 
 t_hlist	*list_(t_object object);
 void	push(t_hlist **lst, t_hlist *new_node);

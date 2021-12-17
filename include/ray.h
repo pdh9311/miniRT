@@ -11,7 +11,7 @@ typedef struct s_ray
 }				t_ray;
 
 t_ray		ray_(t_point3 origin, t_vec3 direction);
-t_point3	at(const t_ray *r, double t);
-t_vec3		new_ray_dir(t_camera *cam, double u, double v);
+t_point3	at(const t_ray *r, float t);
+t_vec3		new_ray_dir(t_camera *cam, float u, float v);
 
 #endif

@@ -24,7 +24,7 @@ t_vec3	random_in_unit_disk(void)
 
 	while (TRUE)
 	{
-		p = vec3_(random_double_(-1, 1), random_double_(-1, 1), 0);
+		p = vec3_(random_float_(-1, 1), random_float_(-1, 1), 0);
 		if (length_squared(p) >= 1)
 			continue ;
 		return (p);
@@ -36,9 +36,9 @@ t_vec3	reflect(t_vec3 v, t_vec3 n)
 	return (add(negate(v), multiply(n, 2 * dot(v, n))));
 }
 
-t_vec3	refract(t_vec3 uv, t_vec3 n, double etai_over_etat)
+t_vec3	refract(t_vec3 uv, t_vec3 n, float etai_over_etat)
 {
-	double	cos_theta;
+	float	cos_theta;
 	t_vec3	r_out_perp;
 	t_vec3	r_out_parallel;
 

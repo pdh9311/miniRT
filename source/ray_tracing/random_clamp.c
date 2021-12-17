@@ -1,21 +1,21 @@
 #include "miniRT.h"
 
-double	deg_to_rad(double degrees)
+float	deg_to_rad(float degrees)
 {
 	return (degrees * M_PI / 180.0);
 }
 
-double	random_double(void)
+float	random_float(void)
 {
 	return (rand() / (RAND_MAX + 1.0));
 }
 
-double	random_double_(double min, double max)
+float	random_float_(float min, float max)
 {
-	return (min + (max - min) * random_double());
+	return (min + (max - min) * random_float());
 }
 
-double	clamp(double x, double min, double max)
+float	clamp(float x, float min, float max)
 {
 	if (x < min)
 		return (min);

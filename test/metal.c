@@ -9,7 +9,7 @@ t_color	ray_color(t_ray* r, t_hlist *world, int depth)
 {
 	t_hit_record	rec;
 	t_vec3			unit_direction;
-	double			t;
+	float			t;
 	t_color			tmp1;
 	t_color			tmp2;
 
@@ -38,7 +38,7 @@ t_color	ray_color(t_ray* r, t_hlist *world, int depth)
 int	main()
 {
 	t_mlx			mlx;
-	const double	aspect_ratio = 16.0 / 9.0;
+	const float	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
 	const int		samples_per_pixel = 10;
@@ -85,9 +85,9 @@ int	main()
 	push(&world, list_(hittable3));
 	push(&world, list_(hittable4));
 
-	double			viewport_height = 2.0;
-	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 1.0;
+	float			viewport_height = 2.0;
+	float			viewport_width = aspect_ratio * viewport_height;
+	float			focal_length = 1.0;
 
 	t_point3			origin = {0, 0, 0};
 	t_vec3			horizontal = {viewport_width, 0, 0};
@@ -113,8 +113,8 @@ int	main()
 			t_color	pixel_color = {0.0, 0.0, 0.0};
 			for (int s = 0; s < samples_per_pixel; ++s)
 			{
-				double	u = ((i + random_double()) / (image_width - 1));
-				double	v = ((image_height - 1 - j + random_double()) / (image_height - 1));
+				float	u = ((i + random_float()) / (image_width - 1));
+				float	v = ((image_height - 1 - j + random_float()) / (image_height - 1));
 				t_ray		r;
 				r.origin = origin;
 				r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);

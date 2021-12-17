@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static double	ft_pow(int i)
+static float	ft_pow(int i)
 {
-	double	ret;
+	float	ret;
 
 	ret = 1.0;
 	while (i > 0)
@@ -23,9 +23,9 @@ static double	ft_pow(int i)
 	return (ret);
 }
 
-double	ft_atof(const char *str)
-{	
-	double	ret;
+float	ft_atof(const char *str)
+{
+	float	ret;
 	int		idx;
 	int		minus;
 

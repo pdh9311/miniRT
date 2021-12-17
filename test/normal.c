@@ -27,14 +27,14 @@ static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
-static double	hit_sphere(const t_point3 center, double radius, const t_ray r)
+static float	hit_sphere(const t_point3 center, float radius, const t_ray r)
 {
 	t_vec3	oc = subtract(r.origin, center);
-	
-	double	a = length_squared(r.direction);
-	double	half_b = dot(oc, r.direction);
-	double	c = length_squared(oc) - (radius * radius);
-	double	discriminant = half_b * half_b - (a * c);
+
+	float	a = length_squared(r.direction);
+	float	half_b = dot(oc, r.direction);
+	float	c = length_squared(oc) - (radius * radius);
+	float	discriminant = half_b * half_b - (a * c);
 	if (discriminant < 0)
 		return (-1.0);
 	return ((-half_b - sqrt(discriminant)) / a);
@@ -42,7 +42,7 @@ static double	hit_sphere(const t_point3 center, double radius, const t_ray r)
 
 static t_color	ray_color(const t_ray* r)
 {
-	double t = hit_sphere((t_point3){0, 0, -1}, 0.5, *r);
+	float t = hit_sphere((t_point3){0, 0, -1}, 0.5, *r);
 	if (t > 0.0) {
 		t_vec3 N = unit_vector(subtract(at(r, t), (t_vec3){0, 0, -1}));
 		printf("%lf %lf %lf\n", N.x, N.y, N.z);
@@ -60,14 +60,14 @@ int	main()
 {
 	t_mlx		mlx;
 
-	const double	aspect_ratio = 16.0 / 9.0;
+	const float	aspect_ratio = 16.0 / 9.0;
 	const int		image_width = 800;
 	const int		image_height = (int)(image_width / aspect_ratio);
 
 	// Camera
-	double			viewport_height = 2.0;
-	double			viewport_width = aspect_ratio * viewport_height;
-	double			focal_length = 1.0;
+	float			viewport_height = 2.0;
+	float			viewport_width = aspect_ratio * viewport_height;
+	float			focal_length = 1.0;
 
 	t_point3		origin = {0, 0, 0};
 	t_vec3			horizontal = {viewport_width, 0, 0};
@@ -90,8 +90,8 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			double	u = (double)i / (image_width - 1);
-			double	v = (double)(image_height - 1 - j) / (image_height - 1);
+			float	u = (float)i / (image_width - 1);
+			float	v = (float)(image_height - 1 - j) / (image_height - 1);
 			t_ray		r;
 			r.origin = origin;
 			r.direction = subtract(add(add(lower_left_corner, multiply(horizontal, u)), multiply(vertical, v)), origin);

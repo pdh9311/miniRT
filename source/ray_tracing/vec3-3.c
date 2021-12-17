@@ -1,18 +1,18 @@
 #include "miniRT.h"
 
-t_vec3	divide(t_vec3 v, double t)
+t_vec3	divide(t_vec3 v, float t)
 {
 	return (multiply(v, 1 / t));
 }
 
-double	length_squared(t_vec3 v)
+float	length_squared(t_vec3 v)
 {
 	return (v.x * v.x
 		+ v.y * v.y
 		+ v.z * v.z);
 }
 
-double	length(t_vec3 v)
+float	length(t_vec3 v)
 {
 	return (sqrt(length_squared(v)));
 }

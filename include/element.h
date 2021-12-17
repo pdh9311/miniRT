@@ -32,10 +32,10 @@ typedef struct s_element
 	t_point3	coord;
 	t_vec3		vector;
 	t_color		rgb;
-	double		brightness;
-	double		diameter;
-	double		height;
-	double		fov;
+	float		brightness;
+	float		diameter;
+	float		height;
+	float		fov;
 	int			type;
 }				t_element;
 
@@ -61,8 +61,8 @@ t_color		get_color(char *rgb);
 t_point3	get_point3(char *data);
 
 int			check_rgb(t_color rgb);
-int			check_ratio(double ratio);
+int			check_ratio(float ratio);
 int			check_axis(t_vec3 axis);
-int			check_fov(double fov);
+int			check_fov(float fov);
 
 #endif

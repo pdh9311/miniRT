@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_vec3	color_(double e1, double e2, double e3)
+t_vec3	color_(float e1, float e2, float e3)
 {
 	t_vec3	v;
 
@@ -10,7 +10,7 @@ t_vec3	color_(double e1, double e2, double e3)
 	return (v);
 }
 
-t_vec3	point3_(double e1, double e2, double e3)
+t_vec3	point3_(float e1, float e2, float e3)
 {
 	t_vec3	v;
 
@@ -39,4 +39,4 @@ void	vec_min(t_vec3 *v, t_vec3 max)
 		v->y = max.y;
 	if (v->z >= max.z)
 		v->z = max.z;
-}	
+}

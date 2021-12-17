@@ -11,19 +11,19 @@
 
 typedef struct s_data
 {
-	double		aspect_ratio;
+	float		aspect_ratio;
 	int			image_width;
 	int			image_height;
 	int			samples_per_pixel;
 	int			depth;
-	double		viewport_height;
-	double		viewport_width;
-	double		focal_length;
+	float		viewport_height;
+	float		viewport_width;
+	float		focal_length;
 
 	t_point3	origin;
-	double		alpha;
-	double		beta;
-	double		gamma;
+	float		alpha;
+	float		beta;
+	float		gamma;
 	t_vec3		horizontal;
 	t_vec3		vertical;
 	t_vec3		tmp;
@@ -37,7 +37,7 @@ t_color	ray_color(t_ray* r, t_hlist *world, int depth)
 {
 	t_hit_record	rec;
 	t_vec3			unit_direction;
-	double			t;
+	float			t;
 	t_color			tmp1;
 	t_color			tmp2;
 
@@ -69,8 +69,8 @@ static int	draw(void *param)
 			t_color	pixel_color = {0.0, 0.0, 0.0};
 			for (int s = 0; s < data->samples_per_pixel; ++s)
 			{
-				double	u = ((i + random_double()) / (data->image_width - 1));
-				double	v = ((data->image_height - 1 - j + random_double()) / (data->image_height - 1));
+				float	u = ((i + random_float()) / (data->image_width - 1));
+				float	v = ((data->image_height - 1 - j + random_float()) / (data->image_height - 1));
 				t_ray		r;
 				r.origin = data->origin;
 				r.direction = subtract(add(add(data->lower_left_corner, multiply(data->horizontal, u)), \
@@ -89,9 +89,9 @@ static int	draw(void *param)
 int	key_hook(int keycode, void *param)
 {
 	t_data	*data = (t_data *)param;
-	double	x = data->origin.x;
-	double	y = data->origin.y;
-	double	z = data->origin.z;
+	float	x = data->origin.x;
+	float	y = data->origin.y;
+	float	z = data->origin.z;
 
 	if (keycode == 53)
 		exit(EXIT_SUCCESS);
@@ -149,7 +149,7 @@ int	main()
 	data.world = NULL;
 	data.depth = 50;
 
-	
+
 	data.viewport_height = 2.0;
 	data.viewport_width = data.aspect_ratio * data.viewport_height;
 	data.focal_length = 1.0;

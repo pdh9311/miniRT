@@ -34,8 +34,8 @@ int	main()
 		int i = 0;
 		while (i < image_width)
 		{
-			float r = (double)i / (image_width - 1);
-			float g = (image_height - (double)j - 1) / (image_height - 1);
+			float r = (float)i / (image_width - 1);
+			float g = (image_height - (float)j - 1) / (image_height - 1);
 			float b = 0.25;
 
 			int	ir = 255.999 * r;

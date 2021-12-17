@@ -10,7 +10,7 @@ t_vec3	subtract(t_vec3 u, t_vec3 v)
 	return (vec3_(u.x - v.x, u.y - v.y, u.z - v.z));
 }
 
-double	dot(t_vec3 u, t_vec3 v)
+float	dot(t_vec3 u, t_vec3 v)
 {
 	return (u.x * v.x
 		+ u.y * v.y

@@ -30,13 +30,13 @@ static void	write_color(t_mlx *mlx, t_color pixel_color, int j, int i, int width
 	mlx->data[j * width + i] = mlx_get_color_value(mlx->mlx_ptr, color);
 }
 
-static int	hit_sphere(const t_point3 center, double radius, const t_ray r)
+static int	hit_sphere(const t_point3 center, float radius, const t_ray r)
 {
 	t_vec3	oc = subtract(r.origin, center);
-	double	a = dot(r.direction, r.direction);
-	double	b = 2.0 * dot(oc, r.direction);
-	double	c = dot(oc, oc) - (radius * radius);
-	double	discriminant = (b * b) - (4 * a * c);
+	float	a = dot(r.direction, r.direction);
+	float	b = 2.0 * dot(oc, r.direction);
+	float	c = dot(oc, oc) - (radius * radius);
+	float	discriminant = (b * b) - (4 * a * c);
 	return (discriminant > 0);
 }
 
@@ -46,7 +46,7 @@ static t_color	ray_color(const t_ray* r)
 		return ((t_color){1, 0, 0});
 	t_vec3	unit_direction = unit_vector(r->direction);
 	//printf("UNIT_COLOR: %lf %lf %lf\n", unit_direction.x, unit_direction.y, unit_direction.z);
-	double	t = 0.5 * (unit_direction.y + 1.0);
+	float	t = 0.5 * (unit_direction.y + 1.0);
 	t_color	tmp1 = {1.0, 1.0, 1.0};
 	t_color	tmp2 = {0.5, 0.7, 1.0};
 	return (add(multiply(tmp1, (1.0 - t)), multiply(tmp2, t)));
@@ -54,17 +54,17 @@ static t_color	ray_color(const t_ray* r)
 
 typedef struct s_data
 {
-	double		aspect_ratio;
+	float		aspect_ratio;
 	int			image_width;
 	int			image_height;
-	double		viewport_height;
-	double		viewport_width;
-	double		focal_length;
+	float		viewport_height;
+	float		viewport_width;
+	float		focal_length;
 
 	t_point3	origin;
-	double		alpha;
-	double		beta;
-	double		gamma;
+	float		alpha;
+	float		beta;
+	float		gamma;
 	t_vec3		horizontal;
 	t_vec3		vertical;
 	t_vec3		tmp;
@@ -80,8 +80,8 @@ static int	draw(void *param)
 		int i = 0;
 		while (i < data->image_width)
 		{
-			double	u = (double)i / (data->image_width - 1);
-			double	v = (double)(data->image_height - 1 - j) / (data->image_height - 1);
+			float	u = (float)i / (data->image_width - 1);
+			float	v = (float)(data->image_height - 1 - j) / (data->image_height - 1);
 			t_ray		r;
 			r.origin = data->origin;
 			r.direction = subtract(add(add(data->lower_left_corner, \
@@ -99,9 +99,9 @@ static int	draw(void *param)
 int	key_hook(int keycode, void *param)
 {
 	t_data	*data = (t_data *)param;
-	double	x = data->origin.x;
-	double	y = data->origin.y;
-	double	z = data->origin.z;
+	float	x = data->origin.x;
+	float	y = data->origin.y;
+	float	z = data->origin.z;
 
 	if (keycode == 53)
 		exit(EXIT_SUCCESS);
@@ -156,7 +156,7 @@ int	main()
 	data.image_width = 800;
 	data.image_height = (int)(data.image_width / data.aspect_ratio);
 
-	
+
 	data.viewport_height = 2.0;
 	data.viewport_width = data.aspect_ratio * data.viewport_height;
 	data.focal_length = 1.0;

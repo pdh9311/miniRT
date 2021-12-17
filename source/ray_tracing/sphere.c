@@ -27,7 +27,7 @@ int	hit_sphere(const t_ray *r, t_sphere *sphere, t_hit_record *rec)
 	return (TRUE);
 }
 
-t_object	sphere_(t_point3 center, double radius, \
+t_object	sphere_(t_point3 center, float radius, \
 					t_color albedo, t_color color)
 {
 	t_object	new_sp;

@@ -36,7 +36,7 @@ typedef struct s_light
 {
 	t_point3	origin;
 	t_color		color;
-	double		bright_ratio;
+	float		bright_ratio;
 }				t_light;
 
 typedef struct s_scene
@@ -54,16 +54,16 @@ typedef struct s_phong
 {
 	t_vec3			light_dir;
 	t_vec3			light_unit_dir;
-	double			kd;
+	float			kd;
 	t_ray			light_ray;
-	double			light_len;
+	float			light_len;
 	t_hit_record	shadow_rec;
 	t_color			specular;
-	double			ksn;
-	double			ks;
+	float			ksn;
+	float			ks;
 	t_vec3			view_dir;
 	t_vec3			reflect_dir;
-	double			spec;
+	float			spec;
 }				t_phong;
 
 // readfile.c
@@ -73,10 +73,10 @@ int		readfile(char *file, t_lst **lst);
 void	init(t_scene *scene, t_lst *lst);
 
 // random_clamp.c
-double	deg_to_rad(double degrees);
-double	random_double(void);
-double	random_double_(double min, double max);
-double	clamp(double x, double min, double max);
+float	deg_to_rad(float degrees);
+float	random_float(void);
+float	random_float_(float min, float max);
+float	clamp(float x, float min, float max);
 
 // ambient.c
 void	set_ambient(t_color *pixel_color, t_scene *scene, t_hit_record *rec);

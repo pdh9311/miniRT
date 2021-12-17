@@ -11,7 +11,7 @@ int	check_rgb(t_color rgb)
 	return (EXIT_SUCCESS);
 }
 
-int	check_ratio(double ratio)
+int	check_ratio(float ratio)
 {
 	if (ratio < 0.0 || ratio > 1.0)
 		return (EXIT_FAILURE);
@@ -30,7 +30,7 @@ int	check_axis(t_vec3 axis)
 	return (EXIT_SUCCESS);
 }
 
-int	check_fov(double fov)
+int	check_fov(float fov)
 {
 	if (fov < 0 || fov > 180)
 		return (EXIT_FAILURE);

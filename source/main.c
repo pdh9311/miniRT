@@ -6,7 +6,7 @@ t_color	ray_color(t_scene *scene)
 {
 	t_color			pixel_color;
 	t_hit_record	rec;
-	double			t;
+	float			t;
 	t_phong			phong;
 
 	init_hit_record(&rec);
@@ -28,8 +28,8 @@ t_color	ray_color(t_scene *scene)
 
 int	draw(void *param)
 {
-	double		u;
-	double		v;
+	float		u;
+	float		v;
 	t_scene		*scene;
 
 	scene = param;
@@ -37,8 +37,8 @@ int	draw(void *param)
 	{
 		for (int x = 0; x < scene->camera.image_width; ++x)
 		{
-			u = (double)x / scene->camera.image_width;
-			v = (double)(scene->camera.image_height - 1 - y) / scene->camera.image_height;
+			u = (float)x / scene->camera.image_width;
+			v = (float)(scene->camera.image_height - 1 - y) / scene->camera.image_height;
 			scene->ray = ray_(scene->camera.origin, new_ray_dir(&scene->camera, u, v));
 			scene->mlx.pixel_color = ray_color(scene);
 			write_color(scene, y, x);

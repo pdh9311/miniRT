@@ -4,7 +4,7 @@ static int	cy_plane(t_hit_cy *cy, t_cylinder *cld, \
 			const t_ray *r, t_hit_record *rec)
 {
 	t_vec3	normal;
-	double	check;
+	float	check;
 
 	normal = cld->unit_normal;
 	check = dot(r->direction, normal);
@@ -85,7 +85,7 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 }
 
 t_object	cylinder_(t_point3 origin, t_vec3 normal, t_color albedo, \
-				t_color color, double radius, double height)
+				t_color color, float radius, float height)
 {
 	t_object	new_cy;
 	t_cylinder	*cy;
