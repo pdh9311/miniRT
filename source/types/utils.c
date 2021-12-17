@@ -1,7 +1,6 @@
 #include "element.h"
 #include "libft.h"
 #include "utils.h"
-#include <stdio.h> //
 
 t_color	get_color(char *rgb)
 {
@@ -19,7 +18,7 @@ t_color	get_color(char *rgb)
 t_point3	get_point3(char *data)
 {
 	t_point3	coord;
-	char	**data_split;
+	char		**data_split;
 
 	data_split = ft_split(data, ',');
 	coord.x = ft_atof(data_split[0]);

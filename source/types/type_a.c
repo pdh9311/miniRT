@@ -1,6 +1,5 @@
 #include "element.h"
 #include "libft.h"
-#include <stdio.h>	//
 
 int	input_type_a(char **split, t_lst **lst)
 {
@@ -18,11 +17,8 @@ int	input_type_a(char **split, t_lst **lst)
 	{
 		free(elem);
 		ft_putendl_fd("Error\n  Not in range", 2);
-		// ft_putendl_fd("Error\n\tNot in range\n");
 		return (EXIT_FAILURE);
 	}
-	// lst에 추가
 	pp_lstadd_back(lst, pp_lstnew(elem));
-	// printf("%lf | %d %d %d\n", elem->brightness, elem->rgb.r, elem->rgb.g, elem->rgb.b);
 	return (EXIT_SUCCESS);
 }

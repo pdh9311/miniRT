@@ -16,18 +16,20 @@ static void	init_mlx(t_scene *scene)
 					&arg->size_l, &arg->endian);
 }
 
-
-
 static void	add_object(t_hlist **list, t_element *elem)
 {
 	t_object	object;
 
 	if (elem->type == PL)
-		object = plane_(elem->coord, unit_vector(elem->vector), (t_color){1, 1, 1}, divide(elem->rgb, 255.999));
+		object = plane_(elem->coord, unit_vector(elem->vector), \
+				(t_color){1, 1, 1}, divide(elem->rgb, 255.999));
 	else if (elem->type == SP)
-		object = sphere_(elem->coord, elem->diameter / 2.0, (t_color){1, 1, 1}, divide(elem->rgb, 255.999));
+		object = sphere_(elem->coord, elem->diameter / 2.0, \
+				(t_color){1, 1, 1}, divide(elem->rgb, 255.999));
 	else if (elem->type == CY)
-		object = cylinder_(elem->coord, unit_vector(elem->vector), (t_color){1, 1, 1}, divide(elem->rgb, 255.999), elem->diameter / 2, elem->height);
+		object = cylinder_(elem->coord, unit_vector(elem->vector), \
+				(t_color){1, 1, 1}, divide(elem->rgb, 255.999), \
+				elem->diameter / 2, elem->height);
 	else
 		return ;
 	push(list, list_(object));
@@ -71,5 +73,4 @@ void	init(t_scene *scene, t_lst *lst)
 	set_light(scene);
 	init_mlx(scene);
 	free_lst(lst);
-	// scene->light = (t_light){(t_point3){0.0, 1.0, 1.0}, (t_color){1.0, 1.0, 1.0}, 1.0};
 }

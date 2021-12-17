@@ -1,6 +1,6 @@
 #include "list.h"
 
-void		free_lst(t_lst *lst)
+void	free_lst(t_lst *lst)
 {
 	t_lst	*tmp;
 

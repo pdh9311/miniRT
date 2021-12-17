@@ -11,7 +11,6 @@ void	set_camera(t_scene *scene)
 	*cam = (t_camera *)scene->cam_list_move->content;
 }
 
-// add only *** 1 camera ***
 int	make_cam_list(t_scene *scene, t_element *elem)
 {
 	t_camera	*cam;
@@ -46,7 +45,8 @@ void	init_camera(t_camera *cam, t_element *elem)
 
 	cam->origin = elem->coord;
 	cam->vector = elem->vector;
-	cam->focal = add(cam->origin, multiply(unit_vector((t_vec3)elem->vector), cam->focal_length));
+	cam->focal = add(cam->origin, \
+		multiply(unit_vector((t_vec3)elem->vector), cam->focal_length));
 	cam->vp_height = 2 * cam->focal_length * tan(deg_to_rad(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
 	cam->w = unit_vector(subtract(cam->origin, cam->focal));

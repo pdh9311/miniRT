@@ -13,21 +13,26 @@ static int	read_line(int fd, char **line, int *flag)
 	return (EXIT_SUCCESS);
 }
 
+static void	check_cam_light_helper(t_lst *lst, int *cam_cnt, int *light_cnt)
+{
+	*cam_cnt = 0;
+	*light_cnt = 0;
+	while (lst != NULL)
+	{
+		if (((t_element *)(lst->content))->type == C)
+			(*cam_cnt)++;
+		if (((t_element *)(lst->content))->type == L)
+			(*light_cnt)++;
+		lst = lst->next;
+	}
+}
+
 static int	check_cam_light(t_lst *lst)
 {
 	int	cam_cnt;
 	int	light_cnt;
 
-	cam_cnt = 0;
-	light_cnt = 0;
-	while (lst != NULL)
-	{
-		if (((t_element *)(lst->content))->type == C)
-			cam_cnt++;
-		if (((t_element *)(lst->content))->type == L)
-			light_cnt++;
-		lst = lst->next;
-	}
+	check_cam_light_helper(lst, &cam_cnt, &light_cnt);
 	if (cam_cnt < 1)
 	{
 		ft_putendl_fd("Error\n  Not found camera", 2);

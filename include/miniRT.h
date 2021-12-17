@@ -50,7 +50,7 @@ typedef struct s_scene
 	t_light		*light;
 	t_lst		*light_list;
 	t_lst		*light_list_move;
-	t_light		ambient; // Ambient
+	t_light		ambient;
 }				t_scene;
 
 typedef struct s_phong
@@ -100,12 +100,17 @@ float	clamp(float x, float min, float max);
 
 // ambient.c
 void	set_ambient(t_color *pixel_color, t_scene *scene, t_hit_record *rec);
+
 // diffuse.c
-void	set_diffuse(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong);
+void	set_diffuse(t_color *pixel_color, t_scene *scene, \
+					t_hit_record *rec, t_phong *phong);
+
 // shadow.c
 int		set_shadow(t_scene *scene, t_hit_record *rec, t_phong *phong);
+
 // specular.c
-void	set_specular(t_color *pixel_color, t_scene *scene, t_hit_record *rec, t_phong *phong);
+void	set_specular(t_color *pixel_color, t_scene *scene, \
+					t_hit_record *rec, t_phong *phong);
 
 void	print_lst(t_lst *lst);
 #endif

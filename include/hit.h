@@ -44,5 +44,4 @@ t_hlist	*list_(t_object object);
 void	push(t_hlist **lst, t_hlist *new_node);
 void	clear(t_hlist **lst);
 
-
 #endif
