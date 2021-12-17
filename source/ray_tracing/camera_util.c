@@ -8,7 +8,7 @@ void	previous_camera(t_scene *scene)
 	cam = &scene->camera;
 	cam_list_move_tmp = &scene->cam_list_move;
 	if (scene->cam_list_move->prev == NULL)
-		*cam_list_move_tmp = scene->cam_list;
+		*cam_list_move_tmp = pp_lstlast(scene->cam_list);
 	else
 		*cam_list_move_tmp = scene->cam_list_move->prev;
 	*cam = (t_camera *)scene->cam_list_move->content;

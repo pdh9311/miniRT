@@ -57,7 +57,7 @@ void	previous_light(t_scene *scene)
 	light = &scene->light;
 	light_list_move_tmp = &scene->light_list_move;
 	if (scene->light_list_move->prev == NULL)
-		*light_list_move_tmp = scene->light_list;
+		*light_list_move_tmp = pp_lstlast(scene->light_list);
 	else
 		*light_list_move_tmp = scene->light_list_move->prev;
 	*light = (t_light *)scene->light_list_move->content;
