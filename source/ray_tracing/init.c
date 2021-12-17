@@ -3,10 +3,10 @@
 static void	init_camera(t_camera *cam, t_element *elem)
 {
 	cam->aspect_ratio = 16.0 / 9.0;
-	// cam->image_width = 800;
-	// cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
-	cam->image_width = 400;
-	cam->image_height = 400;
+	cam->image_width = 800;
+	cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
+	// cam->image_width = 400;
+	// cam->image_height = 400;
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
 	cam->origin = elem->coord;

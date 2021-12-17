@@ -5,6 +5,27 @@ double	g_alpha;
 double	g_beta;
 double	g_gamma;
 
+t_vec3	vec_three_point(t_vec3 vec)
+{
+	t_vec3	tmp;
+	int	point;
+
+	point = 1000;
+	tmp.x = floor(vec.x * point) / point;
+	tmp.y = floor(vec.y * point) / point;
+	tmp.z = floor(vec.z * point) / point;
+	return (tmp);
+}
+
+double	three_point(double value)
+{
+	int	point;
+
+	point = 1000;
+	value = floor(value * point) / point;
+	return (value);
+}
+
 /*
 	[ ADD in Linux or Ubuntu ]
 	mlx_destroy_window(scene->mlx.mlx_ptr, scene->mlx.win_ptr);
@@ -122,7 +143,7 @@ int	key_hook(int keycode, t_scene *scene)
 	}
 	else if (keycode == PAGEUP)
 	{
-		cam->gamma = 5;
+		cam->gamma = 90;
 		g_gamma += cam->gamma;
 		// cam->u = unit_vector(cross(cam->vup, cam->w));
 		// cam->v = cross(cam->w, cam->u);
@@ -138,16 +159,21 @@ int	key_hook(int keycode, t_scene *scene)
 		// 						multiply(cam->v, sin(deg_to_rad(cam->gamma)) * length(cam->u)).z);
 		cam->u = add(multiply(cam->u, fabs(cos(deg_to_rad(cam->gamma))) * length(cam->u)), \
 					multiply(cam->v, fabs(sin(deg_to_rad(cam->gamma))) * length(cam->u)));
+		// cam->u = add(multiply(vec_three_point(cam->u), fabs(cos(deg_to_rad(cam->gamma))) * length(cam->u)), \
+		// 			multiply(vec_three_point(cam->v), fabs(sin(deg_to_rad(cam->gamma))) * length(cam->u)));
+		// cam->u = vec_three_point(cam->u);
 		cam->v = cross(cam->w, cam->u);
 		cam->horizontal = multiply(cam->u, cam->vp_width);
 		cam->vertical = multiply(cam->v, cam->vp_height);
 	}
 	else if (keycode == PAGEDOWN)
 	{
-		cam->gamma = -5;
+		cam->gamma = -90;
 		g_gamma += cam->gamma;
 		cam->u = add(multiply(cam->u, fabs(cos(deg_to_rad(cam->gamma))) * length(cam->u)), \
 					multiply(negate(cam->v), fabs(sin(deg_to_rad(cam->gamma))) * length(cam->u)));
+		// cam->u = add(multiply(cam->u, three_point(fabs(cos(deg_to_rad(cam->gamma)))) * length(cam->u)), \
+		// 			multiply(negate(cam->v), three_point(fabs(sin(deg_to_rad(cam->gamma)))) * length(cam->u)));
 		cam->v = cross(cam->w, cam->u);
 		cam->horizontal = multiply(cam->u, cam->vp_width);
 		cam->vertical = multiply(cam->v, cam->vp_height);
@@ -160,14 +186,18 @@ int	key_hook(int keycode, t_scene *scene)
 	printf("%+.2lf\t", g_beta);
 	printf("%+.2lf\t", g_gamma);
 	printf("%s%+.3lf %+.3lf %+.3lf%s\t", C_AQUA, scene->camera.vector.x, scene->camera.vector.y, scene->camera.vector.z, C_NC);
-	printf("%s%+.3lf %+.3lf %+.3lf%s\t", C_RED, scene->camera.u.x, scene->camera.u.y, scene->camera.u.z, C_NC);
-	printf("%s%+.3lf %+.3lf %+.3lf%s\t", C_GREEN, scene->camera.v.x, scene->camera.v.y, scene->camera.v.z, C_NC);
-	printf("%s%+.3lf %+.3lf %+.3lf%s\t", C_BLUE, scene->camera.w.x, scene->camera.w.y, scene->camera.w.z, C_NC);
+	printf("%s%+lf %+lf %+lf%s\t", C_RED, scene->camera.u.x, scene->camera.u.y, scene->camera.u.z, C_NC);
+	printf("%s%+lf %+lf %+lf%s\t", C_GREEN, scene->camera.v.x, scene->camera.v.y, scene->camera.v.z, C_NC);
+	printf("%s%+.2lf %+.2lf %+.2lf%s\t", C_BLUE, scene->camera.w.x, scene->camera.w.y, scene->camera.w.z, C_NC);
 	printf("%s%+.3lf %+.3lf %+.3lf%s\t", C_YELLOW, scene->camera.origin.x, scene->camera.origin.y, scene->camera.origin.z, C_NC);
 	printf("%s%+.3lf %+.3lf %+.3lf%s\n", C_PURPLE, cam->lower_left_corner.x, cam->lower_left_corner.y, cam->lower_left_corner.z, C_NC);
+
+	if ((1 - fabs(cam->u.x)) < 1e-6 || (1 - fabs(cam->u.y)) < 1e-6)
+		printf("\n");
 	// printf("%s%+.3lf %+.3lf %+.3lf%s\n", C_BLUE, \
 	// 		((t_sphere *)(scene->list->object.figure))->center.x,\
 	// 		((t_sphere *)(scene->list->object.figure))->center.y, \
 	// 		((t_sphere *)(scene->list->object.figure))->center.z, C_NC);
 	return (0);
 }
+
