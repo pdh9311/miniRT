@@ -18,7 +18,7 @@ static void	init_mlx(t_scene *scene)
 
 static void	set_cy_info(t_element *elem, t_cy_info *cy_info)
 {
-	cy_info->origin = elem->coord;
+	cy_info->point = elem->coord;
 	cy_info->normal = unit_vector(elem->vector);
 	cy_info->albedo = (t_color){1, 1, 1};
 	cy_info->color = divide(elem->rgb, 255.999);
@@ -41,9 +41,6 @@ static void	add_object(t_hlist **list, t_element *elem)
 	{
 		set_cy_info(elem, &cy_info);
 		object = cylinder_(cy_info);
-		// object = cylinder_(elem->coord, unit_vector(elem->vector), \
-		// 		(t_color){1, 1, 1}, divide(elem->rgb, 255.999), \
-		// 		elem->diameter / 2, elem->height);
 	}
 	else
 		return ;

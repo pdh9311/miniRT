@@ -4,16 +4,6 @@
 # include "vec3.h"
 # include "hit.h"
 
-typedef struct s_cy_info
-{
-	t_point3	origin;
-	t_vec3		normal;
-	t_color		albedo;
-	t_color		color;
-	float		radius;
-	float		height;
-}				t_cy_info;
-
 typedef struct s_cylinder
 {
 	t_point3	point;
@@ -22,7 +12,10 @@ typedef struct s_cylinder
 	float		radius;
 	float		height;
 	t_color		color;
+	t_color		albedo;
 }				t_cylinder;
+
+typedef t_cylinder	t_cy_info;
 
 /**
  * tmp : ray가 원통의 평면과 교차할때의 t값
@@ -43,9 +36,4 @@ typedef struct s_hit_cy
 int			hit_cylinder(const t_ray *r, \
 				t_cylinder *cylinder, t_hit_record *rec);
 t_object	cylinder_(t_cy_info cy_info);
-/*
-t_object	cylinder_(t_point3 origin, t_vec3 normal, \
-					t_color albedo, t_color color, \
-					float radius, float height);
-*/
 #endif

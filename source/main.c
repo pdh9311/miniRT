@@ -2,11 +2,14 @@
 #include "list.h"
 #include "keyhook.h"
 
+/**
+ * pixel_color = (t_color){0, 0, 0};
+ */
 t_color	ray_color(t_scene *scene)
 {
 	t_color			pixel_color;
 	t_hit_record	rec;
-	// float			t;
+	float			t;
 	t_phong			phong;
 
 	init_hit_record(&rec);
@@ -21,10 +24,9 @@ t_color	ray_color(t_scene *scene)
 		return (multiply(multiply__(pixel_color, rec.albedo), \
 						scene->light->bright_ratio));
 	}
-	// t = fabs((scene->ray.direction.y + 1) * 0.5);
-	// pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), \
-	// 					multiply(color_(0.5, 0.7, 1.0), t));
-	pixel_color = (t_color){0, 0, 0};
+	t = fabs((scene->ray.direction.y + 1) * 0.5);
+	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), \
+						multiply(color_(0.5, 0.7, 1.0), t));
 	return (pixel_color);
 }
 
@@ -57,6 +59,9 @@ int	draw(void *param)
 	return (TRUE);
 }
 
+/**
+ * // mlx_hook(mlx->win_ptr, BTN_PRESS, 1L << 2, mouse_hook, &scene);
+ */
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -75,7 +80,6 @@ int	main(int argc, char *argv[])
 	init(&scene, lst);
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L << 0, key_hook, &scene);
 	mlx_hook(mlx->win_ptr, DESTROY, 0, close_screen, &scene);
-	// mlx_hook(mlx->win_ptr, BTN_PRESS, 1L << 2, mouse_hook, &scene);
 	mlx_loop_hook(mlx->mlx_ptr, &draw, &scene);
 	mlx_loop(mlx->mlx_ptr);
 	return (EXIT_SUCCESS);
