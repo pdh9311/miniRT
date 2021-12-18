@@ -27,7 +27,7 @@ int	make_cam_list(t_scene *scene, t_element *elem)
 	return (EXIT_SUCCESS);
 }
 
-void	init_camera(t_camera *cam, t_element *elem)
+static void	init_camera_helper1(t_camera *cam, t_element *elem)
 {
 	cam->aspect_ratio = 16.0 / 9.0;
 	cam->image_width = 800;
@@ -42,9 +42,13 @@ void	init_camera(t_camera *cam, t_element *elem)
 	cam->move = 1;
 	cam->rotate = 5;
 	cam->z_rotate = 90;
-
 	cam->origin = elem->coord;
 	cam->vector = elem->vector;
+}
+
+void	init_camera(t_camera *cam, t_element *elem)
+{
+	init_camera_helper1(cam, elem);
 	cam->focal = add(cam->origin, \
 		multiply(unit_vector((t_vec3)elem->vector), cam->focal_length));
 	cam->vp_height = 2 * cam->focal_length * tan(deg_to_rad(elem->fov / 2));
@@ -57,9 +61,4 @@ void	init_camera(t_camera *cam, t_element *elem)
 	cam->lower_left_corner = subtract(
 			subtract(subtract(cam->origin, divide(cam->horizontal, 2)),
 				divide(cam->vertical, 2)), cam->w);
-	cam->origin2 = elem->coord;
-	cam->vector2 = elem->vector;
-	cam->init_w = cam->w;
-	cam->init_u = cam->u;
-	cam->init_v = cam->v;
 }

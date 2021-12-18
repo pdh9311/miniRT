@@ -84,25 +84,26 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	return (TRUE);
 }
 
-t_object	cylinder_(t_point3 origin, t_vec3 normal, t_color albedo, \
-				t_color color, float radius, float height)
+// t_object	cylinder_(t_point3 origin, t_vec3 normal, t_color albedo, \
+// 				t_color color, float radius, float height)
+t_object	cylinder_(t_cy_info cy_info)
 {
 	t_object	new_cy;
 	t_cylinder	*cy;
 
 	cy = NULL;
 	new_cy.type = _cylinder;
-	new_cy.albedo = albedo;
+	new_cy.albedo = cy_info.albedo;
 	new_cy.figure = malloc(sizeof(t_cylinder));
 	cy = (t_cylinder *)new_cy.figure;
 	if (cy)
 	{
-		cy->point = origin;
-		cy->normal = normal;
+		cy->point = cy_info.origin;
+		cy->normal = cy_info.normal;
 		cy->unit_normal = unit_vector(cy->normal);
-		cy->color = color;
-		cy->radius = radius;
-		cy->height = height;
+		cy->color = cy_info.color;
+		cy->radius = cy_info.radius;
+		cy->height = cy_info.height;
 	}
 	return (new_cy);
 }

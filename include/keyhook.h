@@ -11,7 +11,11 @@
 # define MOUSE_MOVE		6
 # define DESTROY		17
 
-int		close_screen(void *param);
 int		key_hook(int keycode, t_scene *scene);
+int		close_screen(void *param);
+void	camera_move(t_camera *cam, int keycode);
+void	camera_rotate(t_camera *cam, int keycode);
+void	camera_change(t_scene *scene, int keycode);
+void	light_change(t_scene *scene, int keycode);
 
 #endif

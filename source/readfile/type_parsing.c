@@ -7,7 +7,7 @@ int	check_type(char **split, char *type, t_lst **lst)
 	static const char	*type_str[] = {
 		"A", "C", "L", "pl", "sp", "cy"
 	};
-	static int			(*type_func[])(char **, t_lst **) = {
+	static	int			(*type_func[])(char **, t_lst **) = {
 		&input_type_a, &input_type_c,
 		&input_type_l, &input_type_pl,
 		&input_type_sp, &input_type_cy
