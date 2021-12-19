@@ -1,7 +1,7 @@
 #include "cylinder.h"
 #include "utils.h"
 
-int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
+static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 				const t_ray *r, t_hit_record *rec)
 {
 	cy->w = subtract(r->origin, cld->point);
@@ -26,7 +26,8 @@ int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	return (TRUE);
 }
 
-int	cap_bottom(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
+static int	cap_bottom(t_hit_cy *cy, const t_ray *r, \
+					t_cylinder *cld, t_hit_record *rec)
 {
 	float	t;
 	t_vec3	p;
@@ -50,7 +51,8 @@ int	cap_bottom(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	return (TRUE);
 }
 
-int	cap_top(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
+static int	cap_top(t_hit_cy *cy, const t_ray *r, \
+			t_cylinder *cld, t_hit_record *rec)
 {
 	float	t;
 	t_vec3	p;
