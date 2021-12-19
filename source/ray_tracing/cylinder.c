@@ -26,17 +26,6 @@ int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	return (TRUE);
 }
 
-int	check_cap_range(t_vec3 p, t_vec3 cap_center, float radius)
-{
-	t_vec3	tmp;
-
-	tmp = subtract(p, cap_center);
-	if (length(tmp) > radius)
-		return (FALSE);
-	else
-		return (TRUE);
-}
-
 int	cap_bottom(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	float	t;
@@ -52,7 +41,7 @@ int	cap_bottom(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	bottom = cld->point;
 	t = dot(cld->unit_normal, subtract(bottom, r->origin)) / denominator;
 	p = at(r, t);
-	if (check_cap_range(p, bottom, cld->radius) == FALSE)
+	if (length(subtract(p, bottom)) > cld->radius)
 		return (FALSE);
 	rec->color = cld->color;
 	rec->t = t;
@@ -68,7 +57,8 @@ int	cap_top(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	float	denominator;
 	t_vec3	top;
 
-	if (dot(subtract(at(r, cy->t2), cld->point), cld->unit_normal) > cld->height)
+	if (dot(subtract(at(r, cy->t2), cld->point), cld->unit_normal) \
+			> cld->height)
 		return (FALSE);
 	denominator = dot(r->direction, cld->unit_normal);
 	if (denominator == 0)
@@ -76,7 +66,7 @@ int	cap_top(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	top = add(cld->point, multiply(cld->unit_normal, cld->height));
 	t = dot(cld->unit_normal, subtract(top, r->origin)) / denominator;
 	p = at(r, t);
-	if (check_cap_range(p, top, cld->radius) == FALSE)
+	if (length(subtract(p, top)) > cld->radius)
 		return (FALSE);
 	rec->color = cld->color;
 	rec->t = t;
@@ -89,7 +79,7 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
 
-	if (eq_solve(&cy, cld, r, rec) == FALSE)	// t, p, normal 구하기.
+	if (eq_solve(&cy, cld, r, rec) == FALSE)
 		return (FALSE);
 	cy.is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
 	if (cy.is_between >= 0 && cy.is_between <= cld->height)
