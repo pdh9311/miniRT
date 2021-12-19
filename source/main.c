@@ -18,8 +18,8 @@ t_color	ray_color(t_scene *scene)
 		pixel_color = rec.color;
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
-		// if (set_shadow(scene, &rec, &phong))
-		// 	multiply_(&pixel_color, 0.3);
+		if (set_shadow(scene, &rec, &phong))
+			multiply_(&pixel_color, 0.3);
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), \
 						scene->light->bright_ratio));
@@ -56,7 +56,6 @@ int	draw(void *param)
 	}
 	mlx_put_image_to_window(scene->mlx.mlx_ptr, \
 			scene->mlx.win_ptr, scene->mlx.img_ptr, 0, 0);
-	// exit(1);
 	return (TRUE);
 }
 

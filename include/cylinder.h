@@ -27,6 +27,8 @@ typedef struct s_hit_cy
 	float	c;
 	float	discrimiant;
 	t_vec3	w;
+	float	t1;
+	float	t2;
 	float	is_between;
 	float	tmp;
 	t_vec3	normal;

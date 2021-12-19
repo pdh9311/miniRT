@@ -25,6 +25,68 @@ int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 		dot(subtract(rec->p, cld->point), cld->unit_normal))));
 	return (TRUE);
 }
+/*
+int	check_cy_p(t_cylinder *cld, t_hit_record *rec)
+{
+	t_point3	bottom;
+	t_point3	top;
+	t_vec3		bottom_p;
+	t_vec3		top_p;
+
+	bottom = cld->point;
+	top = add(cld->point, multiply(cld->unit_normal, cld->height));
+	bottom_p = subtract(rec->p, bottom);
+	top_p = subtract(rec->p, top);
+	if (dot(cld->unit_normal, bottom_p) < 0)	// 다른 방향이면
+		return (FALSE);
+	if (dot(cld->unit_normal, top_p) > 0)	// 같은 방향이면
+		return (FALSE);
+	if (rec->t <= 0 || rec->t > TMAX)
+		return (FALSE);
+	return (TRUE);
+}
+
+int	check_cap_range(const t_ray *r, t_cylinder *cld, double t, t_vec3 cap_center)
+{
+	t_vec3	tmp;
+
+	tmp = subtract(at(r, t), subtract(cap_center, r->origin));
+	if (length(tmp) > cld->radius)
+		return (FALSE);
+	else
+		return (TRUE);
+}
+
+
+float	cap_solve_t(const t_ray *r, t_cylinder *cld)
+{
+	t_vec3	bottom;
+	t_vec3	top;
+	float	denominator;
+	double	bottom_t;
+	double	top_t;
+
+	denominator = dot(r->direction, cld->unit_normal);
+	if (denominator == 0)
+		return (TMAX);
+	bottom = cld->point;
+	bottom_t = dot(cld->unit_normal, subtract(bottom, r->origin)) / denominator;
+	if (check_cap_range(r, cld, bottom_t, bottom) == FALSE)
+		bottom_t = TMAX;
+	top = add(cld->point, multiply(cld->unit_normal, cld->height));
+	top_t = dot(cld->unit_normal, subtract(top, r->origin)) / denominator;
+	if (check_cap_range(r, cld, top_t, top) == FALSE)
+		top_t = TMAX;
+	if (top_t < TMIN || top_t >TMAX)
+		top_t = TMAX;
+	if (bottom_t < TMIN || bottom_t >TMAX)
+		bottom_t = TMAX;
+	if (top_t < bottom_t)
+		return (top_t);
+	else
+		return (bottom_t);
+}
+*/
 
 int	check_cap_range(t_vec3 p, t_vec3 cap_center, float radius)
 {
@@ -54,10 +116,11 @@ int	cap_bottom(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	p = at(r, t);
 	if (check_cap_range(p, bottom, cld->radius) == FALSE)
 		return (FALSE);
-	rec->color = cld->color;
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
+	if (dot(unit_vector(r->direction), rec->normal) < 0)
+		rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
@@ -78,16 +141,18 @@ int	cap_top(t_hit_cy *cy, const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 	p = at(r, t);
 	if (check_cap_range(p, top, cld->radius) == FALSE)
 		return (FALSE);
-	rec->color = cld->color;
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
+	if (dot(unit_vector(r->direction), rec->normal) < 0)
+		rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
 int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
+	float		cap_t;
 
 	if (eq_solve(&cy, cld, r, rec) == FALSE)	// t, p, normal 구하기.
 		return (FALSE);
