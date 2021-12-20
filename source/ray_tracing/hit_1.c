@@ -1,6 +1,7 @@
 #include "sphere.h"
 #include "plane.h"
 #include "cylinder.h"
+#include "cone.h"
 
 void	init_hit_record(t_hit_record *hit_record)
 {

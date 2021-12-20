@@ -14,7 +14,6 @@ static int	cy_eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	cy->discrimiant = pow(cy->half_b, 2) - (cy->a * cy->c);
 	cy->t1 = (-(cy->half_b) - sqrt(cy->discrimiant)) / cy->a;
 	cy->t2 = (-(cy->half_b) + sqrt(cy->discrimiant)) / cy->a;
-	rec->color = cld->color;
 	if (cy->discrimiant < 0)
 		return (FALSE);
 	rec->t = cy->t1;
@@ -22,6 +21,7 @@ static int	cy_eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	rec->normal = unit_vector(subtract(subtract(rec->p, cld->point), \
 		multiply(cld->unit_normal, \
 		dot(subtract(rec->p, cld->point), cld->unit_normal))));
+	rec->color = cld->color;
 	return (TRUE);
 }
 
@@ -43,7 +43,7 @@ static int	cap_bottom(t_hit_cy *cy, const t_ray *r, \
 	p = at(r, t);
 	if (length(subtract(p, bottom)) > cld->radius)
 		return (FALSE);
-	rec->color = cld->color;
+	// rec->color = cld->color;
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
@@ -69,7 +69,7 @@ static int	cap_top(t_hit_cy *cy, const t_ray *r, \
 	p = at(r, t);
 	if (length(subtract(p, top)) > cld->radius)
 		return (FALSE);
-	rec->color = cld->color;
+	// rec->color = cld->color;
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
