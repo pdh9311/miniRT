@@ -26,6 +26,8 @@ int	check_axis(t_vec3 axis)
 		return (EXIT_FAILURE);
 	if (axis.z < -1.0 || axis.z > 1.0)
 		return (EXIT_FAILURE);
+	if (axis.x == 0 && axis.y == 0 && axis.z == 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

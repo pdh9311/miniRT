@@ -30,6 +30,7 @@ static void	add_object(t_hlist **list, t_element *elem)
 {
 	t_object	object;
 	t_cy_info	cy_info;
+	t_cy_info	cone_info;
 
 	if (elem->type == PL)
 		object = plane_(elem->coord, unit_vector(elem->vector), \
@@ -41,6 +42,11 @@ static void	add_object(t_hlist **list, t_element *elem)
 	{
 		set_cy_info(elem, &cy_info);
 		object = cylinder_(cy_info);
+	}
+	else if (elem->type == CO)
+	{
+		set_cy_info(elem, &cone_info);
+		object = cone_(cone_info);
 	}
 	else
 		return ;
@@ -63,9 +69,10 @@ void	make_object_list(t_scene *scene, t_lst *lst)
 		{
 			make_light_list(scene, (t_element *)(lst->content));
 		}
-		else if (((t_element *)(lst->content))->type == PL
-				|| ((t_element *)(lst->content))->type == SP
-				|| ((t_element *)(lst->content))->type == CY)
+		else if (((t_element *)(lst->content))->type == PL \
+				|| ((t_element *)(lst->content))->type == SP \
+				|| ((t_element *)(lst->content))->type == CY \
+				|| ((t_element *)(lst->content))->type == CO)
 		{
 			add_object(&scene->list, (t_element *)(lst->content));
 		}
@@ -81,6 +88,7 @@ void	init(t_scene *scene, t_lst *lst)
 	scene->light_list = NULL;
 	scene->light_list_move = NULL;
 	make_object_list(scene, lst);
+	// print_obj_lst(scene->list); exit(1);		// hlist parsing test code
 	set_camera(scene);
 	set_light(scene);
 	init_mlx(scene);

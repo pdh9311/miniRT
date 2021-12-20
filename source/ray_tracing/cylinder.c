@@ -1,7 +1,6 @@
 #include "cylinder.h"
-#include "utils.h"
 
-static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
+static int	cy_eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 				const t_ray *r, t_hit_record *rec)
 {
 	cy->w = subtract(r->origin, cld->point);
@@ -81,7 +80,7 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
 
-	if (eq_solve(&cy, cld, r, rec) == FALSE)
+	if (cy_eq_solve(&cy, cld, r, rec) == FALSE)
 		return (FALSE);
 	cy.is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
 	if (cy.is_between >= 0 && cy.is_between <= cld->height)

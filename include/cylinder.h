@@ -16,7 +16,7 @@ typedef struct s_cylinder
 }				t_cylinder;
 
 typedef t_cylinder	t_cy_info;
-
+typedef t_cylinder	t_cone;
 /**
  * tmp : ray가 원통의 평면과 교차할때의 t값
  */
@@ -32,7 +32,6 @@ typedef struct s_hit_cy
 	float	is_between;
 	float	tmp;
 	t_vec3	normal;
-	float	check;
 }				t_hit_cy;
 
 int			hit_cylinder(const t_ray *r, \

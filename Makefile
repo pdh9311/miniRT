@@ -30,6 +30,7 @@ INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
 				sphere.h \
 				plane.h \
 				cylinder.h \
+				cone.h \
 				keycode.h keyhook.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
@@ -77,6 +78,7 @@ SOURCES		:=	main.c \
 				ray_tracing/specular.c \
 				ray_tracing/plane.c \
 				ray_tracing/cylinder.c \
+				ray_tracing/cone.c \
 				keyhook/keyhook.c \
 				keyhook/close.c \
 				keyhook/cam_move.c \

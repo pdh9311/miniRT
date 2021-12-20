@@ -13,6 +13,7 @@
 # include "sphere.h"
 # include "plane.h"
 # include "cylinder.h"
+# include "cone.h"
 # include "hit.h"
 # include "list.h"
 # include "element.h"
@@ -113,4 +114,5 @@ void	set_specular(t_color *pixel_color, t_scene *scene, \
 					t_hit_record *rec, t_phong *phong);
 
 void	print_lst(t_lst *lst);
+void	print_obj_lst(t_hlist *hlist);
 #endif

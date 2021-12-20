@@ -21,7 +21,8 @@ typedef enum e_type
 	_none,
 	_plane,
 	_sphere,
-	_cylinder
+	_cylinder,
+	_cone
 }				t_type;
 
 typedef struct s_object

@@ -22,6 +22,8 @@ static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 			is_hit = hit_plane(r, object->figure, rec);
 		else if (object->type == _cylinder)
 			is_hit = hit_cylinder(r, object->figure, rec);
+		else if (object->type == _cone)
+			is_hit = hit_cone(r, object->figure, rec);
 	}
 	if (is_hit)
 		rec->albedo = object->albedo;
