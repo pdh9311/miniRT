@@ -77,6 +77,7 @@ int	main(int argc, char *argv[])
 	lst = NULL;
 	if (readfile(argv[1], &lst))
 		return (EXIT_FAILURE);
+	// print_lst(lst); exit(1);		/// readfile test code
 	init(&scene, lst);
 	mlx_hook(mlx->win_ptr, KEY_PRESS, 1L << 0, key_hook, &scene);
 	mlx_hook(mlx->win_ptr, DESTROY, 0, close_screen, &scene);

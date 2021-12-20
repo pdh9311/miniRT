@@ -43,6 +43,7 @@ SOURCES		:=	main.c \
 				types/type_pl.c \
 				types/type_sp.c \
 				types/type_cy.c \
+				types/type_co.c \
 				types/utils.c \
 				types/check_utils.c \
 				utils/free.c \
@@ -81,7 +82,8 @@ SOURCES		:=	main.c \
 				keyhook/cam_move.c \
 				keyhook/cam_rotate.c \
 				keyhook/cam_change.c \
-				keyhook/light_change.c
+				keyhook/light_change.c \
+				test.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/

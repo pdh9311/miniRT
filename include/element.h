@@ -12,7 +12,8 @@ enum	e_type_str
 	L,
 	PL,
 	SP,
-	CY
+	CY,
+	CO			/// ADD: CO
 };
 
 typedef struct s_check
@@ -57,6 +58,7 @@ int			input_type_l(char **split, t_lst **lst);
 int			input_type_pl(char **split, t_lst **lst);
 int			input_type_sp(char **split, t_lst **lst);
 int			input_type_cy(char **split, t_lst **lst);
+int			input_type_co(char **split, t_lst **lst);
 t_color		get_color(char *rgb);
 t_point3	get_point3(char *data);
 

@@ -3,14 +3,15 @@
 
 int	check_type(char **split, char *type, t_lst **lst)
 {
-	static const int	total = 6;
+	static const int	total = 7;					/// MOD: 6 -> 7
 	static const char	*type_str[] = {
-		"A", "C", "L", "pl", "sp", "cy"
+		"A", "C", "L", "pl", "sp", "cy", "co"		/// ADD: "co"
 	};
 	static	int			(*type_func[])(char **, t_lst **) = {
 		&input_type_a, &input_type_c,
 		&input_type_l, &input_type_pl,
-		&input_type_sp, &input_type_cy
+		&input_type_sp, &input_type_cy,
+		&input_type_co								/// ADD: &input_type_co
 	};
 	int					idx;
 
