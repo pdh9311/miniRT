@@ -15,14 +15,13 @@ t_color	ray_color(t_scene *scene)
 	init_hit_record(&rec);
 	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
-		pixel_color = rec.color;
-		set_ambient(&pixel_color, scene, &rec);
+		pixel_color = (t_color){0, 0, 0};
 		set_diffuse(&pixel_color, scene, &rec, &phong);
 		if (set_shadow(scene, &rec, &phong))
-			multiply_(&pixel_color, 0.3);
+			return ((t_color){0, 0, 0});
 		set_specular(&pixel_color, scene, &rec, &phong);
-		return (multiply(multiply__(pixel_color, rec.albedo), \
-						scene->light->bright_ratio));
+		set_ambient(&pixel_color, scene, &rec);
+		return (pixel_color);
 	}
 	t = fabs((scene->ray.direction.y + 1) * 0.5);
 	pixel_color = add(multiply(color_(1.0, 1.0, 1.0), 1 - t), \
