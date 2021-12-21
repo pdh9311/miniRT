@@ -19,7 +19,8 @@ t_color	ray_color(t_scene *scene)
 		set_ambient(&pixel_color, scene, &rec);
 		set_diffuse(&pixel_color, scene, &rec, &phong);
 		if (set_shadow(scene, &rec, &phong))
-			multiply_(&pixel_color, 0.3);
+			// multiply_(&pixel_color, 0.3);
+			return ((t_color){0.0, 0.0, 0.0});
 		set_specular(&pixel_color, scene, &rec, &phong);
 		return (multiply(multiply__(pixel_color, rec.albedo), \
 						scene->light->bright_ratio));

@@ -14,6 +14,9 @@ typedef struct s_hit_record
 	float		t;
 	t_color		albedo;
 	t_color		color;
+// ADD-->
+	int			id;
+// END-->
 }				t_hit_record;
 
 typedef enum e_type
@@ -29,6 +32,9 @@ typedef struct s_object
 	t_type	type;
 	t_color	albedo;
 	void	*figure;
+// ADD-->
+	int		id;
+// END-->
 }				t_object;
 
 typedef struct s_hlist

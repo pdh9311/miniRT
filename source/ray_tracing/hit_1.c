@@ -33,6 +33,11 @@ int	hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 	t_hit_record	temp_rec;
 	float			closest_so_far;
 	int				hit_anything;
+// ADD-->
+	int				idx;
+
+	idx = 0;
+// END-->
 
 	hit_anything = FALSE;
 	closest_so_far = max;
@@ -44,9 +49,15 @@ int	hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 			{
 				hit_anything = TRUE;
 				closest_so_far = temp_rec.t;
+// ADD-->
+				temp_rec.id = idx;
+// END-->
 				*rec = temp_rec;
 			}
 		}
+// ADD-->
+		idx += 1;
+// END-->
 		current = current->next;
 	}
 	return (hit_anything);

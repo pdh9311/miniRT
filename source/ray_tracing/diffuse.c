@@ -14,6 +14,9 @@ void	set_diffuse(t_color *pixel_color, t_scene *scene, \
 {
 	phong->light_dir = subtract(scene->light->origin, rec->p);
 	phong->light_unit_dir = unit_vector(phong->light_dir);
+// ADD-->
+	phong->id = rec->id;
+// END-->
 	if (dot(phong->light_unit_dir, rec->normal) < 0)
 		rec->normal = negate(rec->normal);
 	phong->kd = fmax(dot(rec->normal, phong->light_unit_dir), 0.0);
