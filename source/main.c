@@ -55,6 +55,7 @@ int	draw(void *param)
 	}
 	mlx_put_image_to_window(scene->mlx.mlx_ptr, \
 			scene->mlx.win_ptr, scene->mlx.img_ptr, 0, 0);
+exit(1);		
 	return (TRUE);
 }
 

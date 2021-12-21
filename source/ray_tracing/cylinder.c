@@ -23,6 +23,8 @@ static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
 	rec->normal = unit_vector(subtract(subtract(rec->p, cld->point), \
 		multiply(cld->unit_normal, \
 		dot(subtract(rec->p, cld->point), cld->unit_normal))));
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+		// rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
@@ -48,6 +50,8 @@ static int	cap_bottom(t_hit_cy *cy, const t_ray *r, \
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+	// 	rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
@@ -74,6 +78,8 @@ static int	cap_top(t_hit_cy *cy, const t_ray *r, \
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+	// 	rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
