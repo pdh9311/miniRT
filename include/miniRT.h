@@ -70,9 +70,6 @@ typedef struct s_phong
 	t_vec3			view_dir;
 	t_vec3			reflect_dir;
 	float			spec;
-// ADD-->
-	int				id;
-// END-->
 }				t_phong;
 
 // readfile.c
