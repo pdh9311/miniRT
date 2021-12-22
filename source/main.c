@@ -11,7 +11,9 @@ t_color	ray_color(t_scene *scene)
 	t_hit_record	rec;
 	float			t;
 	t_phong			phong;
+	int				flag;
 
+	flag = 0;
 	init_hit_record(&rec);
 	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
@@ -19,9 +21,12 @@ t_color	ray_color(t_scene *scene)
 		pixel_color = (t_color){0.0, 0.0, 0.0};
 		set_diffuse(&pixel_color, scene, &rec, &phong);
 		if (set_shadow(scene, &rec, &phong))
-			return ((t_color){0.0, 0.0, 0.0});
+			flag = 1;
+			// return ((t_color){0.0, 0.0, 0.0});
 		set_specular(&pixel_color, scene, &rec, &phong);
 		set_ambient(&pixel_color, scene, &rec);
+		if (flag == 1)
+			return (multiply(pixel_color, 0.7));
 		return (pixel_color);
 	}
 	t = fabs((scene->ray.direction.y + 1) * 0.5);
