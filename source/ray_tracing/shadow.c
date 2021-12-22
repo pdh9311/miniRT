@@ -30,15 +30,17 @@ static int	shadow_hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 	hit_anything = FALSE;
 	closest_so_far = max;
 	idx = 0;
+	(void)rec;
 	while (current)
 	{
-		if (idx != rec->id && hit_(&current->object, r, &temp_rec))
+		if (hit_(&current->object, r, &temp_rec))
 		{
-			if (temp_rec.t > 0 && temp_rec.t< closest_so_far)
+			if (temp_rec.t > TMIN && temp_rec.t< closest_so_far)
 			{
-				hit_anything = TRUE;
-				closest_so_far = temp_rec.t;
-				*rec = temp_rec;
+				return (TRUE);
+				// hit_anything = TRUE;
+				// closest_so_far = temp_rec.t;
+				// *rec = temp_rec;
 			}
 		}
 		current = current->next;
