@@ -75,9 +75,7 @@ static int	read_and_parsing(t_rdfile *rd, t_lst **lst)
 int	readfile(char *file, t_lst **lst)
 {
 	t_rdfile	rd;
-	// ADD-->
 	char		*check;
-
 
 	check = ft_strrchr(file, '.');
 	if (ft_strcmp(".rt", check) != 0)
@@ -85,7 +83,6 @@ int	readfile(char *file, t_lst **lst)
 		ft_putendl_fd("Error\n  Wrong file type", 2);
 		return (EXIT_FAILURE);
 	}
-	// END-->
 	rd.fd = open(file, O_RDONLY);
 	if (rd.fd < 0)
 	{

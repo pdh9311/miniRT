@@ -34,7 +34,7 @@ static int	shadow_hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 	{
 		if (hit_(&current->object, r, &temp_rec))
 		{
-			if (temp_rec.t > TMIN && temp_rec.t< closest_so_far)
+			if (temp_rec.t > TMIN && temp_rec.t < closest_so_far)
 			{
 				return (TRUE);
 			}

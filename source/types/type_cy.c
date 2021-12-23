@@ -1,15 +1,22 @@
 #include "element.h"
 #include "libft.h"
 
+static int	cy_split_cnt(char **split)
+{
+	if (split_cnt(split) != 6)
+	{
+		ft_putendl_fd("Error\n  Wrong argument count cy", 2);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 int	input_type_cy(char **split, t_lst **lst)
 {
 	t_element	*elem;
 
-	if (split_cnt(split) != 6)
-	{
-		ft_putendl_fd("Error\n  Wrong argument count cy", 2);
+	if (cy_split_cnt(split) == FALSE)
 		return (EXIT_FAILURE);
-	}
 	elem = (t_element *)malloc(sizeof(t_element));
 	if (elem == NULL)
 		return (EXIT_FAILURE);
