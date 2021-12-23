@@ -5,6 +5,11 @@ int	input_type_a(char **split, t_lst **lst)
 {
 	t_element	*elem;
 
+	if (split_cnt(split) != 3)
+	{
+		ft_putendl_fd("Error\n  Wrong argument count a", 2);
+		return (EXIT_FAILURE);
+	}
 	elem = (t_element *)malloc(sizeof(t_element));
 	if (elem == NULL)
 		return (EXIT_FAILURE);
