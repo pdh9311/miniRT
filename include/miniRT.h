@@ -51,9 +51,6 @@ typedef struct s_scene
 	t_lst		*light_list;
 	t_lst		*light_list_move;
 	t_light		ambient;
-// ADD-->
-	int			obj_id;
-// END-->
 }				t_scene;
 
 typedef struct s_phong

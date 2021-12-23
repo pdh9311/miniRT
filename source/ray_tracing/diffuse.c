@@ -16,17 +16,9 @@ void	set_diffuse(t_color *pixel_color, t_scene *scene, \
 
 	phong->light_dir = subtract(scene->light->origin, rec->p);
 	phong->light_unit_dir = unit_vector(phong->light_dir);
-// ADD-->
-	phong->shadow_rec.id = rec->id;
-// END-->
-// DEL-->
 	//if (dot(phong->light_unit_dir, rec->normal) < 0)
 		//rec->normal = negate(rec->normal);
-// END-->
 	phong->kd = fmax(dot(rec->normal, phong->light_unit_dir), 0.0);
-// MOD-->
 	diffuse = multiply(multiply(scene->light->color, scene->light->bright_ratio), phong->kd);
 	add_(pixel_color, diffuse);
-// END-->
-	// multiply_(pixel_color, phong->kd);
 }

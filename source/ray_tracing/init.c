@@ -26,8 +26,7 @@ static void	set_cy_info(t_element *elem, t_cy_info *cy_info)
 	cy_info->height = elem->height;
 }
 
-// ADD--> int id
-static void	add_object(t_hlist **list, t_element *elem, int id)
+static void	add_object(t_hlist **list, t_element *elem)
 {
 	t_object	object;
 	t_cy_info	cy_info;
@@ -45,9 +44,6 @@ static void	add_object(t_hlist **list, t_element *elem, int id)
 	}
 	else
 		return ;
-// ADD-->
-	object.id = id;
-// END-->
 	push(list, list_(object));
 }
 
@@ -71,14 +67,9 @@ void	make_object_list(t_scene *scene, t_lst *lst)
 				|| ((t_element *)(lst->content))->type == SP
 				|| ((t_element *)(lst->content))->type == CY)
 		{
-// MOD-->
-			//add_object(&scene->list, (t_element *)(lst->content));
-			add_object(&scene->list, (t_element *)(lst->content), scene->obj_id);
+			add_object(&scene->list, (t_element *)(lst->content));
 		}
 		lst = lst->next;
-// ADD-->
-		scene->obj_id += 1;
-// END-->
 	}
 }
 
@@ -89,9 +80,6 @@ void	init(t_scene *scene, t_lst *lst)
 	scene->cam_list_move = NULL;
 	scene->light_list = NULL;
 	scene->light_list_move = NULL;
-// ADD-->
-	scene->obj_id = 0;
-// END-->
 	make_object_list(scene, lst);
 	set_camera(scene);
 	set_light(scene);

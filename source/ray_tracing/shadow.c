@@ -1,6 +1,5 @@
 #include "miniRT.h"
 
-// ADD-->
 static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 {
 	int	is_hit;
@@ -38,9 +37,6 @@ static int	shadow_hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 			if (temp_rec.t > TMIN && temp_rec.t< closest_so_far)
 			{
 				return (TRUE);
-				// hit_anything = TRUE;
-				// closest_so_far = temp_rec.t;
-				// *rec = temp_rec;
 			}
 		}
 		current = current->next;
@@ -48,13 +44,11 @@ static int	shadow_hit(t_hlist *current, t_ray *r, t_hit_record *rec, float max)
 	}
 	return (hit_anything);
 }
-// END-->
 
 int	set_shadow(t_scene *scene, t_hit_record *rec, t_phong *phong)
 {
 	phong->light_len = length(phong->light_dir);
 	phong->light_ray = ray_(rec->p, phong->light_unit_dir);
-	// MOD--> hit -> shadow_hit
 	if (shadow_hit(scene->list, &phong->light_ray, \
 			&phong->shadow_rec, phong->light_len))
 		return (TRUE);
