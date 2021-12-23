@@ -46,6 +46,41 @@ static void	init_camera_helper1(t_camera *cam, t_element *elem)
 	cam->vector = elem->vector;
 }
 
+t_vec3	set_vup(t_vec3 w)
+{
+	t_vec3	cam_direction;
+
+	cam_direction = negate(w);
+	printf("%+f\n", cam_direction.y);
+	if (cam_direction.x == 0 && cam_direction.y != 0 && cam_direction.z == 0)
+		return ((t_vec3){0, 1, 1});
+	else
+		return ((t_vec3){0, 1, 0});
+}
+
+/*
+ * when		w.x == 0 && w.y != 0 && w.z = 0
+ * if		vup = (0, 1, 0)
+ * then		u = (0, 0, 0)
+ * thus
+ * 	if	w.x == 0 && w.y != 0 && w.z == 0
+ * 	then	change vup.z to 1
+ ********************************************
+ * [cam-> u = cam->vup × cam->w]
+ * 				x	  y		z
+ * vup			0,    1,	1
+ * w			0,   -1,	0
+ * vup × w =	1,    0,	0
+ * ∴ u = (1, 0, 0)
+ ********************************************
+ * [cam-> u = cam->vup × cam->w]
+ * 				x	  y		z
+ * vup			0,    1,	1
+ * w			0,    1,	0
+ * vup × w =   -1,    0,	0
+ * ∴ u = (-1, 0, 0)
+ ********************************************
+ */
 void	init_camera(t_camera *cam, t_element *elem)
 {
 	init_camera_helper1(cam, elem);
@@ -54,8 +89,14 @@ void	init_camera(t_camera *cam, t_element *elem)
 	cam->vp_height = 2 * cam->focal_length * tan(deg_to_rad(elem->fov / 2));
 	cam->vp_width = cam->aspect_ratio * cam->vp_height;
 	cam->w = unit_vector(subtract(cam->origin, cam->focal));
+	cam->vup = set_vup(cam->w);
 	cam->u = unit_vector(cross(cam->vup, cam->w));
 	cam->v = cross(cam->w, cam->u);
+	printf("w:\t %+f %+f %+f\n", cam->w.x, cam->w.y, cam->w.z);
+	printf("vup:\t %+f %+f %+f\n", cam->vup.x, cam->vup.y, cam->vup.z);
+	printf("u:\t %+f %+f %+f\n", cam->u.x, cam->u.y, cam->u.z);
+	printf("v:\t %+f %+f %+f\n\n", cam->v.x, cam->v.y, cam->v.z);
+
 	cam->horizontal = multiply(cam->u, cam->vp_width);
 	cam->vertical = multiply(cam->v, cam->vp_height);
 	cam->lower_left_corner = subtract(
