@@ -8,9 +8,18 @@ t_color	get_color(char *rgb)
 	char	**rgb_split;
 
 	rgb_split = ft_split(rgb, ',');
-	color.x = ft_atoi(rgb_split[0]);
-	color.y = ft_atoi(rgb_split[1]);
-	color.z = ft_atoi(rgb_split[2]);
+	if (rgb_split[0] == NULL)
+		color.x = 255;
+	else
+		color.x = ft_atoi(rgb_split[0]);
+	if (rgb_split[1] == NULL)
+		color.y = 255;
+	else
+		color.y = ft_atoi(rgb_split[1]);
+	if (rgb_split[2] == NULL)
+		color.z = 255;
+	else
+		color.z = ft_atoi(rgb_split[2]);
 	free_dptr(rgb_split, 0);
 	return (color);
 }
