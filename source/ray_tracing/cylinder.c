@@ -87,19 +87,19 @@ int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
 
-	if (eq_solve(&cy, cld, r, rec) == FALSE)
+	if (eq_solve(&cy, cld, r, rec) == FALSE || rec->t < TMIN)
 		return (FALSE);
 	cy.is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
 	if (cy.is_between >= 0 && cy.is_between <= cld->height)
 		return (TRUE);
 	else if (cy.is_between < 0)
 	{
-		if (cap_bottom(&cy, r, cld, rec) == FALSE)
+		if (cap_bottom(&cy, r, cld, rec) == FALSE || rec->t < TMIN)
 			return (FALSE);
 	}
 	else
 	{
-		if (cap_top(&cy, r, cld, rec) == FALSE)
+		if (cap_top(&cy, r, cld, rec) == FALSE || rec->t < TMIN)
 			return (FALSE);
 	}
 	return (TRUE);
