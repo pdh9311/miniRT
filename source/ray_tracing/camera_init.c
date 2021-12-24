@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:54:56 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 17:50:54 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:14:28 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	make_cam_list(t_scene *scene, t_element *elem)
 static void	init_camera_helper1(t_camera *cam, t_element *elem)
 {
 	cam->aspect_ratio = 16.0 / 9.0;
-	cam->image_width = 800;
+	cam->image_width = 1920;
 	cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
 	cam->samples_per_pixel = 20;
 	cam->focal_length = 1.0;
