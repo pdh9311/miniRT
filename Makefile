@@ -6,7 +6,7 @@
 #    By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/24 15:57:52 by donpark           #+#    #+#              #
-#    Updated: 2021/12/24 16:07:57 by donpark          ###   ########.fr        #
+#    Updated: 2021/12/24 17:54:25 by donpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIBFT_LIB	:= $(LIBFT_DIR)libft.a
 LIBFT_INC	:= $(LIBFT_DIR)
 
 INC_DIR		:= ./include/
-INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
+INCLUDES	:= 	element.h keycode.h utils.h list.h \
 				vec3.h \
 				hit.h \
 				camera.h \
