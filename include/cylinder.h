@@ -29,9 +29,6 @@ typedef struct s_cylinder
 
 typedef t_cylinder	t_cy_info;
 
-/**
- * tmp : ray가 원통의 평면과 교차할때의 t값
- */
 typedef struct s_hit_cy
 {
 	float	a;
