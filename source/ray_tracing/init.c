@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:56:58 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 17:51:12 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:42:46 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	add_object(t_hlist **list, t_element *elem)
 {
 	t_object	object;
 	t_cy_info	cy_info;
+	t_cy_info	cone_info;
 
 	if (elem->type == PL)
 		object = plane_(elem->coord, unit_vector(elem->vector), \
@@ -53,6 +54,11 @@ static void	add_object(t_hlist **list, t_element *elem)
 	{
 		set_cy_info(elem, &cy_info);
 		object = cylinder_(cy_info);
+	}
+	else if (elem->type == CO)
+	{
+		set_cy_info(elem, &cone_info);
+		object = cone_(cone_info);
 	}
 	else
 		return ;
@@ -77,7 +83,8 @@ void	make_object_list(t_scene *scene, t_lst *lst)
 		}
 		else if (((t_element *)(lst->content))->type == PL
 				|| ((t_element *)(lst->content))->type == SP
-				|| ((t_element *)(lst->content))->type == CY)
+				|| ((t_element *)(lst->content))->type == CY \
+				|| ((t_element *)(lst->content))->type == CO)
 		{
 			add_object(&scene->list, (t_element *)(lst->content));
 		}

@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:57:29 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 16:00:57 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:44:37 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 int	check_type(char **split, char *type, t_lst **lst)
 {
-	static const int	total = 6;
+	static const int	total = 7;
 	static const char	*type_str[] = {
-		"A", "C", "L", "pl", "sp", "cy"
+		"A", "C", "L", "pl", "sp", "cy", "co"
 	};
 	static	int			(*type_func[])(char **, t_lst **) = {
-		&input_type_a, &input_type_c,
-		&input_type_l, &input_type_pl,
-		&input_type_sp, &input_type_cy
+		&input_type_a, &input_type_c, &input_type_l,
+		&input_type_pl,	&input_type_sp, &input_type_cy,
+		&input_type_co
 	};
 	int					idx;
 

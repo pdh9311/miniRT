@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:58:02 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 16:03:28 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:39:27 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_cylinder
 }				t_cylinder;
 
 typedef t_cylinder	t_cy_info;
+typedef t_cylinder	t_cone;
 
 typedef struct s_hit_cy
 {

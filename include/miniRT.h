@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:58:23 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 15:58:23 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:42:38 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "sphere.h"
 # include "plane.h"
 # include "cylinder.h"
+# include "cone.h"
 # include "hit.h"
 # include "list.h"
 # include "element.h"

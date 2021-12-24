@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:58:08 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 15:58:08 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:37:38 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ typedef enum e_type
 	_none,
 	_plane,
 	_sphere,
-	_cylinder
+	_cylinder,
+	_cone
 }				t_type;
 
 typedef struct s_object

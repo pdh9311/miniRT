@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:57:48 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 16:02:52 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:48:06 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_color	ray_color(t_scene *scene)
 		set_specular(&pixel_color, scene, &rec, &phong);
 		set_ambient(&pixel_color, scene, &rec);
 		if (flag == 1)
-			return (multiply(pixel_color, 0.7));
+			return (multiply(pixel_color, 0.9));
 		return (pixel_color);
 	}
 	t = fabs((scene->ray.direction.y + 1) * 0.5);

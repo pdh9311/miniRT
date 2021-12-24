@@ -6,7 +6,7 @@
 #    By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/24 15:57:52 by donpark           #+#    #+#              #
-#    Updated: 2021/12/24 16:07:57 by donpark          ###   ########.fr        #
+#    Updated: 2021/12/24 18:40:06 by donpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ INCLUDES	:= 	element.h keycode.h utils.h list.h test.h \
 				sphere.h \
 				plane.h \
 				cylinder.h \
-				keycode.h keyhook.h
+				keycode.h keyhook.h \
+				cone.h
 INCS		:= $(addprefix $(INC_DIR), $(INCLUDES))
 
 SRCS_DIR	:=	./source/
@@ -54,6 +55,7 @@ SOURCES		:=	main.c \
 				types/type_pl.c \
 				types/type_sp.c \
 				types/type_cy.c \
+				types/type_co.c \
 				types/utils.c \
 				types/check_utils.c \
 				utils/free.c \
@@ -86,6 +88,7 @@ SOURCES		:=	main.c \
 				ray_tracing/specular.c \
 				ray_tracing/plane.c \
 				ray_tracing/cylinder.c \
+				ray_tracing/cone.c \
 				keyhook/keyhook.c \
 				keyhook/close.c \
 				keyhook/cam_move.c \

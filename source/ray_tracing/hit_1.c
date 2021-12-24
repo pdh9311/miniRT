@@ -6,13 +6,14 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:56:51 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 15:56:52 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 18:40:46 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sphere.h"
 #include "plane.h"
 #include "cylinder.h"
+#include "cone.h"
 
 void	init_hit_record(t_hit_record *hit_record)
 {
@@ -34,6 +35,8 @@ static int	hit_(t_object *object, t_ray *r, t_hit_record *rec)
 			is_hit = hit_plane(r, object->figure, rec);
 		else if (object->type == _cylinder)
 			is_hit = hit_cylinder(r, object->figure, rec);
+		else if (object->type == _cone)
+			is_hit = hit_cone(r, object->figure, rec);
 	}
 	if (is_hit)
 		rec->albedo = object->albedo;
