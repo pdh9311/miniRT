@@ -6,7 +6,7 @@
 #    By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/24 15:57:52 by donpark           #+#    #+#              #
-#    Updated: 2021/12/24 15:57:52 by donpark          ###   ########.fr        #
+#    Updated: 2021/12/24 16:07:57 by donpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ CFLAGS		:= -g -Werror -Wextra -Wall $(CHECK)
 CHECK		:=	-fsanitize=address
 
 OS 			:= $(shell uname)
-#USERS 		:= $(shell Users)
 ifeq ($(OS), Linux)
 	MLX_DIR		:= ./minilibx-linux/
 	MLX			:= -lm -lXext -lX11
@@ -178,6 +177,3 @@ norm :
 	@find ./include -name "*.h" -exec norminette {} \;
 	@echo "$(RESET)"
 
-test :
-	@echo "$(CYAN)./miniRT test_files/element.rt$(RESET)"
-	@./miniRT test_files/element.rt
