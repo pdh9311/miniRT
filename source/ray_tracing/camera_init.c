@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:54:56 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 16:02:20 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:50:54 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_vec3	set_vup(t_vec3 w)
 	t_vec3	cam_direction;
 
 	cam_direction = negate(w);
-	printf("%+f\n", cam_direction.y);
 	if (cam_direction.x == 0 && cam_direction.y != 0 && cam_direction.z == 0)
 		return ((t_vec3){0, 1, 1});
 	else

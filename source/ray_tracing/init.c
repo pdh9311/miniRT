@@ -6,7 +6,7 @@
 /*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 15:56:58 by donpark           #+#    #+#             */
-/*   Updated: 2021/12/24 15:56:58 by donpark          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:51:12 by donpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	init_mlx(t_scene *scene)
 	cam = scene->camera;
 	arg->mlx_ptr = mlx_init();
 	arg->win_ptr = mlx_new_window(arg->mlx_ptr, cam->image_width, \
-					cam->image_height, "rainbow");
+					cam->image_height, "miniRT");
 	arg->img_ptr = mlx_new_image(arg->mlx_ptr, cam->image_width, \
 					cam->image_height);
 	arg->addr = (char *)mlx_get_data_addr(arg->img_ptr, &arg->bpp, \
