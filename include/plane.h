@@ -15,6 +15,7 @@ typedef struct s_plane
 
 int			hit_plane(const t_ray *r, t_plane *plane, t_hit_record *rec);
 
-t_object	plane_(t_point3 origin, t_vec3 normal, t_color albedo, t_color color);
+t_object	plane_(t_point3 origin, t_vec3 normal, \
+					t_color albedo, t_color color);
 
 #endif

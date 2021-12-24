@@ -28,7 +28,6 @@ int	check_type(char **split, char *type, t_lst **lst)
 	return (EXIT_SUCCESS);
 }
 
-
 int	line_split(char *line, t_lst **lst)
 {
 	char	**split;

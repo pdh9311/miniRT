@@ -59,6 +59,7 @@ int			input_type_sp(char **split, t_lst **lst);
 int			input_type_cy(char **split, t_lst **lst);
 t_color		get_color(char *rgb);
 t_point3	get_point3(char *data);
+int			split_cnt(char **split);
 
 int			check_rgb(t_color rgb);
 int			check_ratio(float ratio);

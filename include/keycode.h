@@ -132,7 +132,7 @@
 #  define ENTER			65293
 
 #  define ENG_A			97
-#  define ENG_B			87
+#  define ENG_B			98
 #  define ENG_C			99
 #  define ENG_D			100
 #  define ENG_E			101

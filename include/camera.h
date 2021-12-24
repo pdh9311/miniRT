@@ -8,9 +8,7 @@ typedef struct s_camera
 	int			image_width;
 	int			image_height;
 	t_vec3		origin;
-	t_vec3		origin2;
 	t_vec3		vector;
-	t_vec3		vector2;
 	float		fov;
 	float		vp_height;
 	float		vp_width;
@@ -18,9 +16,6 @@ typedef struct s_camera
 	t_vec3		w;
 	t_vec3		u;
 	t_vec3		v;
-	t_vec3		init_w;
-	t_vec3		init_u;
-	t_vec3		init_v;
 	float		focal_length;
 	int			samples_per_pixel;
 	t_vec3		horizontal;

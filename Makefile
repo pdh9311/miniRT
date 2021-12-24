@@ -76,8 +76,12 @@ SOURCES		:=	main.c \
 				ray_tracing/specular.c \
 				ray_tracing/plane.c \
 				ray_tracing/cylinder.c \
-				test.c \
-				keyhook.c
+				keyhook/keyhook.c \
+				keyhook/close.c \
+				keyhook/cam_move.c \
+				keyhook/cam_rotate.c \
+				keyhook/cam_change.c \
+				keyhook/light_change.c
 SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJS_DIR	:=	./object/
@@ -117,6 +121,7 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)/list
 	@mkdir -p $(OBJS_DIR)/readfile
 	@mkdir -p $(OBJS_DIR)/ray_tracing
+	@mkdir -p $(OBJS_DIR)/keyhook
 	@echo "$(MENT)[ Created obj directory ... ]$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
