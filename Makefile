@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/12/24 15:57:52 by donpark           #+#    #+#              #
+#    Updated: 2021/12/24 15:57:52 by donpark          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 C			:= gcc
 CFLAGS		:= -g -Werror -Wextra -Wall $(CHECK)
 CHECK		:=	-fsanitize=address
@@ -53,7 +65,6 @@ SOURCES		:=	main.c \
 				list/pp_lstlast.c \
 				list/pp_lstdelone.c \
 				list/pp_lstfree.c \
-				ray_tracing/camera.c \
 				ray_tracing/color.c \
 				ray_tracing/hit_1.c \
 				ray_tracing/hit_2.c \

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/24 15:57:48 by donpark           #+#    #+#             */
+/*   Updated: 2021/12/24 16:02:52 by donpark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "color.h"
 #include "list.h"
 #include "keyhook.h"
@@ -17,12 +29,10 @@ t_color	ray_color(t_scene *scene)
 	init_hit_record(&rec);
 	if (hit(scene->list, &scene->ray, &rec, TMAX))
 	{
-		//pixel_color = rec.color;
 		pixel_color = (t_color){0.0, 0.0, 0.0};
 		set_diffuse(&pixel_color, scene, &rec, &phong);
 		if (set_shadow(scene, &rec, &phong))
 			flag = 1;
-			// return ((t_color){0.0, 0.0, 0.0});
 		set_specular(&pixel_color, scene, &rec, &phong);
 		set_ambient(&pixel_color, scene, &rec);
 		if (flag == 1)

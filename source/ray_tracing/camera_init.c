@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera_init.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/24 15:54:56 by donpark           #+#    #+#             */
+/*   Updated: 2021/12/24 16:02:20 by donpark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 void	set_camera(t_scene *scene)
@@ -92,11 +104,6 @@ void	init_camera(t_camera *cam, t_element *elem)
 	cam->vup = set_vup(cam->w);
 	cam->u = unit_vector(cross(cam->vup, cam->w));
 	cam->v = cross(cam->w, cam->u);
-	printf("w:\t %+f %+f %+f\n", cam->w.x, cam->w.y, cam->w.z);
-	printf("vup:\t %+f %+f %+f\n", cam->vup.x, cam->vup.y, cam->vup.z);
-	printf("u:\t %+f %+f %+f\n", cam->u.x, cam->u.y, cam->u.z);
-	printf("v:\t %+f %+f %+f\n\n", cam->v.x, cam->v.y, cam->v.z);
-
 	cam->horizontal = multiply(cam->u, cam->vp_width);
 	cam->vertical = multiply(cam->v, cam->vp_height);
 	cam->lower_left_corner = subtract(

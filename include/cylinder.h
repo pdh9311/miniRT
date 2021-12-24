@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: donpark <donpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/24 15:58:02 by donpark           #+#    #+#             */
+/*   Updated: 2021/12/24 16:03:28 by donpark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CYLINDER_H
 # define CYLINDER_H
 
@@ -30,9 +42,6 @@ typedef struct s_hit_cy
 	float	t1;
 	float	t2;
 	float	is_between;
-	float	tmp;
-	t_vec3	normal;
-	float	check;
 }				t_hit_cy;
 
 int			hit_cylinder(const t_ray *r, \
