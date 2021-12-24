@@ -20,10 +20,10 @@ t_color	ray_color(t_scene *scene)
 		//pixel_color = rec.color;
 		pixel_color = (t_color){0.0, 0.0, 0.0};
 		set_diffuse(&pixel_color, scene, &rec, &phong);
-		if (set_shadow(scene, &rec, &phong))
-			flag = 1;
-			// return ((t_color){0.0, 0.0, 0.0});
-		set_specular(&pixel_color, scene, &rec, &phong);
+		// if (set_shadow(scene, &rec, &phong))
+		// 	flag = 1;
+		// 	// return ((t_color){0.0, 0.0, 0.0});
+		// set_specular(&pixel_color, scene, &rec, &phong);
 		set_ambient(&pixel_color, scene, &rec);
 		if (flag == 1)
 			return (multiply(pixel_color, 0.7));

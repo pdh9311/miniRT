@@ -1,32 +1,6 @@
 #include "cylinder.h"
 #include "utils.h"
 
-static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
-				const t_ray *r, t_hit_record *rec)
-{
-	cy->w = subtract(r->origin, cld->point);
-	cy->a = dot(r->direction, r->direction) \
-		- pow(dot(r->direction, cld->unit_normal), 2);
-	cy->half_b = dot(r->direction, cy->w) \
-		- (dot(r->direction, \
-			cld->unit_normal) * dot(cy->w, cld->unit_normal));
-	cy->c = dot(cy->w, cy->w) - pow(dot(cy->w, cld->unit_normal), 2) \
-			- pow(cld->radius, 2);
-	cy->discrimiant = pow(cy->half_b, 2) - (cy->a * cy->c);
-	cy->t1 = (-(cy->half_b) - sqrt(cy->discrimiant)) / cy->a;
-	cy->t2 = (-(cy->half_b) + sqrt(cy->discrimiant)) / cy->a;
-	rec->color = cld->color;
-	if (cy->discrimiant < 0)
-		return (FALSE);
-	rec->t = cy->t1;
-	rec->p = at(r, rec->t);
-	rec->normal = unit_vector(subtract(subtract(rec->p, cld->point), \
-		multiply(cld->unit_normal, \
-		dot(subtract(rec->p, cld->point), cld->unit_normal))));
-	if (dot(unit_vector(r->direction), rec->normal) > 0)
-		rec->normal = negate(rec->normal);
-	return (TRUE);
-}
 
 static int	cap_bottom(t_hit_cy *cy, const t_ray *r, \
 					t_cylinder *cld, t_hit_record *rec)
@@ -50,8 +24,8 @@ static int	cap_bottom(t_hit_cy *cy, const t_ray *r, \
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
-	if (dot(unit_vector(r->direction), rec->normal) > 0)
-		rec->normal = negate(rec->normal);
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+	// 	rec->normal = negate(rec->normal);
 	return (TRUE);
 }
 
@@ -78,20 +52,92 @@ static int	cap_top(t_hit_cy *cy, const t_ray *r, \
 	rec->t = t;
 	rec->p = p;
 	rec->normal = cld->unit_normal;
-	if (dot(unit_vector(r->direction), rec->normal) > 0)
-		rec->normal = negate(rec->normal);
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+	// 	rec->normal = negate(rec->normal);
 	return (TRUE);
 }
+
+
+static int	eq_solve(t_hit_cy *cy, t_cylinder *cld, \
+				const t_ray *r, t_hit_record *rec)
+{
+	cy->w = subtract(r->origin, cld->point);
+	cy->a = dot(r->direction, r->direction) \
+		- pow(dot(r->direction, cld->unit_normal), 2);
+	cy->half_b = dot(r->direction, cy->w) \
+		- (dot(r->direction, \
+			cld->unit_normal) * dot(cy->w, cld->unit_normal));
+	cy->c = dot(cy->w, cy->w) - pow(dot(cy->w, cld->unit_normal), 2) \
+			- pow(cld->radius, 2);
+	cy->discrimiant = pow(cy->half_b, 2) - (cy->a * cy->c);
+	cy->t1 = (-(cy->half_b) - sqrt(cy->discrimiant)) / cy->a;
+	cy->t2 = (-(cy->half_b) + sqrt(cy->discrimiant)) / cy->a;
+	rec->color = cld->color;
+	if (cy->discrimiant < 0)
+		return (FALSE);
+	rec->t = cy->t1;
+	rec->p = at(r, rec->t);
+	rec->normal = unit_vector(subtract(subtract(rec->p, cld->point), \
+		multiply(cld->unit_normal, \
+		dot(subtract(rec->p, cld->point), cld->unit_normal))));
+	//////////////////////////////////////////////////////////////////////////////////////////
+	cy->is_in = FALSE;
+	t_vec3	c0b0 = subtract(r->origin, cld->point);
+	t_vec3	qb0 = multiply(cld->unit_normal, dot(cld->unit_normal, subtract(r->origin, cld->point)));
+	t_vec3	c0q = subtract(c0b0, qb0);
+	float	d_c0q = length(c0q);
+	// float	between = dot(subtract(rec->p, cld->point), cld->unit_normal);
+	cy->is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
+	if (d_c0q <= cld->radius && cy->is_between >= 0 && cy->is_between <= cld->height)
+	{
+		cy->is_in = TRUE;
+		rec->t = cy->t2;
+		rec->p = at(r, rec->t);
+		rec->normal = negate(unit_vector(subtract(subtract(rec->p, cld->point), \
+			multiply(cld->unit_normal, \
+			dot(subtract(rec->p, cld->point), cld->unit_normal)))));
+	}
+	else if (d_c0q <= cld->radius && cy->is_between < 0)		// 안 속에 있을때 bottom 평면
+	{
+		cy->is_in = TRUE;
+		if (cap_top(cy, r, cld, rec) == FALSE)
+			return (FALSE);
+		cy->in_bot_top = TRUE;
+	}
+	else if (d_c0q <= cld->radius && cy->is_between > cld->height)	// 안 속에 있을때 top 평면
+	{
+		cy->is_in = TRUE;
+		if (cap_bottom(cy, r, cld, rec) == FALSE)
+			return (FALSE);
+		cy->in_bot_top = TRUE;
+	}
+	// if (x == 400 && y == 225)
+	// 	printf("d_c0q: %f\n\n", d_c0q);
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	// if (dot(unit_vector(r->direction), rec->normal) > 0)
+	// 	rec->normal = negate(rec->normal);
+	return (TRUE);
+}
+
 
 int	hit_cylinder(const t_ray *r, t_cylinder *cld, t_hit_record *rec)
 {
 	t_hit_cy	cy;
 
+	cy.in_bot_top = 0;
 	if (eq_solve(&cy, cld, r, rec) == FALSE)
 		return (FALSE);
-	cy.is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
+
+	// cy.is_between = dot(subtract(rec->p, cld->point), cld->unit_normal);
+	if (rec->t < 0)
+		printf("t: %f\n", rec->t);
+
+
 	if (cy.is_between >= 0 && cy.is_between <= cld->height && rec->t > TMIN)
+	{
 		return (TRUE);
+	}
 	else if (cy.is_between < 0)
 	{
 		if (cap_bottom(&cy, r, cld, rec) == FALSE || rec->t < TMIN)

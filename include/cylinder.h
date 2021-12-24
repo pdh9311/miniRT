@@ -30,9 +30,8 @@ typedef struct s_hit_cy
 	float	t1;
 	float	t2;
 	float	is_between;
-	float	tmp;
-	t_vec3	normal;
-	float	check;
+	int		is_in;
+	int		in_bot_top;
 }				t_hit_cy;
 
 int			hit_cylinder(const t_ray *r, \
